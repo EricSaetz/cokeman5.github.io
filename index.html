@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>HS Alternative Game Modes</title>
+  <meta charset="utf-8">
+</head>
+<body style="overflow: hidden; width: auto; height: auto; margin: 0px; position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;" class="ui-layout-container">
+
+  <script src="js/three.min.js"></script>
+  <script src="CollectionReader.js"></script>
+  <script src="CollectionView.js"></script>
+  <script src="RandomDeckView.js"></script>
+  <script src="SealedView.js"></script>
+  <script src="RushView.js"></script>
+  <script src="GUIHandler.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.layout-latest.js"></script>
+<script src="js/OrbitControls.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	$('body').layout({ applyDemoStyles: true });
+	$("#content").load("index.php #noupesoc");
+});
+</script>
+
+<div id="gui" style="float: left;width: 300px;"></div>
+
+<div id="render" style="margin-left: 300px;overflow: hidden;">
+<form action="demo_form.asp" id="accountForm" style="position:fixed; bottom:55%; left:40%">
+  Hearthpwn Username: <input type="text" id ="username" name="username"></input>
+</form>
+<input style="position:fixed; bottom:50%; left:47%" id="submitButton" type="submit" onclick="handleSubmitAttempt()" value="Submit"></input>
+
+</div>
+  
+  <script>
+  
+	
+    // Set up the scene, camera, and renderer as global variables.
+    var scene, camera, controls, renderer, raycaster;
+	var scale, WIDTH,HEIGHT;
+	var mouse = new THREE.Vector2(), INTERSECTED;
+	var prevTime;
+    var cardsToDisplay = [];
+	var textToDisplay = [];
+	var randomDeck = [];
+	var cardData;
+	var leftArrow=null;
+	var rightArrow=null;
+	var doneButton=null;
+	var currentPage = 0;
+	var mode = 0;
+	var animations = [];
+	var timedFunctions = [];
+	
+    // Sets up the scene.
+    function init() {
+
+      // Create the scene and set the scene size.
+      scene = new THREE.Scene();
+	  
+	  var scale = Math.min((window.innerWidth-300)/1920,window.innerHeight/1080);
+	  WIDTH = 1920*scale;
+      HEIGHT = 1080*scale;
+
+      // Create a renderer and add it to the DOM.
+      renderer = new THREE.WebGLRenderer({antialias:true});
+      renderer.setSize(WIDTH,HEIGHT);
+      document.getElementById('render').appendChild(renderer.domElement);
+	  
+      // Create a camera, zoom it out from the model a bit, and add it to the scene.
+      camera = new THREE.PerspectiveCamera(45, WIDTH/HEIGHT, 1, 20000);
+      camera.position.set(0,0,1500,'XYZ');
+	  camera.rotation.set(0,0,0,'XYZ');
+      scene.add(camera);
+	  
+	  controls = new THREE.OrbitControls( camera, renderer.domElement );
+	  //controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
+	  controls.enableDamping = true;
+	  controls.dampingFactor = 0.25;
+	  controls.enableZoom = false;
+
+      // Create an event listener that resizes the renderer with the browser window.
+      window.addEventListener('resize', function() {
+	    scale = Math.min((window.innerWidth-300)/1920,window.innerHeight/1080);
+        WIDTH = 1920*scale;
+        HEIGHT = 1080*scale;
+        renderer.setSize(WIDTH, HEIGHT);
+        camera.aspect = WIDTH / HEIGHT;
+        camera.updateProjectionMatrix();
+      });
+	  
+	  document.getElementById('render').addEventListener( 'mousedown', onDocumentMouseDown, false );
+
+      // Set the background color of the scene.
+      renderer.setClearColor(0x333F47, 1);
+
+      // Create a light, set its position, and add it to the scene.
+	  scene.add( new THREE.AmbientLight( 0x404040, 5 ) );
+	  raycaster = new THREE.Raycaster();
+	  
+	  prevTime = Date.now();
+    }
+	
+	function onDocumentMouseDown( event ) {
+		event.preventDefault();
+		mouse.x = ( (event.clientX-300) / WIDTH ) * 2 - 1;
+		mouse.y = - ( event.clientY / HEIGHT ) * 2 + 1;
+		
+		raycaster.setFromCamera( mouse, camera );
+		var intersects = raycaster.intersectObjects( scene.children,true );
+		
+		if ( intersects.length > 0 ) {
+			INTERSECTED = intersects[ 0 ].object;
+			if (mode==0) {
+				if (INTERSECTED==rightArrow) {
+						currentPage++;
+						loadPage(currentPage,collection);
+						INTERSECTED=null;
+					}
+				else if (INTERSECTED==leftArrow) {
+						currentPage--;
+						loadPage(currentPage,collection);
+						INTERSECTED=null;
+					}
+			}
+			else if (mode==2) {
+				for (var n=0;n<cardsToDisplay.length;n++) {
+					if (INTERSECTED == cardsToDisplay[n].mesh.getObjectByName("back") || INTERSECTED == cardsToDisplay[n].mesh.getObjectByName("front")) {
+						sealedCardClicked(n);
+					}
+				}
+				if (INTERSECTED==doneButton) {
+					doneButtonPressed();
+				}
+				else if (INTERSECTED==rightArrow) {
+						currentPage++;
+						loadPage(currentPage,sealedCollection);
+						INTERSECTED=null;
+					}
+				else if (INTERSECTED==leftArrow) {
+						currentPage--;
+						loadPage(currentPage,sealedCollection);
+						INTERSECTED=null;
+					}
+			}
+			else if (mode==3) {
+				for (var n=0;n<cardsToDisplay.length;n++) {
+					if (INTERSECTED==cardsToDisplay[n].mesh)
+						rushCardClicked(cardsToDisplay[n]);
+				}
+			}
+		} else {
+			INTERSECTED = null;
+		}
+	}
+
+
+    // Renders the scene and updates the render as needed.
+    function animate() {
+	  var timeDifference = Date.now()-prevTime;
+	  prevTime = Date.now();
+
+	  // Read more about requestAnimationFrame at http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+	  requestAnimationFrame(animate);
+			
+	  controls.update();
+	  if (animations.length>0)
+		processAnimations(timeDifference);
+	  
+	  for (var i=0;i<timedFunctions.length;i++) {
+		timedFunctions[i].timer+=timeDifference;
+		if (timedFunctions[i].timer>=timedFunctions[i].maxTime) {
+			timedFunctions[i].onTimeReached();
+			timedFunctions.splice(i,1);
+		}
+	  }
+			
+	  // Render the scene.
+	  render(scene, camera);
+    }
+	
+	function render() {
+		renderer.render( scene, camera );
+	}
+	
+	function processAnimations(timeDifference) {
+		var anim;
+		for (var i=0;i<animations.length;i++) {
+			anim = animations[i];
+			if (anim.type==="rotationY") {
+				anim.object.rotation.y+=anim.amount/(anim.endTime/1000)*(timeDifference*.001);
+				anim.startTime+=timeDifference;
+				if (anim.startTime>anim.endTime) {
+					anim.object.rotation.y=anim.startingValue+anim.amount;
+					animations.splice(i,1);
+				}
+			}
+			else if (anim.type==="positionY") {
+				anim.object.position.y+=anim.amount/(anim.endTime/1000)*(timeDifference*.001);
+				anim.startTime+=timeDifference;
+				if (anim.startTime>anim.endTime) {
+					anim.object.position.y=anim.startingValue+anim.amount;
+					animations.splice(i,1);
+				}
+			}
+		}
+	}
+	
+	function clearAssets() {
+		animations=[];
+		timedFunctions=[];
+		
+		for (var i=0;i<cardsToDisplay.length;i++) {
+			scene.remove(cardsToDisplay[i].mesh);
+			for (var n=0;n<cardsToDisplay[i].mesh.children.length;n++) {
+				if (cardsToDisplay[n].mesh.children[n].material.map!=null)
+					cardsToDisplay[n].mesh.children[n].material.map.dispose();
+				cardsToDisplay[n].mesh.children[n].material.dispose();
+				cardsToDisplay[n].mesh.children[n].geometry.dispose();
+			}
+		}
+		cardsToDisplay=[];
+		
+		for (i=0;i<textToDisplay.length;i++) {
+			scene.remove(textToDisplay[i]);
+			if (textToDisplay[i].material instanceof THREE.MultiMaterial) {
+				textToDisplay[i].material.materials[0].dispose();
+				textToDisplay[i].material.materials[1].dispose();
+			} else {
+				textToDisplay[i].material.dispose();
+			}
+			textToDisplay[i].geometry.dispose();
+		}
+		textToDisplay = [];
+		
+		if (doneButton!=null) {
+			scene.remove(doneButton);
+			doneButton.material.dispose();
+			doneButton = null;
+		}
+		if (leftArrow!=null) {
+			scene.remove(leftArrow);
+			leftArrow.material.dispose();
+			leftArrow=null;
+		}
+		if (rightArrow!=null) {
+			scene.remove(rightArrow);
+			rightArrow.material.dispose();
+			rightArrow=null;
+		}
+	}
+	
+	function pullCardData() {
+		$.ajax({
+		url: 'https://omgvamp-hearthstone-v1.p.mashape.com/cards/Mind Vision', // The URL to the API. You can get this by clicking on "Show CURL example" from an API profile
+		type: 'GET', // The HTTP Method, can be GET POST PUT DELETE etc
+		data: {}, // Additional parameters here
+		dataType: 'json',
+		success: function(data) {
+			cardData=data[0];
+			cardLoaded();
+			},
+		error: function(err) { alert(err); },
+		beforeSend: function(xhr) {
+		xhr.setRequestHeader("X-Mashape-Authorization", "mUXdlSi402msh5KdXAFtso4xhR7Cp14KQjsjsnouMCnzlGkHvz"); // Enter here your Mashape key
+		}
+		});
+	}
+
+  </script>
+
+</body>
+</html>
