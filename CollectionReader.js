@@ -7,19 +7,27 @@ function handleSubmitAttempt() {
 		var splitText;
 		var element;
 		
-		$.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent('https://www.hearthpwn.com/members/'+username+'/collection') + '&callback=?', function(data){
-			text = data.contents.split('\n');
-			initCollection();
-			readCollection(text);
-			element = document.getElementById("accountForm");
-			element.parentNode.removeChild(element);
-			element = document.getElementById("submitButton");
-			element.parentNode.removeChild(element);
-			loadModeSelectGUI();
-			init();
-			startCollectionView();
-			animate();
+		$.ajax({
+			type: 'GET',
+			url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'https%3A%2F%2Fwww.hearthpwn.com%2Fmembers%2Fcokeman5%2Fcollection'&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
+			dataType: 'text',
+			success: function(data) {
+				text = data.split('\n');
+				for (var i=0;i<20;i++)
+					console.log(text[1045+i]);
+				initCollection();
+				readCollection(text);
+				element = document.getElementById("accountForm");
+				element.parentNode.removeChild(element);
+				element = document.getElementById("submitButton");
+				element.parentNode.removeChild(element);
+				loadModeSelectGUI();
+				init();
+				startCollectionView();
+				animate();
+			}
 		});
+		
 }
 
 function initCollection() {
@@ -45,36 +53,24 @@ function readCollection(text) {
 		var amountGolden=0;
 		var isGolden=false;
 		var id;
+		var cardData;
 		
 		var card;
 		
 		for (var n=0;n<text.length;n++) {
 			if (text[n].includes('data-card-name')) {
-				cardName = text[n].split('"')[5];
-				cardName = cardName.replace(/&#x27;/g,'\'');
-				id = parseInt(text[n].split('"')[1]);
-				rarity = parseInt(text[n].split('"')[3]);
-				manaCost = parseInt(text[n].split('"')[7]);
-			} 
-			else if (text[n].includes('data-card-class')) {
-				theClass=text[n].split('"')[3];
+				cardData=text[n].split('"');
+				cardName = cardData[15];
+				id = parseInt(cardData[21]);
+				rarity = parseInt(cardData[25]);
+				manaCost = parseInt(cardData[11]);
+				theClass=cardData[5];
+				isGolden = (cardData[23]==="TRUE");
 			}
-			else if (text[n].includes('data-is-gold=')) {
-				if ((text[n].split('"')[3]) === 'True') {
-					isGolden=true;
-				}
-				else {
-					isGolden=false;
-				}
-			} 
 			else if (text[n].includes('data-card-count')) {
 				cardAmount = parseInt(text[n].split('"')[3]);
-				if (isGolden) {
-					amountGolden = cardAmount;
-				}
-				else {
-					amountGolden = 0;
-				}
+				if (isGolden)
+					amountGolden=cardAmount;
 				
 				card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount, amountGolden:amountGolden};
 				addToCollection(card,collection,2);

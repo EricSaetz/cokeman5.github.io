@@ -32,7 +32,7 @@ function displayRushDeck() {
 }
 
 function rushCardClicked(cardDisplay) {
-	if (cardDisplay.card.amount>0 && cardDisplay.position.y>-838) {
+	if (cardDisplay.card.amount>0 && cardDisplay.mesh.position.y>-838) {
 		addToRushDeck(cardDisplay.card);
 		rushDeckSize++;
 		cardDisplay.mesh.material.color.setHex( 0x838383 );

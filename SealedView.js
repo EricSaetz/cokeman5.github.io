@@ -13,7 +13,7 @@ function loadSealedOpeningView() {
 	clearAssets();
 	whichView = "Opening";
 	
-		for (var i=0; i<5;i++) {
+	for (var i=0; i<5;i++) {
 		var material1 = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
 		var material2 = new THREE.MeshLambertMaterial( { map: null, side: THREE.BackSide, transparent: true} );
 		object1 = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material1 );
@@ -42,9 +42,9 @@ function loadSealedOpeningView() {
 
 function autoOpen() {
 	if (document.getElementById("openingModeSelect").value==="Auto") {
-		for (cardIndex=0;cardIndex<5 && !hiddenCards[cardIndex];cardIndex++);
+		for (var cardIndex=0;cardIndex<5 && !hiddenCards[cardIndex];cardIndex++);
 		if (cardIndex<5) {
-			setCardTextureForSealed(cardIndex,cardsToDisplay[cardIndex].card.name);
+			setCardTextureForSealed(cardIndex,cardsToDisplay[cardIndex].card);
 			animations.push({object:cardsToDisplay[cardIndex].mesh,type:"rotationY",amount:Math.PI,startingValue:cardsToDisplay[cardIndex].mesh.rotation.y,startTime:0,endTime:800});
 			hiddenCards[cardIndex]=false;
 			if (cardIndex!=4)
@@ -53,7 +53,6 @@ function autoOpen() {
 				timedFunctions.push({timer:0,maxTime:1600,onTimeReached:function(){autoOpen()}});
 				doneButton.visible=true;
 			}
-			cardIndex++;
 		} 
 		else {
 			if (packNum+1<packs.length) {
@@ -226,7 +225,6 @@ function openPacks() {
 	else {
 		loadSealedOpeningView();
 		packNum=0;
-		timer=0;
 		displayPack();
 	}
 }
@@ -289,7 +287,7 @@ function setCardTextureForSealed(num,card) {
 	var map;
 	var material;
 	
-	cardsToDisplay[num] = card;
+	cardsToDisplay[num].card = card;
 	
 	map = new THREE.TextureLoader().load( 'Images/' + card.name.replace(':','_') + '.png' );
 	map.minFilter = THREE.LinearFilter;
