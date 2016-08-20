@@ -11,7 +11,7 @@ function startCollectionView() {
 	}
 	
 	loadArrows();
-	page = 0;
+	currentPage = 0;
 	loadPage(currentPage,collection);
 	scene.add(rightArrow);
 	scene.add(leftArrow);

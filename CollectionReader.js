@@ -13,8 +13,6 @@ function handleSubmitAttempt() {
 			dataType: 'text',
 			success: function(data) {
 				text = data.split('\n');
-				for (var i=0;i<20;i++)
-					console.log(text[1045+i]);
 				initCollection();
 				readCollection(text);
 				element = document.getElementById("accountForm");
@@ -61,6 +59,7 @@ function readCollection(text) {
 			if (text[n].includes('data-card-name')) {
 				cardData=text[n].split('"');
 				cardName = cardData[15];
+				cardName = cardName.replace(/&amp;#27;/g,'\'');
 				id = parseInt(cardData[21]);
 				rarity = parseInt(cardData[25]);
 				manaCost = parseInt(cardData[11]);

@@ -94,7 +94,7 @@ function loadSealedCollectionView() {
 	}
 	
 	loadArrows();
-	page = 0;
+	currentPage = 0;
 	loadPage(currentPage,sealedCollection);
 	scene.add(rightArrow);
 	scene.add(leftArrow);
@@ -115,7 +115,7 @@ function doneButtonPressed() {
 function sealedCardClicked(num) {
 	if (document.getElementById("openingModeSelect").value==="Normal") {
 		if (hiddenCards[num]) {
-			setCardTextureForSealed(num,cardsToDisplay[num].card.name);
+			setCardTextureForSealed(num,cardsToDisplay[num].card);
 			animations.push({object:cardsToDisplay[num].mesh,type:"rotationY",amount:Math.PI,startingValue:cardsToDisplay[num].mesh.rotation.y,startTime:0,endTime:800});
 			hiddenCards[num]=false;
 		}
