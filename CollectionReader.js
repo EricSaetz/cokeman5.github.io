@@ -22,6 +22,7 @@ function handleSubmitAttempt() {
 				loadMainGUI();
 				init();
 				startCollectionView(collection);
+				document.getElementById("modeDescription").innerHTML = "Here you can view your collection.";
 				animate();
 			}
 		});

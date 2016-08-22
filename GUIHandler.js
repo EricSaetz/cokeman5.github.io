@@ -219,8 +219,6 @@ function loadSealedGUI() {
 }
 
 function removeSealedGUI() {
-	aElement = document.getElementById('cardBackText');
-	aElement.parentNode.removeChild(aElement);
 	aElement = document.getElementById('openingModeText');
 	aElement.parentNode.removeChild(aElement);
 	aElement = document.getElementById('openingModeSelect');
@@ -326,8 +324,9 @@ function removeRushGUI() {
 }
 
 function changeMode(value) {
-	if (mode==0 && !(value === "Collection"))
+	if (mode==0 && !(value === "Collection")) {
 		clearAssets();
+	}
 	else if (mode==1 && !(value === "Random Deck")) {
 		clearAssets();
 		removeRandomDeckGUI();
@@ -343,6 +342,7 @@ function changeMode(value) {
 
 	if (value === "Collection" && mode!=0) {
 		mode=0;
+		document.getElementById("modeDescription").innerHTML = "Here you can view your collection.";
 		startCollectionView(collection);
 	}
 	else if (value==="Random Deck" && mode!=1) {
