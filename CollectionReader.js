@@ -9,7 +9,7 @@ function handleSubmitAttempt() {
 		
 		$.ajax({
 			type: 'GET',
-			url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'https%3A%2F%2Fwww.hearthpwn.com%2Fmembers%2Fcokeman5%2Fcollection'&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
+			url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'https%3A%2F%2Fwww.hearthpwn.com%2Fmembers%2F"+username+"%2Fcollection'&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
 			dataType: 'text',
 			success: function(data) {
 				text = data.split('\n');
