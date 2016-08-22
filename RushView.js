@@ -11,6 +11,8 @@ function startRushView() {
 function displayRushDeck() {
 	clearAssets();
 	
+	rushDeck.sort(function(a, b){return compareCards(a,b)});
+	
 	for (var i=0; i<30;i++) {
 		var material = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
 		object = new THREE.Mesh(  new THREE.PlaneGeometry( 130*3, 34*3, 4, 4 ), material );
@@ -35,13 +37,25 @@ function rushCardClicked(cardDisplay) {
 	if (cardDisplay.card.amount>0 && cardDisplay.mesh.position.y>-838) {
 		addToRushDeck(cardDisplay.card);
 		rushDeckSize++;
-		cardDisplay.mesh.material.color.setHex( 0x838383 );
-		if (rushDeckSize>30) {
-			animations=[];
-			rushDeck.sort(function(a, b){return compareCards(a,b)});
-			displayRushDeck();
+		cardDisplay.mesh.getObjectByName("front").material.color.setHex( 0x838383 );
+		if (rushDeckSize>=30) {
+			rushOver();
 		}
 	}
+}
+
+function rushOver() {
+	var card;
+	
+	animations=[];
+	while (rushDeckSize<30) {
+		card = rushCollection[Math.floor(Math.random()*rushCollection.length)];
+		if (card.amount>0) {
+			rushDeckSize++;
+			addToRushDeck(card);
+		}
+	}
+	displayRushDeck();
 }
 
 function addToRushDeck(card) {
@@ -54,8 +68,11 @@ function addToRushDeck(card) {
 		}
 	}
 	if (!flag) {
-		console.log(card.name);
 		rushDeck.push({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden});
+	}
+	
+	for (var n=0;n<rushCollection.length;n++) {
+		addToCollection(rushCollection[n],limitedCollection);
 	}
 	
 	card.amount--;
@@ -76,7 +93,10 @@ function startMovingCards(row) {
 		}
 		
 		if ((row+1)*6<rushCollection.length)
-			timedFunctions.push({timer:0,maxTime:timeForOneRow*(465/1676),onTimeReached:function(){startMovingCards(row+1)}})
+			timedFunctions.push({timer:0,maxTime:timeForOneRow*(465/1676),onTimeReached:function(){startMovingCards(row+1)}});
+		else {
+			timedFunctions.push({timer:0,maxTime:timeForOneRow,onTimeReached:function(){rushOver()}});
+		}
 	}
 }
 
@@ -92,75 +112,73 @@ function startRush() {
 	var material;
 	var object;
 	
-	clearAssets();
-  
-	for (var i=0; i<24;i++) {
-		material = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
-		object = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material );
-			object.position.set( (i%6)*(70+286)-960+70,640+198, 0 );
-			object.rotation.set(0,0,0,'XYZ');
-			cardsToDisplay.push({mesh:object,card:null});
-			object.visible=false;
-			scene.add( object );
-	}
-	
 	amountOfCards = parseInt(document.getElementById("amountOfCards").value);
-	selectedClass = document.getElementById('classSelect').value;
-	
-	switch (selectedClass) {
-		case 'Random' : theClass = getRandomClass(limitedCollection);
-			break;
-		case 'Druid' : theClass = limitedCollection.expansionAll.druid;
-			break;
-		case 'Hunter' : theClass = limitedCollection.expansionAll.hunter;
-			break;
-		case 'Mage' : theClass = limitedCollection.expansionAll.mage;
-			break;
-		case 'Paladin' : theClass = limitedCollection.expansionAll.paladin;
-			break;
-		case 'Priest' : theClass = limitedCollection.expansionAll.priest;
-			break;
-		case 'Rogue' : theClass = limitedCollection.expansionAll.rogue;
-			break;
-		case 'Shaman' : theClass = limitedCollection.expansionAll.shaman;
-			break;
-		case 'Warlock' : theClass = limitedCollection.expansionAll.warlock;
-			break;
-		case 'Warrior' : theClass = limitedCollection.expansionAll.warrior;
-	}
-	
-	rushDeck=[];
-	rushCollection=[];
-	rushDeckSize=0;
-	
-	for (var i=0;i<amountOfCards;i++) {
-		flag=false;
-		
-		if (Math.random()<.5 && theClass.length>0)
-			cards = theClass;
-		else
-			cards = limitedCollection.expansionAll.neutral;
-		
-		index = Math.floor(Math.random()*cards.length);
-		for (var n=0;n<rushCollection.length && !flag;n++) {
-			if (rushCollection[n].name===(cards[index].name)) {
-				rushCollection[n].amount++;
-				flag = true;
-			}
+	if (amountOfCards>=30) {
+		clearAssets();
+	  
+		for (var i=0; i<24;i++) {
+			var material1 = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
+			var material2 = new THREE.MeshLambertMaterial( { map: null, side: THREE.BackSide, transparent: true} );
+			object1 = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material1 );
+			object2 = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material2 );
+			object1.name = "front";
+			object2.name = "back";
+			object = new THREE.Object3D();
+			object.add(object1);
+			object.add(object2);
+			object1.visible = false;
+			object2.visible = false;
+			cardsToDisplay.push({mesh:object,card:null});
+			object.position.set( (i%6)*(70+286)-960+70,640+198, 0 );
+			scene.add( object );
 		}
-		if (!flag) {
+		
+		setCardBack(document.getElementById("cardBackSelect").value);
+		
+		selectedClass = document.getElementById('classSelect').value;
+		
+		switch (selectedClass) {
+			case 'Random' : theClass = getRandomClass(limitedCollection);
+				break;
+			case 'Druid' : theClass = limitedCollection.expansionAll.druid;
+				break;
+			case 'Hunter' : theClass = limitedCollection.expansionAll.hunter;
+				break;
+			case 'Mage' : theClass = limitedCollection.expansionAll.mage;
+				break;
+			case 'Paladin' : theClass = limitedCollection.expansionAll.paladin;
+				break;
+			case 'Priest' : theClass = limitedCollection.expansionAll.priest;
+				break;
+			case 'Rogue' : theClass = limitedCollection.expansionAll.rogue;
+				break;
+			case 'Shaman' : theClass = limitedCollection.expansionAll.shaman;
+				break;
+			case 'Warlock' : theClass = limitedCollection.expansionAll.warlock;
+				break;
+			case 'Warrior' : theClass = limitedCollection.expansionAll.warrior;
+		}
+		
+		rushDeck=[];
+		rushCollection=[];
+		rushDeckSize=0;
+		
+		for (var i=0;i<amountOfCards;i++) {
+			flag=false;
+			
+			if (Math.random()<.5 && theClass.length>0)
+				cards = theClass;
+			else
+				cards = limitedCollection.expansionAll.neutral;
+			
+			index = Math.floor(Math.random()*cards.length);
 			card = {name:cards[index].name,id:cards[index].id,rarity:cards[index].rarity,manaCost:cards[index].manaCost,theClass:cards[index].theClass,amount:1, amountGolden:cards[index].amountGolden};
 			rushCollection.push(card);
+			cards[index].amount--;
+			if (cards[index].amount<=0)
+				cards.splice(index,1);
 		}
-		cards[index].amount--;
-		if (cards[index].amount<=0)
-			cards.splice(index,1);
+		
+		startMovingCards(0);
 	}
-	
-	for (var n=0;n<rushCollection.length;n++) {
-		addToCollection(rushCollection[n],limitedCollection);
-	}
-	
-	startMovingCards(0);
-	
 }

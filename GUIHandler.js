@@ -1,6 +1,11 @@
-function loadModeSelectGUI() {
-	var aText,aSelect,aOption,gui;
+function loadMainGUI() {
+	var aText,aSelect,aOption,gui,aTextArea;
     var modes = ["Collection","Random Deck", "Sealed", "Rush"];
+	var cardBacks = ["Classic", "Alleria", "Black Temple", "Blizzard 2014", "Blizzard 2015", "Clutch of Yogg-Saron", "Cupcake", "Dalaran Flame", "Darkspear", "Darnassus", 
+					"Exodar", "Explorer's Map", "Eyes of C'thun", "Fireside", "Galaxy Gifts", "Gnomes", "Goblins", "Golden Celebration", "Hallow's End", "Heroes of the Storm", 
+					"Heroic Naxxramas", "Highmaul", "Hogger", "Icecrown", "Legacy of the Void", "Legend", "Love Is in the Air", "Lunar New Year", "Magni", "Maraad", "Medivh", 
+					"Molten Core", "Naxxramas", "Nefarian", "Ninjas", "Overwatch", "Pandaria", "Pirates!", "Power Core", "Ragnaros", "Rainbow", "Shaman Thrall", "Staff of Origination", 
+					"Tauren Thunderbluff", "The Grand Tournament", "Tournament Grounds", "Warlords", "Winter Veil Wreath"];
 	
 	gui = document.getElementById('gui');
 	
@@ -19,6 +24,31 @@ function loadModeSelectGUI() {
 		aOption.innerHTML=modes[i];
 		aSelect.appendChild(aOption);
 	}
+	
+	aText = document.createElement("p");
+	aText.innerHTML="Card Back:";
+	aText.setAttribute("style","position:fixed; top:60px; left:38px");
+	aText.setAttribute("id","cardBackText");
+	gui.appendChild(aText);
+	aSelect = document.createElement("select");
+	aSelect.setAttribute("style","position:fixed; top:75px; left:118px");
+	aSelect.setAttribute("id","cardBackSelect");
+	aSelect.setAttribute("onchange", "setCardBack(this.value)");
+	gui.appendChild(aSelect);
+	
+	for (var i=0;i<cardBacks.length;i++) {
+		aOption = document.createElement("option");
+		aOption.setAttribute("value",cardBacks[i]);
+		aOption.innerHTML=cardBacks[i];
+		aSelect.appendChild(aOption);
+	}
+	
+	aTextArea = document.createElement("textarea");
+	aTextArea.setAttribute("cols",15);
+	aTextArea.setAttribute("readonly","true");
+	aTextArea.setAttribute("id","modeDescription");
+	aTextArea.setAttribute("style","position:fixed; top:120px; left:50px; width:200px; height:150px; resize:none;text-align: center; border:none");
+	gui.appendChild(aTextArea);
 }
 
 function loadRandomDeckGUI() {
@@ -26,6 +56,8 @@ function loadRandomDeckGUI() {
 	var classNames = ["Random", "Druid", "Hunter", "Mage", "Paladin", "Priest", "Rogue", "Shaman", "Warlock", "Warrior" ];
 	
 	gui = document.getElementById('gui');
+	
+	document.getElementById("modeDescription").innerHTML = "This mode allows you to generate a random deck using your collection.";
 	
 	input = document.createElement("input");
 	input.setAttribute("type","text");
@@ -84,32 +116,12 @@ function removeRandomDeckGUI() {
 
 function loadSealedGUI() {
 	var gui,aText,aSelect,aOption,aTextArea,input;
-	var cardBacks = ["Classic", "Alleria", "Black Temple", "Blizzard 2014", "Blizzard 2015", "Clutch of Yogg-Saron", "Cupcake", "Dalaran Flame", "Darkspear", "Darnassus", 
-					"Exodar", "Explorer's Map", "Eyes of C'thun", "Fireside", "Galaxy Gifts", "Gnomes", "Goblins", "Golden Celebration", "Hallow's End", "Heroes of the Storm", 
-					"Heroic Naxxramas", "Highmaul", "Hogger", "Icecrown", "Legacy of the Void", "Legend", "Love Is in the Air", "Lunar New Year", "Magni", "Maraad", "Medivh", 
-					"Molten Core", "Naxxramas", "Nefarian", "Ninjas", "Overwatch", "Pandaria", "Pirates!", "Power Core", "Ragnaros", "Rainbow", "Shaman Thrall", "Staff of Origination", 
-					"Tauren Thunderbluff", "The Grand Tournament", "Tournament Grounds", "Warlords", "Winter Veil Wreath"];
 	var packNames = ["Wild", "Basic","Classic","Naxx","GvG","BRM","TGT","LOE","OG","KARA"];
     var openingModes = [ "Normal", "Auto", "Instant" ];
 	
 	gui = document.getElementById('gui');
 	
-	aText = document.createElement("p");
-	aText.innerHTML="Card Back:";
-	aText.setAttribute("style","position:fixed; bottom:330px; left:38px");
-	aText.setAttribute("id","cardBackText");
-	gui.appendChild(aText);
-	aSelect = document.createElement("select");
-	aSelect.setAttribute("style","position:fixed; bottom:345px; left:118px");
-	aSelect.setAttribute("id","cardBackSelect");
-	gui.appendChild(aSelect);
-	
-	for (var i=0;i<cardBacks.length;i++) {
-		aOption = document.createElement("option");
-		aOption.setAttribute("value",cardBacks[i]);
-		aOption.innerHTML=cardBacks[i];
-		aSelect.appendChild(aOption);
-	}
+	document.getElementById("modeDescription").innerHTML = "This mode allows you to open simulated packs that contain only cards you own. Challenge your deckbuilding skills using a limited collection.";
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Opening Mode:";
@@ -209,8 +221,6 @@ function loadSealedGUI() {
 function removeSealedGUI() {
 	aElement = document.getElementById('cardBackText');
 	aElement.parentNode.removeChild(aElement);
-	aElement = document.getElementById('cardBackSelect');
-	aElement.parentNode.removeChild(aElement);
 	aElement = document.getElementById('openingModeText');
 	aElement.parentNode.removeChild(aElement);
 	aElement = document.getElementById('openingModeSelect');
@@ -240,6 +250,8 @@ function loadRushGUI() {
 	var classNames = ["Random", "Druid", "Hunter", "Mage", "Paladin", "Priest", "Rogue", "Shaman", "Warlock", "Warrior" ];
 	
 	gui = document.getElementById('gui');
+	
+	document.getElementById("modeDescription").innerHTML = "This mode tests your deckbuilding abilities under stress. Cards will scroll down quickly, requiring you to build your deck on the fly!";
 	
 	input = document.createElement("input");
 	input.setAttribute("type","text");
@@ -331,7 +343,7 @@ function changeMode(value) {
 
 	if (value === "Collection" && mode!=0) {
 		mode=0;
-		startCollectionView();
+		startCollectionView(collection);
 	}
 	else if (value==="Random Deck" && mode!=1) {
 		mode = 1;

@@ -1,18 +1,29 @@
-function startCollectionView() {
+function startCollectionView(theCollection) {
   var material;
   
+  clearAssets();
+  
 	for (var i=0; i<8;i++) {
-		material = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
-		object = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material );
-			object.position.set( (286+212.4)*(i%4)+212.4-960, 620-(Math.floor(i/4)*(150+395))-150-197.5, 0 );
-			object.rotation.set(0,0,0,'XYZ');
-			cardsToDisplay.push({mesh:object,card:null});
-			scene.add( object );
+		var material1 = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
+		var material2 = new THREE.MeshLambertMaterial( { map: null, side: THREE.BackSide, transparent: true} );
+		object1 = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material1 );
+		object2 = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material2 );
+		object1.name = "front";
+		object2.name = "back";
+		object = new THREE.Object3D();
+		object.add(object1);
+		object.add(object2);
+		object1.visible = false;
+		object2.visible = false;
+		cardsToDisplay.push({mesh:object,card:null});
+		object.position.set( (286+212.4)*(i%4)+212.4-960, 620-(Math.floor(i/4)*(150+395))-150-197.5, 0 );
+		scene.add( object );
 	}
+	setCardBack(document.getElementById("cardBackSelect").value);
 	
 	loadArrows();
 	currentPage = 0;
-	loadPage(currentPage,collection);
+	loadPage(currentPage,theCollection);
 	scene.add(rightArrow);
 	scene.add(leftArrow);
 }
@@ -128,40 +139,23 @@ function getMaxPages(theCollection) {
 
 function loadClassCards(index,classCards) {
 	var max;
-	for (var i=0;i<8;i++,index++) {
-		if (index<classCards.length) {
-			setCardTexture(i,classCards[index]);
+	for (var i=0;i<8;i++) {
+		if (index+i<classCards.length) {
+			setCardTexture(i,classCards[index+i]);
+			cardsToDisplay[i].mesh.visible=true;
+			if (cardsToDisplay[i].card.amount<=0) {
+				cardsToDisplay[i].mesh.getObjectByName("front").material.color.setHex( 0x838383 );
+			}
 			if (classCards[index].rarity==5)
 				max='/1';
 			else
 				max='/2';
-			loadAmountText(classCards[index].amount+max,cardsToDisplay[i].mesh.position.x-45,cardsToDisplay[i].mesh.position.y-275, collection.expansionAll.allCards[i].amount,cardsToDisplay[i].mesh.position.z);
-		} else {
+			loadAmountText(cardsToDisplay[i].card.amount+max,cardsToDisplay[i].mesh.position.x-45,cardsToDisplay[i].mesh.position.y-275, collection.expansionAll.allCards[i].amount,cardsToDisplay[i].mesh.position.z);
+		} 
+		else {
 			cardsToDisplay[i].mesh.visible = false;
 		}
 	}
-}
-
-function setCardTexture(num,card) {
-	var map;
-	var material;
-	
-	map = new THREE.TextureLoader().load( 'Images/' + card.name.replace(':','_') + '.png' );
-	map.minFilter = THREE.LinearFilter;
-	material = new THREE.MeshLambertMaterial( { map: map, side: THREE.FrontSide, transparent: true } );
-	
-	if (card.amount<=0) {
-			material.color.setHex( 0x838383 );
-		}
-	
-	if (cardsToDisplay[num].mesh.material.map!=null)
-		cardsToDisplay[num].mesh.material.map.dispose();
-	cardsToDisplay[num].mesh.material.dispose();
-	
-	cardsToDisplay[num].mesh.material = material;
-	cardsToDisplay[num].card=card;
-	cardsToDisplay[num].mesh.visible=true;
-	cardsToDisplay[num].mesh.needsUpdate = true;
 }
 
 function loadAmountText(amount, x, y, z) {

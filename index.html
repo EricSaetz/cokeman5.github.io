@@ -147,7 +147,7 @@ $(document).ready(function () {
 			}
 			else if (mode==3) {
 				for (var n=0;n<cardsToDisplay.length;n++) {
-					if (INTERSECTED==cardsToDisplay[n].mesh)
+					if (INTERSECTED == cardsToDisplay[n].mesh.getObjectByName("front"))
 						rushCardClicked(cardsToDisplay[n]);
 				}
 			}
@@ -252,22 +252,47 @@ $(document).ready(function () {
 		}
 	}
 	
-	function pullCardData() {
-		$.ajax({
-		url: 'https://omgvamp-hearthstone-v1.p.mashape.com/cards/Mind Vision', // The URL to the API. You can get this by clicking on "Show CURL example" from an API profile
-		type: 'GET', // The HTTP Method, can be GET POST PUT DELETE etc
-		data: {}, // Additional parameters here
-		dataType: 'json',
-		success: function(data) {
-			cardData=data[0];
-			cardLoaded();
-			},
-		error: function(err) { alert(err); },
-		beforeSend: function(xhr) {
-		xhr.setRequestHeader("X-Mashape-Authorization", "mUXdlSi402msh5KdXAFtso4xhR7Cp14KQjsjsnouMCnzlGkHvz"); // Enter here your Mashape key
+	function setCardBack(cardBackName) {
+	var map;
+	var material;
+	var extension;
+	
+	if (cardBackName === "Molten Core" || cardBackName === "Tournament Grounds")
+		extension='.gif';
+	else
+		extension='.png';
+	
+	map = new THREE.TextureLoader().load( 'Card Backs/'+cardBackName+extension );
+	map.minFilter = THREE.LinearFilter;
+	
+	for (var i=0;i<cardsToDisplay.length;i++) {
+		if (cardsToDisplay[i].mesh.children.length>0) {
+			if (cardsToDisplay[i].mesh.getObjectByName("back").material.map!=null)
+				cardsToDisplay[i].mesh.getObjectByName("back").material.map.dispose();
+			cardsToDisplay[i].mesh.getObjectByName("back").material.map=map;
+			cardsToDisplay[i].mesh.getObjectByName("back").needsUpdate=true;
+			cardsToDisplay[i].mesh.getObjectByName("back").visible=true;
 		}
-		});
 	}
+}
+
+function setCardTexture(num,card) {
+	var map;
+	var material;
+	
+	cardsToDisplay[num].card = card;
+	
+	map = new THREE.TextureLoader().load( 'Images/' + card.name.replace(':','_') + '.png' );
+	map.minFilter = THREE.LinearFilter;
+	
+	if (cardsToDisplay[num].mesh.getObjectByName("front").material.map!=null)
+		cardsToDisplay[num].mesh.getObjectByName("front").material.map.dispose();
+	cardsToDisplay[num].mesh.getObjectByName("front").material.map=map;	
+	cardsToDisplay[num].mesh.getObjectByName("front").material.color.setHex( 0xFFFFFF );
+	cardsToDisplay[num].mesh.getObjectByName("front").needsUpdate=true;
+	
+	cardsToDisplay[num].mesh.getObjectByName("front").visible=true;
+}
 
   </script>
 

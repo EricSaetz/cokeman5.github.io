@@ -104,18 +104,10 @@ function setBarTexture(num,cardName,cardAmount) {
 	
 	map = new THREE.TextureLoader().load( 'Bars/' + cardName + '.png' );
 	map.minFilter = THREE.LinearFilter;
-	material = new THREE.MeshLambertMaterial( { map: map, side: THREE.FrontSide, transparent: true } );
-	
-	if (cardAmount<=0) {
-			material.color.setHex( 0x838383 );
-		}
 	
 	if (cardsToDisplay[num].mesh.material.map!=null)
 		cardsToDisplay[num].mesh.material.map.dispose();
-	cardsToDisplay[num].mesh.material.dispose();
-	
-
-	cardsToDisplay[num].mesh.material = material;
+	cardsToDisplay[num].mesh.material.map=map;
 	cardsToDisplay[num].cardName=cardName;
 	cardsToDisplay[num].mesh.visible=true;
 	cardsToDisplay[num].mesh.needsUpdate = true;

@@ -19,9 +19,9 @@ function handleSubmitAttempt() {
 				element.parentNode.removeChild(element);
 				element = document.getElementById("submitButton");
 				element.parentNode.removeChild(element);
-				loadModeSelectGUI();
+				loadMainGUI();
 				init();
-				startCollectionView();
+				startCollectionView(collection);
 				animate();
 			}
 		});
