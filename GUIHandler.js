@@ -256,13 +256,13 @@ function loadRushGUI() {
 	input.setAttribute("id","Time");
 	input.setAttribute("maxlength",3);
 	input.setAttribute("value","100");
-	input.setAttribute("style","position:fixed; bottom:175px; left:170px;width:25px")
+	input.setAttribute("style","position:fixed; bottom:195px; left:170px;width:25px")
 	gui.appendChild(input);
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Time(s):";
 	aText.setAttribute("id","timeText");
-	aText.setAttribute("style","position:fixed; bottom:160px; left:105px");
+	aText.setAttribute("style","position:fixed; bottom:180px; left:105px");
 	gui.appendChild(aText);
 	
 	input = document.createElement("input");
@@ -270,23 +270,23 @@ function loadRushGUI() {
 	input.setAttribute("id","amountOfCards");
 	input.setAttribute("value","200");
 	input.setAttribute("maxlength",3);
-	input.setAttribute("style","position:fixed; bottom:145px; left:197px;width:25px")
+	input.setAttribute("style","position:fixed; bottom:165px; left:197px;width:25px")
 	gui.appendChild(input);
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Amount of Cards:";
 	aText.setAttribute("id","amountOfCardsText");
-	aText.setAttribute("style","position:fixed; bottom:130px; left:75px");
+	aText.setAttribute("style","position:fixed; bottom:150px; left:75px");
 	gui.appendChild(aText);
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Class:";
-	aText.setAttribute("style","position:fixed; bottom:95px; left:88px");
+	aText.setAttribute("style","position:fixed; bottom:115px; left:88px");
 	aText.setAttribute("id","classText");
 	gui.appendChild(aText);
 	
 	aSelect = document.createElement("select");
-	aSelect.setAttribute("style","position:fixed; bottom:110px; left:138px");
+	aSelect.setAttribute("style","position:fixed; bottom:130px; left:138px");
 	aSelect.setAttribute("id","classSelect");
 	gui.appendChild(aSelect);
 	
@@ -296,6 +296,21 @@ function loadRushGUI() {
 		aOption.innerHTML=classNames[i];
 		aSelect.appendChild(aOption);
 	}
+	
+	input = document.createElement("input");
+	input.setAttribute("type","text");
+	input.setAttribute("id","percentageClassCards");
+	input.setAttribute("value","30");
+	input.setAttribute("maxlength",3);
+	input.setAttribute("style","position:fixed; bottom:98px; left:220px;width:25px")
+	input.setAttribute("onkeypress","filterInput(event)");
+	gui.appendChild(input);
+	
+	aText = document.createElement("p");
+	aText.innerHTML="% Chance of Class Cards:";
+	aText.setAttribute("id","%Text");
+	aText.setAttribute("style","position:fixed; bottom:85px; left:50px");
+	gui.appendChild(aText);
 	
 	input = document.createElement("input");
 	input.setAttribute("style","position:fixed; bottom:40px; left:75px; width:150px;height:50px")
@@ -320,6 +335,10 @@ function removeRushGUI() {
 	aElement = document.getElementById('classSelect');
 	aElement.parentNode.removeChild(aElement);
 	aElement = document.getElementById('rushButton');
+	aElement.parentNode.removeChild(aElement);
+	aElement = document.getElementById('percentageClassCards');
+	aElement.parentNode.removeChild(aElement);
+	aElement = document.getElementById('%Text');
 	aElement.parentNode.removeChild(aElement);
 }
 

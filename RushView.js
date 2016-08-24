@@ -1,6 +1,8 @@
 var rushCollection = [];
 var rushDeck = [];
 var rushDeckSize=0;
+var time;
+
 
 function startRushView() {
 	
@@ -37,6 +39,7 @@ function rushCardClicked(cardDisplay) {
 	if (cardDisplay.card.amount>0 && cardDisplay.mesh.position.y>-838) {
 		addToRushDeck(cardDisplay.card);
 		rushDeckSize++;
+		updateCardCount();
 		cardDisplay.mesh.getObjectByName("front").material.color.setHex( 0x838383 );
 		if (rushDeckSize>=30) {
 			rushOver();
@@ -111,9 +114,12 @@ function startRush() {
 	var selectedClass;
 	var material;
 	var object;
+	var percentageClassCards;
+	var amountOfTime;
 	
 	amountOfCards = parseInt(document.getElementById("amountOfCards").value);
 	if (amountOfCards>=30) {
+		percentageClassCards = parseInt(document.getElementById('percentageClassCards').value);
 		clearAssets();
 	  
 		for (var i=0; i<24;i++) {
@@ -132,6 +138,17 @@ function startRush() {
 			object.position.set( (i%6)*(70+286)-960+70,640+198, 0 );
 			scene.add( object );
 		}
+		
+		time = parseInt(document.getElementById("Time").value);
+		
+		loadText(Math.floor(time/60),"timerMinutes",100,-675,500,0);
+		loadText(":","timerColon",100,-590,500,0);
+		loadText(Math.floor((time%60)/10),"timerTenSeconds",100,-550,500,0);
+		loadText(time%10,"timerSeconds",100,-470,500,0);
+		
+		loadText("0/30","amountText",100,400,500,0);
+		
+		timedFunctions.push({timer:0,maxTime:1000,onTimeReached:function(){updateTime()}});
 		
 		setCardBack(document.getElementById("cardBackSelect").value);
 		
@@ -166,7 +183,7 @@ function startRush() {
 		for (var i=0;i<amountOfCards;i++) {
 			flag=false;
 			
-			if (Math.random()<.5 && theClass.length>0)
+			if (Math.random()*100<percentageClassCards && theClass.length>0)
 				cards = theClass;
 			else
 				cards = limitedCollection.expansionAll.neutral;
@@ -181,4 +198,44 @@ function startRush() {
 		
 		startMovingCards(0);
 	}
+}
+
+function updateTime() {
+	if (time>0) {
+		var timerText;
+		time--;
+		if (Math.floor((time+1)/60)!=Math.floor(time/60)) {
+			timerText = scene.getObjectByName("timerMinutes");
+			scene.remove(timerText);
+			timerText.material.dispose();
+			timerText.geometry.dispose();
+			loadText(Math.floor(time/60),"timerMinutes",100,-675,500,0);
+		}
+		if (Math.floor(((time+1)%60)/10)!=Math.floor((time%60)/10)) {
+			timerText = scene.getObjectByName("timerTenSeconds");
+			scene.remove(timerText);
+			timerText.material.dispose();
+			timerText.geometry.dispose();
+			loadText(Math.floor((time%60)/10),"timerTenSeconds",100,-550,500,0);
+		}
+		
+		timerText = scene.getObjectByName("timerSeconds");
+		scene.remove(timerText);
+		timerText.material.dispose();
+		timerText.geometry.dispose();
+		loadText(time%10,"timerSeconds",100,-470,500,0);
+		
+		timedFunctions.push({timer:0,maxTime:1000,onTimeReached:function(){updateTime()}});
+	}
+}
+
+function updateCardCount() {
+	var amountText;
+	
+	amountText = scene.getObjectByName("amountText")
+	scene.remove(amountText);
+	amountText.material.dispose();
+	amountText.geometry.dispose();
+	loadText(rushDeckSize+"/30","amountText",100,400,500,0);
+	
 }

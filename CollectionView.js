@@ -150,7 +150,7 @@ function loadClassCards(index,classCards) {
 				max='/1';
 			else
 				max='/2';
-			loadAmountText(cardsToDisplay[i].card.amount+max,cardsToDisplay[i].mesh.position.x-45,cardsToDisplay[i].mesh.position.y-275, collection.expansionAll.allCards[i].amount,cardsToDisplay[i].mesh.position.z);
+			loadText(cardsToDisplay[i].card.amount+max,"amountText"+i, 50,cardsToDisplay[i].mesh.position.x-45,cardsToDisplay[i].mesh.position.y-275, collection.expansionAll.allCards[i].amount,cardsToDisplay[i].mesh.position.z);
 		} 
 		else {
 			cardsToDisplay[i].mesh.visible = false;
@@ -158,16 +158,16 @@ function loadClassCards(index,classCards) {
 	}
 }
 
-function loadAmountText(amount, x, y, z) {
+function loadText(theText,name, size, x, y, z) {
 	var loader = new THREE.FontLoader();
 
 	loader.load( 'Font/Harabara_Regular.json', function ( font ) {
 
-		var textGeo = new THREE.TextGeometry( amount, {
+		var textGeo = new THREE.TextGeometry( theText, {
 
 			font: font,
 
-			size: 50,
+			size: size,
 			height: 1,
 			curveSegments: 12
 
@@ -176,6 +176,8 @@ function loadAmountText(amount, x, y, z) {
 		var textMaterial = new THREE.MeshPhongMaterial( { color: 0xFFFFFF } );
 
 		var mesh = new THREE.Mesh( textGeo, textMaterial );
+		
+		mesh.name = name;
 		
 		textToDisplay.push(mesh);
 		mesh.position.set(x,y,z);
