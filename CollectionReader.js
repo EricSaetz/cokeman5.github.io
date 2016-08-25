@@ -19,6 +19,8 @@ function handleSubmitAttempt() {
 				element.parentNode.removeChild(element);
 				element = document.getElementById("submitButton");
 				element.parentNode.removeChild(element);
+				element = document.getElementById("appDescriptionText");
+				element.parentNode.removeChild(element);
 				loadMainGUI();
 				init();
 				startCollectionView(collection);
