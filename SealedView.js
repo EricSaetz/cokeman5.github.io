@@ -226,15 +226,19 @@ function generatePack(expansion) {
 	var rarity;
 	var cardPool;
 	var card;
+	var commonsInPack=0;
+	
+	
 	for (var z=0;z<5;z++) {
 		rarity = Math.random();
-		if (rarity<.011 && expansion.legendaries.length>0)
+		if (rarity<.0113 && expansion.legendaries.length>0)
 			cardPool=expansion.legendaries;
-		else if (rarity<.0552 && expansion.epics.length>0)
+		else if (rarity<.0559 && expansion.epics.length>0)
 			cardPool=expansion.epics;
-		else if (rarity<.2836 && expansion.rares.length>0)
+		else if ((rarity<.2722 || commonsInPack>=4) && expansion.rares.length>0)
 			cardPool=expansion.rares;
 		else {
+			commonsInPack++;
 			cardPool=expansion.commons;
 		}
 		card = cardPool[Math.floor(Math.random()*cardPool.length)];

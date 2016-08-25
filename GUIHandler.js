@@ -84,12 +84,12 @@ function loadRandomDeckGUI() {
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Class:";
-	aText.setAttribute("style","position:fixed; bottom:130px; left:88px");
+	aText.setAttribute("style","position:fixed; bottom:120px; left:88px");
 	aText.setAttribute("id","classText");
 	gui.appendChild(aText);
 	
 	aSelect = document.createElement("select");
-	aSelect.setAttribute("style","position:fixed; bottom:145px; left:138px");
+	aSelect.setAttribute("style","position:fixed; bottom:135px; left:138px");
 	aSelect.setAttribute("id","classSelect");
 	gui.appendChild(aSelect);
 	
@@ -99,6 +99,14 @@ function loadRandomDeckGUI() {
 		aOption.innerHTML=classNames[i];
 		aSelect.appendChild(aOption);
 	}
+	
+	input = document.createElement("input");
+	input.setAttribute("style","position:fixed; bottom:170px; left:70px")
+	input.setAttribute("type","submit");
+	input.setAttribute("id","clipboardButton");
+	input.setAttribute("onclick","copyDeckToClipboard()");
+	input.setAttribute("value","Copy Deck to Clipboard");
+	gui.appendChild(input);
 }
 
 function removeRandomDeckGUI() {
@@ -111,6 +119,8 @@ function removeRandomDeckGUI() {
 	aElement = document.getElementById('percentageClassCards');
 	aElement.parentNode.removeChild(aElement);
 	aElement = document.getElementById('%Text');
+	aElement.parentNode.removeChild(aElement);
+	aElement = document.getElementById('clipboardButton');
 	aElement.parentNode.removeChild(aElement);
 }
 
@@ -252,6 +262,14 @@ function loadRushGUI() {
 	document.getElementById("modeDescription").innerHTML = "This mode tests your deckbuilding abilities under stress. Cards will scroll down quickly, requiring you to build your deck on the fly!";
 	
 	input = document.createElement("input");
+	input.setAttribute("style","position:fixed; bottom:230px; left:70px")
+	input.setAttribute("type","submit");
+	input.setAttribute("id","clipboardButton");
+	input.setAttribute("onclick","copyDeckToClipboard()");
+	input.setAttribute("value","Copy Deck to Clipboard");
+	gui.appendChild(input);
+	
+	input = document.createElement("input");
 	input.setAttribute("type","text");
 	input.setAttribute("id","Time");
 	input.setAttribute("maxlength",3);
@@ -319,6 +337,7 @@ function loadRushGUI() {
 	input.setAttribute("id","rushButton");
 	input.setAttribute("value","Start Rush");
 	gui.appendChild(input);
+	
 }
 
 function removeRushGUI() {
@@ -339,6 +358,8 @@ function removeRushGUI() {
 	aElement = document.getElementById('percentageClassCards');
 	aElement.parentNode.removeChild(aElement);
 	aElement = document.getElementById('%Text');
+	aElement.parentNode.removeChild(aElement);
+	aElement = document.getElementById('clipboardButton');
 	aElement.parentNode.removeChild(aElement);
 }
 

@@ -298,6 +298,46 @@ function setCardTexture(num,card) {
 	cardsToDisplay[num].mesh.getObjectByName("front").visible=true;
 }
 
+function copyDeckToClipboard() {
+	var deck;
+	var deckString="";
+	if (mode==1)
+		deck=randomDeck;
+	else if (mode==3)
+		deck=rushDeck;
+		
+	for (var i=0;i<deck.length;i++) {
+		deckString+=deck[i].amount+" "+deck[i].name+"\n";
+	}
+	
+	var origSelectionStart, origSelectionEnd;
+	var target = document.createElement("textarea");
+	target.style.position = "absolute";
+	target.style.left = "-9999px";
+	target.style.top = "0";
+	target.id = "_hiddenCopyText_";
+	document.body.appendChild(target);
+	target.textContent = deckString;
+	
+	var currentFocus = document.activeElement;
+    target.focus();
+    target.setSelectionRange(0, target.value.length);
+    
+    // copy the selection
+    var succeed;
+    try {
+    	  succeed = document.execCommand("copy");
+    } catch(e) {
+        console.log("copy failed");
+    }
+	
+	if (currentFocus && typeof currentFocus.focus === "function") {
+        currentFocus.focus();
+    }
+	
+	target.parentNode.removeChild(target);
+}
+
   </script>
 
 </body>
