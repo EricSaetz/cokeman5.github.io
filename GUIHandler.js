@@ -383,7 +383,7 @@ function changeMode(value) {
 	if (value === "Collection" && mode!=0) {
 		mode=0;
 		document.getElementById("modeDescription").innerHTML = "Here you can view your collection.";
-		startCollectionView(collection);
+		startCollectionView(collection,0,0,1920,1240);
 	}
 	else if (value==="Random Deck" && mode!=1) {
 		mode = 1;

@@ -9,7 +9,7 @@ function handleSubmitAttempt() {
 		
 		$.ajax({
 			type: 'GET',
-			url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'https%3A%2F%2Fwww.hearthpwn.com%2Fmembers%2F"+username+"%2Fcollection'&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
+			url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'http%3A%2F%2Fwww.hearthpwn.com%2Fmembers%2F"+username+"%2Fcollection'&diagnostics=true",
 			dataType: 'text',
 			success: function(data) {
 				text = data.split('\n');
@@ -23,7 +23,7 @@ function handleSubmitAttempt() {
 				element.parentNode.removeChild(element);
 				loadMainGUI();
 				init();
-				startCollectionView(collection);
+				startCollectionView(collection,0,0,1920,1240);
 				document.getElementById("modeDescription").innerHTML = "Here you can view your collection.";
 				animate();
 			}
@@ -96,7 +96,7 @@ function readCollection(text) {
 				if (cardLimit!=null) {
 					if (cards[i].amount>cardLimit)
 						cards[i].amount=cardLimit;
-					if (Cards[i].amountGolden>cardLimit)
+					if (cards[i].amountGolden>cardLimit)
 						cards[i].amountGolden=cardLimit;
 				}
 			}

@@ -3,6 +3,8 @@ var packs = [];
 var hiddenCards = [true,true,true,true,true];
 var packNum = 0;
 var sealedCollection = [];
+var sealedDeck = [];
+var sealedDeckSize = 0;
 var whichView;
 
 function startSealedView() {
@@ -63,9 +65,28 @@ function autoOpen() {
 				timedFunctions.push({timer:0,maxTime:800,onTimeReached:function(){autoOpen()}});
 			} 
 			else {
-				startCollectionView(sealedCollection);
+				loadSealedCollectionView();
 			}
 		}
+	}
+}
+
+function loadSealedCollectionView() {
+	startCollectionView(sealedCollection,-200,0,1670,1240);
+	whichView="Collection";
+	sealedDeckSize=0;
+	sealedDeck=[];
+	
+	for (var i=0; i<30;i++) {
+		var material = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
+		object1 = new THREE.Mesh(  new THREE.PlaneGeometry( 255, 40, 4, 4 ), material );
+		object1.name = "barArt";
+		object = new THREE.Object3D();
+		object.add(object1);
+		object.position.set( 900,590-i*40,0);
+		cardsToDisplay.push({mesh:object,card:null});
+		object.visible = false;
+		scene.add( object );
 	}
 }
 
@@ -75,7 +96,7 @@ function openingModeChanged(value) {
 			timedFunctions.push({timer:0,maxTime:800,onTimeReached:function(){autoOpen()}});
 		}
 		else if (value==="Instant")
-			startCollectionView(sealedCollection);
+			loadSealedCollectionView();
 	}
 }
 
@@ -86,21 +107,90 @@ function doneButtonPressed() {
 			displayPack();
 		} 
 		else {
-			startCollectionView(sealedCollection);
+			loadSealedCollectionView();
 		}
 	}
 }
 
 function sealedCardClicked(num) {
-	if (document.getElementById("openingModeSelect").value==="Normal") {
-		if (hiddenCards[num]) {
-			setCardTexture(num,cardsToDisplay[num].card);
-			animations.push({object:cardsToDisplay[num].mesh,type:"rotationY",amount:Math.PI,startingValue:cardsToDisplay[num].mesh.rotation.y,startTime:0,endTime:800});
-			hiddenCards[num]=false;
+	var flag = false;
+	var card = cardsToDisplay[num].card;
+	if (whichView==="Opening") {
+		if (document.getElementById("openingModeSelect").value==="Normal") {
+			if (hiddenCards[num]) {
+				setCardTexture(num,card);
+				animations.push({object:cardsToDisplay[num].mesh,type:"rotationY",amount:Math.PI,startingValue:cardsToDisplay[num].mesh.rotation.y,startTime:0,endTime:800});
+				hiddenCards[num]=false;
+			}
+			
+			if (!hiddenCards[0] && !hiddenCards[1] && !hiddenCards[2] && !hiddenCards[3] && !hiddenCards[4])
+				doneButton.visible=true;
 		}
-		
-		if (!hiddenCards[0] && !hiddenCards[1] && !hiddenCards[2] && !hiddenCards[3] && !hiddenCards[4])
-			doneButton.visible=true;
+	}
+	else if (whichView==="Collection") {
+		if (num<8) {
+			if (sealedDeckSize<30) {
+				sealedDeckSize++;
+				for (var i=0;i<sealedDeck.length && !flag;i++) {
+					if (card.amount > 0 && sealedDeck[i].id==card.id) {
+						if (sealedDeck[i].rarity<5 && sealedDeck[i].amount<2) {
+							sealedDeck[i].amount++;
+							card.amount--;
+							loadCardAmountText(cardsToDisplay[num], 50,-45,-275, 0);
+							if (card.amount<=0)
+								cardsToDisplay[num].mesh.getObjectByName("front").material.color.setHex( 0x838383 );
+							setBarTexture(i+8,sealedDeck[i]);
+						}
+						flag=true;
+					}
+				}
+				if (card.amount > 0 && !flag) {
+					sealedDeck.push({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden});
+					card.amount--;
+					loadCardAmountText(cardsToDisplay[num], 50,-45,-275, 0);
+					if (card.amount<=0)
+						cardsToDisplay[num].mesh.getObjectByName("front").material.color.setHex( 0x838383 );
+				}
+			}
+		}
+		else {
+			card.amount--;
+			addToCollection({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden},sealedCollection,null);
+			for (var i=0;i<8;i++) {
+				if (cardsToDisplay[i].card.id==card.id) {
+					loadCardAmountText(cardsToDisplay[i], 50,-45,-275, 0);
+					cardsToDisplay[i].mesh.getObjectByName("front").material.color.setHex( 0xFFFFFF );
+				}
+			}
+			if (card.amount>0)
+				setBarTexture(num,card);
+			else {
+				for (var i=0;i<sealedDeck.length;i++) {
+					if (sealedDeck[i].id==card.id) {
+						sealedDeck.splice(i,1);
+					}
+				}
+			}
+		}
+		updateDeckList();
+	}
+}
+
+function updateDeckList() {
+	sealedDeck.sort(function(a, b){return compareCards(a,b)});
+	console.log(sealedDeck);
+	for (var i=0;i<30;i++) {
+		if (sealedDeck.length>i) {
+			if (cardsToDisplay[i+8].card==null || cardsToDisplay[i+8].card.id!=sealedDeck[i].id) {
+				setBarTexture(i+8,sealedDeck[i]);
+			}
+		}
+		else {
+			for (var n=0;n<cardsToDisplay[i+8].mesh.children.length;n++) {
+				cardsToDisplay[i+8].mesh.children[n].visible=false;
+				cardsToDisplay[i+8].card=null;
+			}
+		}
 	}
 }
 
@@ -194,7 +284,7 @@ function openPacks() {
 	sortCollection(sealedCollection);
 	
 	if (document.getElementById("openingModeSelect").value==="Instant")
-		loadCollectionView(sealedCollection);
+		loadSealedCollectionView();
 	else if (document.getElementById("openingModeSelect").value==="Auto") {
 		loadSealedOpeningView();
 		packNum=0;

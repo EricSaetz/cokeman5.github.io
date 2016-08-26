@@ -17,9 +17,9 @@
 <script type='text/javascript' src='/js/jquery.layout-latest.js'></script>
 <script type='text/javascript' src='/js/OrbitControls.js'></script>
 
-<div id="gui" style="width: 300px;"></div>
+<div id="gui" style="width: 300px;overflow: hidden; padding:0px; margin:0px"></div>
 
-<div id="render" style="margin-left: 300px;overflow: hidden;">
+<div id="render" style="position:absolute; left:300px; top:0px;overflow: hidden; padding:0px; margin:0px">
 <textarea id="appDescriptionText" style="position:fixed; bottom:35%; left:30%; width:600px; height:350px; resize:none;text-align: center; border:none" cols="15" readonly="true">
 Welcome to HS Alternate Gamemodes! This app is meant to improve the experience of playing Hearthstone with friends by offering a variety of different deck building modes. These modes aim to help level the playing field between players with varying collection sizes, as well as creating a wide variety of interesting decks.
 
@@ -41,6 +41,7 @@ In order to make proper use of this app, create an account on Hearthpwn.com. Fro
 	var prevTime;
     var cardsToDisplay = [];
 	var textToDisplay = [];
+	var imagesToDisplay = [];
 	var randomDeck = [];
 	var cardData;
 	var leftArrow=null;
@@ -103,13 +104,18 @@ In order to make proper use of this app, create an account on Hearthpwn.com. Fro
 	function onDocumentMouseDown( event ) {
 		event.preventDefault();
 		mouse.x = ( (event.clientX-300) / WIDTH ) * 2 - 1;
-		mouse.y = - ( event.clientY / HEIGHT ) * 2 + 1;
+		mouse.y = - (event.clientY / HEIGHT ) * 2 + 1;
 		
 		raycaster.setFromCamera( mouse, camera );
 		var intersects = raycaster.intersectObjects( scene.children,true );
 		
 		if ( intersects.length > 0 ) {
 			INTERSECTED = intersects[ 0 ].object;
+			for (var i=0;i<imagesToDisplay.length;i++) {
+				if (INTERSECTED==imagesToDisplay[i]) {
+					imageClicked(imagesToDisplay[i].name);
+				}
+			}
 			if (mode==0) {
 				if (INTERSECTED==rightArrow) {
 						currentPage++;
@@ -124,7 +130,7 @@ In order to make proper use of this app, create an account on Hearthpwn.com. Fro
 			}
 			else if (mode==2) {
 				for (var n=0;n<cardsToDisplay.length;n++) {
-					if (INTERSECTED == cardsToDisplay[n].mesh.getObjectByName("back") || INTERSECTED == cardsToDisplay[n].mesh.getObjectByName("front")) {
+					if (INTERSECTED == cardsToDisplay[n].mesh.getObjectByName("back") || INTERSECTED == cardsToDisplay[n].mesh.getObjectByName("front") || INTERSECTED == cardsToDisplay[n].mesh.getObjectByName("barArt")) {
 						sealedCardClicked(n);
 					}
 				}
@@ -212,9 +218,14 @@ In order to make proper use of this app, create an account on Hearthpwn.com. Fro
 		for (var i=0;i<cardsToDisplay.length;i++) {
 			scene.remove(cardsToDisplay[i].mesh);
 			for (var n=0;n<cardsToDisplay[i].mesh.children.length;n++) {
-				if (cardsToDisplay[n].mesh.children[n].material.map!=null)
-					cardsToDisplay[n].mesh.children[n].material.map.dispose();
-				cardsToDisplay[n].mesh.children[n].material.dispose();
+				if (cardsToDisplay[i].mesh.children[n].material.map!=null)
+					cardsToDisplay[i].mesh.children[n].material.map.dispose();
+				if (cardsToDisplay[i].mesh.children[n].material instanceof THREE.MultiMaterial) {
+					cardsToDisplay[i].mesh.children[n].material.materials[0].dispose();
+					cardsToDisplay[i].mesh.children[n].material.materials[1].dispose();
+				}
+				else
+					cardsToDisplay[n].mesh.children[n].material.dispose();
 				cardsToDisplay[n].mesh.children[n].geometry.dispose();
 			}
 		}
@@ -231,6 +242,13 @@ In order to make proper use of this app, create an account on Hearthpwn.com. Fro
 			textToDisplay[i].geometry.dispose();
 		}
 		textToDisplay = [];
+		
+		for (var i=0;i<imagesToDisplay.length;i++) {
+			scene.remove(imagesToDisplay[i]);
+			imagesToDisplay[i].material.map.dispose();
+			imagesToDisplay[i].material.dispose();
+			imagesToDisplay[i].geometry.dispose();
+		}
 		
 		if (doneButton!=null) {
 			scene.remove(doneButton);
@@ -329,6 +347,97 @@ function copyDeckToClipboard() {
     }
 	
 	target.parentNode.removeChild(target);
+}
+
+function loadImage(image,x,y,width,height) {
+	map = new THREE.TextureLoader().load( 'Other/' + image + '.png' );
+	map.minFilter = THREE.LinearFilter;
+	
+	var material = new THREE.MeshLambertMaterial( { map: map, side: THREE.FrontSide, transparent: true } );
+	object = new THREE.Mesh(  new THREE.PlaneGeometry( width, height, 4, 4 ), material );
+	object.visible = true;
+	object.position.set(x,y,1);
+	object.name = image;
+	imagesToDisplay.push(object);
+	scene.add( object );
+}
+
+function imageClicked(imageName) {
+	var theCollection;
+	if (mode==0)
+		theCollection = collection;
+	else if (mode==2)
+		theCollection = sealedCollection;
+	
+	switch (imageName) {
+		case "druidIcon" : {
+			currentPage = getFirstPageOfClass("DRUID",theCollection);
+			loadPage(currentPage,theCollection);
+		} break;
+		case "hunterIcon" : {
+			currentPage = getFirstPageOfClass("HUNTER",theCollection);
+			loadPage(currentPage,theCollection);
+		} break;
+		case "mageIcon" : {
+			currentPage = getFirstPageOfClass("MAGE",theCollection);
+			loadPage(currentPage,theCollection);
+		} break;
+		case "paladinIcon" : {
+			currentPage = getFirstPageOfClass("PALADIN",theCollection);
+			loadPage(currentPage,theCollection);
+		} break;
+		case "priestIcon" : {
+			currentPage = getFirstPageOfClass("PRIEST",theCollection);
+			loadPage(currentPage,theCollection);
+		} break;
+		case "rogueIcon" : {
+			currentPage = getFirstPageOfClass("ROGUE",theCollection);
+			loadPage(currentPage,theCollection);
+		} break;
+		case "shamanIcon" : {
+			currentPage = getFirstPageOfClass("SHAMAN",theCollection);
+			loadPage(currentPage,theCollection);
+		} break;
+		case "warlockIcon" : {
+			currentPage = getFirstPageOfClass("WARLOCK",theCollection);
+			loadPage(currentPage,theCollection);
+		} break;
+		case "warriorIcon" : {
+			currentPage = getFirstPageOfClass("WARRIOR",theCollection);
+			loadPage(currentPage,theCollection);
+		} break;
+		case "neutralIcon" : {
+			currentPage = getFirstPageOfClass("NEUTRAL",theCollection);
+			loadPage(currentPage,theCollection);
+		}
+	}
+}
+
+function loadText(theText,name, size, x, y, z) {
+	var loader = new THREE.FontLoader();
+
+	loader.load( 'Font/Harabara_Regular.json', function ( font ) {
+
+		var textGeo = new THREE.TextGeometry( theText, {
+
+			font: font,
+
+			size: size,
+			height: 1,
+			curveSegments: 12
+
+		} );
+
+		var textMaterial = new THREE.MeshPhongMaterial( { color: 0xFFFFFF } );
+
+		var mesh = new THREE.Mesh( textGeo, textMaterial );
+		
+		mesh.name = name;
+		
+		textToDisplay.push(mesh);
+		mesh.position.set(x,y,z);
+		scene.add(mesh);
+	} );
 }
 
   </script>

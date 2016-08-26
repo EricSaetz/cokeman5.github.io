@@ -13,11 +13,12 @@ function startRushView() {
 function displayRushDeck() {
 	clearAssets();
 	
-	rushDeck.sort(function(a, b){return compareCards(a,b)});
-	
 	for (var i=0; i<30;i++) {
 		var material = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
-		object = new THREE.Mesh(  new THREE.PlaneGeometry( 130*3, 34*3, 4, 4 ), material );
+		object1 = new THREE.Mesh(  new THREE.PlaneGeometry( 130*3, 34*3, 4, 4 ), material );
+			object1.name = "barArt";
+			object = new THREE.Object3D();
+			object.add(object1);
 			object.position.set( 500*Math.floor(i/10)-500,510-34*3*(i%10),0);
 			cardsToDisplay.push({mesh:object,card:null});
 			object.visible = false;
@@ -26,9 +27,7 @@ function displayRushDeck() {
 	
 	for (var i=0;i<30;i++) {
 		if (i<rushDeck.length) {
-			setBarTexture(i,rushDeck[i].name,rushDeck[i].amount);
-			loadTextForDeckList(rushDeck[i].amount,30,0xD8D63C,null, cardsToDisplay[i].mesh.position.x+160, cardsToDisplay[i].mesh.position.y-15, 1);
-			loadTextForDeckList(rushDeck[i].manaCost,40,0xFFFFFF,0x000000, cardsToDisplay[i].mesh.position.x-175, cardsToDisplay[i].mesh.position.y-20, 1);
+			setBarTexture(i,rushDeck[i]);
 		}
 		else
 			cardsToDisplay[i].mesh.visible=false;
@@ -58,6 +57,7 @@ function rushOver() {
 			addToRushDeck(card);
 		}
 	}
+	rushDeck.sort(function(a, b){return compareCards(a,b)});
 	displayRushDeck();
 }
 
