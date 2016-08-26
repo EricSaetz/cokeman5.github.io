@@ -133,6 +133,14 @@ function loadSealedGUI() {
 	
 	document.getElementById("modeDescription").innerHTML = "This mode allows you to open simulated packs that contain only cards you own. Challenge your deckbuilding skills using a limited collection.";
 	
+	input = document.createElement("input");
+	input.setAttribute("style","position:fixed; bottom:340px; left:70px")
+	input.setAttribute("type","submit");
+	input.setAttribute("id","clipboardButton");
+	input.setAttribute("onclick","copyDeckToClipboard()");
+	input.setAttribute("value","Copy Deck to Clipboard");
+	gui.appendChild(input);
+	
 	aText = document.createElement("p");
 	aText.innerHTML="Opening Mode:";
 	aText.setAttribute("style","position:fixed; bottom:290px; left:38px");
@@ -250,6 +258,8 @@ function removeSealedGUI() {
 	aElement = document.getElementById('amountText');
 	aElement.parentNode.removeChild(aElement);
 	aElement = document.getElementById('openPacksButton');
+	aElement.parentNode.removeChild(aElement);
+	aElement = document.getElementById('clipboardButton');
 	aElement.parentNode.removeChild(aElement);
 }
 

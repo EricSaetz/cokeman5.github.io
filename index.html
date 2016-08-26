@@ -314,6 +314,8 @@ function copyDeckToClipboard() {
 	var deckString="";
 	if (mode==1)
 		deck=randomDeck;
+	else if (mode==2)
+		deck=sealedDeck;
 	else if (mode==3)
 		deck=rushDeck;
 		
