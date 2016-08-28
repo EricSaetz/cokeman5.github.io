@@ -121,7 +121,7 @@ function readCollection(text, max, min) {
 		var cards = theCollection.expansionAll.allCards;
 		var flag = false;
 		
-		if (card.amount>=minAmount) {
+		if (card.amount>=minAmount && card.id!=-1) {
 			for (i=0;i<cards.length && !flag;i++) {
 				if (cards[i].id==card.id) {
 					flag = true;

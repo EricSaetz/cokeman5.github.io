@@ -325,8 +325,12 @@ function generatePack(expansion) {
 			commonsInPack++;
 			cardPool=expansion.commons;
 		}
-		card = cardPool[Math.floor(Math.random()*cardPool.length)];
-		card = {name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden};
+		if (cardPool.length>0) {
+			card = cardPool[Math.floor(Math.random()*cardPool.length)];
+			card = {name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden};
+		} else {
+			card = {name:"Shadow of Nothing",id:-1,rarity:4,manaCost:0,theClass:"PRIEST",amount:1, amountGolden:0};
+		}
 		pack.push(card);
 	}
 	
