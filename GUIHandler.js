@@ -47,8 +47,26 @@ function loadMainGUI() {
 	aTextArea.setAttribute("cols",15);
 	aTextArea.setAttribute("readonly","true");
 	aTextArea.setAttribute("id","modeDescription");
-	aTextArea.setAttribute("style","position:fixed; top:120px; left:50px; width:200px; height:150px; resize:none;text-align: center; border:none");
+	aTextArea.setAttribute("style","position:fixed; top:140px; left:50px; width:200px; height:150px; resize:none;text-align: center; border:none");
 	gui.appendChild(aTextArea);
+	
+	aText = document.createElement("p");
+	aText.innerHTML="Viewing Mode:";
+	aText.setAttribute("style","position:fixed; top:95px; left:73px");
+	gui.appendChild(aText);
+	aSelect = document.createElement("select");
+	aSelect.setAttribute("onchange", "changeViewMode(this.value)");
+	aSelect.setAttribute("style","position:fixed; top:110px; left:173px");
+	gui.appendChild(aSelect);
+	
+	aOption = document.createElement("option");
+	aOption.setAttribute("value","2D");
+	aOption.innerHTML="2D";
+	aSelect.appendChild(aOption);
+	aOption = document.createElement("option");
+	aOption.setAttribute("value","3D");
+	aOption.innerHTML="3D";
+	aSelect.appendChild(aOption);
 }
 
 function loadRandomDeckGUI() {

@@ -43,6 +43,7 @@
 	  controls.enableDamping = true;
 	  controls.dampingFactor = 0.25;
 	  controls.enableZoom = false;
+	  controls.enabled=false;
 
 	  // Create an event listener that resizes the renderer with the browser window.
 	  window.addEventListener('resize', function() {
@@ -123,7 +124,19 @@
 			INTERSECTED = null;
 		}
 	}
-
+	
+	function changeViewMode(mode) {
+		switch (mode) {
+			case "2D" : {
+				camera.position.set(0,0,1500,'XYZ');
+				camera.rotation.set(0,0,0,'XYZ');
+				controls.enabled=false;
+			} break;
+			case "3D" : {
+				controls.enabled=true;
+			}
+		}
+	}
 
 	// Renders the scene and updates the render as needed.
 	function animate() {
@@ -132,8 +145,9 @@
 
 	  // Read more about requestAnimationFrame at http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
 	  requestAnimationFrame(animate);
-			
-	  controls.update();
+		
+		controls.update();
+	  
 	  if (animations.length>0)
 		processAnimations(timeDifference);
 	  
