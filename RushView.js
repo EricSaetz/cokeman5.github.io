@@ -2,6 +2,7 @@ var rushCollection = [];
 var rushDeck = [];
 var rushDeckSize=0;
 var time;
+var totalTime;
 
 
 function startRushView() {
@@ -74,17 +75,12 @@ function addToRushDeck(card) {
 		rushDeck.push({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden});
 	}
 	
-	for (var n=0;n<rushCollection.length;n++) {
-		addToCollection(rushCollection[n],limitedCollection);
-	}
-	
 	card.amount--;
 }
 
 function startMovingCards(row) {
 	if (rushDeckSize<30) {
-		var amountOfTime = parseInt(document.getElementById("Time").value)*1000;
-		var timeForOneRow = amountOfTime*(1676/(1676+465*Math.floor((rushCollection.length-1)/6)));
+		var timeForOneRow = totalTime*(1676/(1676+465*Math.floor((rushCollection.length-1)/6)));
 		
 		for (var i=row*6;i<row*6+6;i++) {
 			if (i<rushCollection.length) {
@@ -140,6 +136,7 @@ function startRush() {
 		}
 		
 		time = parseInt(document.getElementById("Time").value);
+		totalTime = parseInt(document.getElementById("Time").value)*1000;
 		
 		loadText(Math.floor(time/60),"timerMinutes",100,-675,500,0);
 		loadText(":","timerColon",100,-590,500,0);
@@ -193,8 +190,16 @@ function startRush() {
 			rushCollection.push(card);
 			cards[index].amount--;
 			if (cards[index].amount<=0)
-				cards.splice(index,1);
+				removeFromCollection(cards[index],limitedCollection);
 		}
+		
+		console.log(rushCollection.length);
+		for (var i=0;i<rushCollection.length;i++) {
+			card = rushCollection[i];
+			card = {name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden};
+			addToCollection(card, limitedCollection,2);
+		}
+		console.log(limitedCollection.expansionAll.allCards.length);
 		
 		startMovingCards(0);
 	}

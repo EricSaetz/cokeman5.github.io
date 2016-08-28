@@ -89,7 +89,8 @@ function readCollection(text) {
 		var flag = false;
 		
 		for (i=0;i<cards.length && !flag;i++) {
-			if (cards[i].manaCost==card.manaCost && cards[i].rarity==card.rarity && cards[i].name===card.name) {
+			if (cards[i].id==card.id) {
+				console.log("card found");
 				flag = true;
 				cards[i].amount+=card.amount;
 				cards[i].amountGolden+=card.amountGolden;
@@ -104,7 +105,7 @@ function readCollection(text) {
 			
 			
 		if (!flag) {
-			addToExpansion(card,theCollection.expansionAll)
+			addToExpansion(card,theCollection.expansionAll);
 			if (card.id==251 || card.id==682 || card.id==217 || card.id==559)
                 addToExpansion(card,theCollection.expansionOther);
             else if (card.id < 683) {
@@ -168,6 +169,76 @@ function readCollection(text) {
 					break;
 			}
 		}
+		
+	function removeFromCollection(card, theCollection) {
+		removeFromExpansion(card,theCollection.expansionAll);
+		if (card.id==251 || card.id==682 || card.id==217 || card.id==559)
+			removeFromExpansion(card,theCollection.expansionOther);
+		else if (card.id < 683) {
+			if (card.rarity==2)
+				removeFromExpansion(card,theCollection.expansionBasic);
+			else
+				removeFromExpansion(card,theCollection.expansionClassic);
+		}
+		else if (card.id<12174)
+			removeFromExpansion(card,theCollection.expansionNaxx);
+		else if (card.id<14434)
+			removeFromExpansion(card,theCollection.expansionGvG);
+		else if (card.id<22258)
+			removeFromExpansion(card,theCollection.expansionBRM);
+		else if (card.id<27209)
+			removeFromExpansion(card,theCollection.expansionTGT);
+		else if (card.id<27261)
+			removeFromExpansion(card,theCollection.expansionLOE);
+		else if (card.id<42019)
+			removeFromExpansion(card,theCollection.expansionOG);
+		else
+			removeFromExpansion(card,theCollection.expansionKARA);
+	}
+	
+	function removeFromExpansion(card, theExpansion) {
+		removeFromCardList(card,theExpansion.allCards);
+		switch (card.theClass) {
+			case 'DRUID': removeFromCardList(card, theExpansion.druid);
+				break;
+			case 'HUNTER': removeFromCardList(card, theExpansion.hunter);
+				break;
+			case 'MAGE': removeFromCardList(card, theExpansion.mage);
+				break;
+			case 'PRIEST': removeFromCardList(card, theExpansion.priest);
+				break;
+			case 'PALADIN': removeFromCardList(card, theExpansion.paladin);
+				break;
+			case 'ROGUE': removeFromCardList(card, theExpansion.rogue);
+				break;
+			case 'SHAMAN': removeFromCardList(card, theExpansion.shaman);
+				break;
+			case 'WARLOCK': removeFromCardList(card, theExpansion.warlock);
+				break;
+			case 'WARRIOR': removeFromCardList(card, theExpansion.warrior);
+				break;
+			case 'NONE': removeFromCardList(card, theExpansion.neutral);
+		}
+			
+		switch (card.rarity) {
+			case 1 : removeFromCardList(card, theExpansion.commons);
+				break;
+			case 2 : removeFromCardList(card, theExpansion.commons);
+				break;
+			case 3 : removeFromCardList(card, theExpansion.rares);
+				break;
+			case 4 : removeFromCardList(card, theExpansion.epics);
+				break;
+			case 5 : removeFromCardList(card, theExpansion.legendaries);
+		}
+	}
+	
+	function removeFromCardList(card, cardList) {
+		for (var i=0;i<cardList.length;i++) {
+			if (cardList[i].id==card.id)
+				cardList.splice(i,1);
+		}
+	}
 		
 	function compareCards(card1,card2) {
 		if (card1.theClass==='NONE' && !(card2.theClass==='NONE'))
