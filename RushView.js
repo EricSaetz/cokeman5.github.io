@@ -197,7 +197,7 @@ function startRush() {
 		for (var i=0;i<rushCollection.length;i++) {
 			card = rushCollection[i];
 			card = {name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden};
-			addToCollection(card, limitedCollection,2);
+			addToCollection(card, limitedCollection,2,1);
 		}
 		console.log(limitedCollection.expansionAll.allCards.length);
 		

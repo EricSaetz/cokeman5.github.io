@@ -91,7 +91,7 @@ function createRandomDeck() {
 	randomDeck.sort(function(a, b){return compareCards(a,b)});
 	
 	for (var n=0;n<randomDeck.length;n++) {
-		addToCollection(randomDeck[n],limitedCollection);
+		addToCollection(randomDeck[n],limitedCollection,2,0);
 	}
 	
 	displayRandomDeck();

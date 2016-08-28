@@ -155,7 +155,7 @@ function sealedCardClicked(num) {
 		}
 		else {
 			card.amount--;
-			addToCollection({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden},sealedCollection,null);
+			addToCollection({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden},sealedCollection,null,1);
 			for (var i=0;i<8;i++) {
 				if (cardsToDisplay[i].card.id==card.id) {
 					loadCardAmountText(cardsToDisplay[i], 50,-45,-275, 0);
@@ -239,13 +239,7 @@ function clearPacks() {
 function openPacks() {
 	var theExpansion;
 	
-	sealedCollection = {expansionAll:[], expansionBasic:[], expansionClassic:[], expansionNaxx:[], expansionGvG:[], expansionBRM:[],
-				  expansionTGT:[], expansionLOE:[], expansionOG:[], expansionKARA:[], expansionOther:[]};
-	var n;
-	for (n in sealedCollection) {
-		sealedCollection[n]={allCards:[],commons:[],rares:[],epics:[],legendaries:[],druid:[],hunter:[],
-					mage:[],rogue:[],warlock:[],warrior:[],shaman:[],paladin:[],priest:[],neutral:[]};
-	}
+	sealedCollection = initCollection();
 	
 	packs=[];
 	
@@ -276,7 +270,7 @@ function openPacks() {
 		for (var n=0;n<packAmounts[i];n++) {
 			var aPack=generatePack(theExpansion);
 			for (var z=0;z<aPack.length;z++)
-				addToCollection(aPack[z],sealedCollection,null);
+				addToCollection(aPack[z],sealedCollection,null,1);
 			packs.push(aPack);
 		}
 	}

@@ -1,51 +1,66 @@
 var collection = [];
 var limitedCollection = [];
 
-function handleSubmitAttempt() {
-		var username = document.getElementById('username').value;
+function handleSubmitAttempt(i) {
+		var usernames = document.getElementById('username').value.split(";");
+		var html = [];
 		var text;
 		var splitText;
 		var element;
+		var tempCollection;
+		
+		console.log(usernames[i]);
 		
 		$.ajax({
 			type: 'GET',
-			url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'http%3A%2F%2Fwww.hearthpwn.com%2Fmembers%2F"+username+"%2Fcollection'&diagnostics=true",
+			url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'http%3A%2F%2Fwww.hearthpwn.com%2Fmembers%2F"+usernames[i]+"%2Fcollection'&diagnostics=true",
 			dataType: 'text',
 			success: function(data) {
 				text = data.split('\n');
-				initCollection();
-				readCollection(text);
-				element = document.getElementById("accountForm");
-				element.parentNode.removeChild(element);
-				element = document.getElementById("submitButton");
-				element.parentNode.removeChild(element);
-				element = document.getElementById("appDescriptionText");
-				element.parentNode.removeChild(element);
-				loadMainGUI();
-				init();
-				startCollectionView(collection,0,0,1920,1240);
-				document.getElementById("modeDescription").innerHTML = "Here you can view your collection.";
-				animate();
+				if (i==0) {
+					collection = readCollection(text,2,0);
+					limitedCollection = readCollection(text,2,1);
+				}
+				else {
+					tempCollection = readCollection(text,2,0);
+					intersectCollections(collection, tempCollection);
+					tempCollection = readCollection(text,2,1);
+					intersectCollections(limitedCollection, tempCollection);
+				}
+				
+				if (i==usernames.length-1) {
+					element = document.getElementById("accountForm");
+					element.parentNode.removeChild(element);
+					element = document.getElementById("submitButton");
+					element.parentNode.removeChild(element);
+					element = document.getElementById("appDescriptionText");
+					element.parentNode.removeChild(element);
+					loadMainGUI();
+					init();
+					startCollectionView(collection,0,0,1920,1240);
+					document.getElementById("modeDescription").innerHTML = "Here you can view your collection.";
+					animate();
+				} 
+				else 
+					handleSubmitAttempt(i+1);
 			}
 		});
-		
 }
 
 function initCollection() {
-	collection = {expansionAll:[], expansionBasic:[], expansionClassic:[], expansionNaxx:[], expansionGvG:[], expansionBRM:[],
+	var theCollection = {expansionAll:[], expansionBasic:[], expansionClassic:[], expansionNaxx:[], expansionGvG:[], expansionBRM:[],
 				  expansionTGT:[], expansionLOE:[], expansionOG:[], expansionKARA:[], expansionOther:[]};
-	limitedCollection = {expansionAll:[], expansionBasic:[], expansionClassic:[], expansionNaxx:[], expansionGvG:[], expansionBRM:[],
-				  expansionTGT:[], expansionLOE:[], expansionOG:[], expansionKARA:[], expansionOther:[]};
+				  
 	var n;
-	for (n in collection) {
-		collection[n]={allCards:[],commons:[],rares:[],epics:[],legendaries:[],druid:[],hunter:[],
-					mage:[],rogue:[],warlock:[],warrior:[],shaman:[],paladin:[],priest:[],neutral:[]};
-		limitedCollection[n]={allCards:[],commons:[],rares:[],epics:[],legendaries:[],druid:[],hunter:[],
+	for (n in theCollection) {
+		theCollection[n]={allCards:[],commons:[],rares:[],epics:[],legendaries:[],druid:[],hunter:[],
 					mage:[],rogue:[],warlock:[],warrior:[],shaman:[],paladin:[],priest:[],neutral:[]};
 	}
+	
+	return theCollection;
 }
 
-function readCollection(text) {
+function readCollection(text, max, min) {
 		var cardName="";
 		var cardAmount=0;
 		var rarity=0;
@@ -55,8 +70,11 @@ function readCollection(text) {
 		var isGolden=false;
 		var id;
 		var cardData;
+		var tempCollection;
 		
 		var card;
+		
+		tempCollection = initCollection();
 		
 		for (var n=0;n<text.length;n++) {
 			if (text[n].includes('data-card-name')) {
@@ -75,59 +93,75 @@ function readCollection(text) {
 					amountGolden=cardAmount;
 				
 				card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount, amountGolden:amountGolden};
-				addToCollection(card,collection,2);
-				if (cardAmount>0) {
-					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount, amountGolden:amountGolden};
-					addToCollection(card, limitedCollection,2);
+				addToCollection(card,tempCollection,max,min);
+			}
+		}
+		
+		return tempCollection;
+	}
+	
+	function intersectCollections(collection1,collection2) {
+		collection1 = collection1.expansionAll.allCards;
+		collection2 = collection2.expansionAll.allCards;
+		for (var i=0;i<collection1.length;i++) {
+			for (var n=0;n<collection2.length;n++) {
+				if (collection1[i].id==collection2[n].id) {
+					intersectCards(collection1[i],collection2[n]);
+					collection2.splice(n,1);
 				}
 			}
 		}
 	}
 	
-	function addToCollection(card,theCollection,cardLimit) {
+	function intersectCards(card1, card2) {
+		card1.amount = Math.min(card1.amount,card2.amount);
+	}
+	
+	function addToCollection(card,theCollection,maxAmount,minAmount) {
 		var cards = theCollection.expansionAll.allCards;
 		var flag = false;
 		
-		for (i=0;i<cards.length && !flag;i++) {
-			if (cards[i].id==card.id) {
-				console.log("card found");
-				flag = true;
-				cards[i].amount+=card.amount;
-				cards[i].amountGolden+=card.amountGolden;
-				if (cardLimit!=null) {
-					if (cards[i].amount>cardLimit)
-						cards[i].amount=cardLimit;
-					if (cards[i].amountGolden>cardLimit)
-						cards[i].amountGolden=cardLimit;
+		if (card.amount>=minAmount) {
+			for (i=0;i<cards.length && !flag;i++) {
+				if (cards[i].id==card.id) {
+					flag = true;
+					cards[i].amount+=card.amount;
+					cards[i].amountGolden+=card.amountGolden;
+					if (maxAmount!=null) {
+						if (cards[i].amount>maxAmount)
+							cards[i].amount=maxAmount;
+						if (cards[i].amountGolden>maxAmount)
+							cards[i].amountGolden=maxAmount;
+					}
 				}
 			}
-		}
 			
 			
-		if (!flag) {
-			addToExpansion(card,theCollection.expansionAll);
-			if (card.id==251 || card.id==682 || card.id==217 || card.id==559)
-                addToExpansion(card,theCollection.expansionOther);
-            else if (card.id < 683) {
-                if (card.rarity==2)
-                    addToExpansion(card,theCollection.expansionBasic);
-                else
-                    addToExpansion(card,theCollection.expansionClassic);
-            }
-            else if (card.id<12174)
-                addToExpansion(card,theCollection.expansionNaxx);
-            else if (card.id<14434)
-                addToExpansion(card,theCollection.expansionGvG);
-            else if (card.id<22258)
-                addToExpansion(card,theCollection.expansionBRM);
-            else if (card.id<27209)
-                addToExpansion(card,theCollection.expansionTGT);
-            else if (card.id<27261)
-                addToExpansion(card,theCollection.expansionLOE);
-            else if (card.id<42019)
-                addToExpansion(card,theCollection.expansionOG);
-            else
-                addToExpansion(card,theCollection.expansionKARA);
+			if (!flag) {
+				addToExpansion(card,theCollection.expansionAll);
+				if (card.id==251 || card.id==682 || card.id==217 || card.id==559)
+					addToExpansion(card,theCollection.expansionOther);
+				else if (card.id < 683) {
+					if (card.rarity==2)
+						addToExpansion(card,theCollection.expansionBasic);
+					else
+						addToExpansion(card,theCollection.expansionClassic);
+				}
+				else if (card.id<12174)
+					addToExpansion(card,theCollection.expansionNaxx);
+				else if (card.id<14434)
+					addToExpansion(card,theCollection.expansionGvG);
+				else if (card.id<22258)
+					addToExpansion(card,theCollection.expansionBRM);
+				else if (card.id<27209)
+					addToExpansion(card,theCollection.expansionTGT);
+				else if (card.id<27261)
+					addToExpansion(card,theCollection.expansionLOE);
+				else if (card.id<42019)
+					addToExpansion(card,theCollection.expansionOG);
+				else
+					addToExpansion(card,theCollection.expansionKARA);
+			}
 		}
 	}
 	
