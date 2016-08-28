@@ -197,15 +197,17 @@
 		for (var i=0;i<cardsToDisplay.length;i++) {
 			scene.remove(cardsToDisplay[i].mesh);
 			for (var n=0;n<cardsToDisplay[i].mesh.children.length;n++) {
-				if (cardsToDisplay[i].mesh.children[n].material.map!=null)
+				if (cardsToDisplay[i].mesh.children[n].material.map!=null) {
 					cardsToDisplay[i].mesh.children[n].material.map.dispose();
+				}
 				if (cardsToDisplay[i].mesh.children[n].material instanceof THREE.MultiMaterial) {
 					cardsToDisplay[i].mesh.children[n].material.materials[0].dispose();
 					cardsToDisplay[i].mesh.children[n].material.materials[1].dispose();
 				}
-				else
-					cardsToDisplay[n].mesh.children[n].material.dispose();
-				cardsToDisplay[n].mesh.children[n].geometry.dispose();
+				else {
+					cardsToDisplay[i].mesh.children[n].material.dispose();
+				}
+				cardsToDisplay[i].mesh.children[n].geometry.dispose();
 			}
 		}
 		cardsToDisplay=[];
