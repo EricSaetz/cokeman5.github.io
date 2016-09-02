@@ -185,7 +185,7 @@ function startRush() {
 			else
 				cards = limitedCollection.expansionAll.neutral;
 			
-			if (card.length>0) {
+			if (cards.length>0) {
 				index = Math.floor(Math.random()*cards.length);
 				card = {name:cards[index].name,id:cards[index].id,rarity:cards[index].rarity,manaCost:cards[index].manaCost,theClass:cards[index].theClass,amount:1, amountGolden:cards[index].amountGolden};
 				cards[index].amount--;
