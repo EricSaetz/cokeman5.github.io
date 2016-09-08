@@ -276,10 +276,10 @@ function openPacks() {
 		}
 	}
 	
-	sortCollection(sealedCollection);
-	
 	for (var i=0;i<sealedCollection.expansionAll.allCards.length;i++)
 		preloadCardTexture(sealedCollection.expansionAll.allCards[i]);
+	
+	sortCollection(sealedCollection);
 	
 	if (document.getElementById("openingModeSelect").value==="Instant")
 		loadSealedCollectionView();
