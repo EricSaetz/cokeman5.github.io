@@ -16,6 +16,7 @@
 	var mode = 0;
 	var animations = [];
 	var timedFunctions = [];
+	var preloadedImages = [];
 
 	// Sets up the scene.
 	function init() {
@@ -248,7 +249,7 @@
 		}
 	}
 
-	function setCardBack(cardBackName) {
+function setCardBack(cardBackName) {
 	var map;
 	var material;
 	var extension;
@@ -270,27 +271,50 @@
 			cardsToDisplay[i].mesh.getObjectByName("back").visible=true;
 		}
 	}
-	}
+}
 
-	function setCardTexture(num,card) {
-	var map;
+function setCardTexture(cardDisplay,card) {
+	var map = null;
 	var material;
 
-	cardsToDisplay[num].card = card;
+	cardDisplay.card = card;
 
-	map = new THREE.TextureLoader().load( 'Images/' + card.name.replace(':','_') + '.png' );
-	map.minFilter = THREE.LinearFilter;
-
-	if (cardsToDisplay[num].mesh.getObjectByName("front").material.map!=null)
-		cardsToDisplay[num].mesh.getObjectByName("front").material.map.dispose();
-	cardsToDisplay[num].mesh.getObjectByName("front").material.map=map;	
-	cardsToDisplay[num].mesh.getObjectByName("front").material.color.setHex( 0xFFFFFF );
-	cardsToDisplay[num].mesh.getObjectByName("front").needsUpdate=true;
-
-	cardsToDisplay[num].mesh.getObjectByName("front").visible=true;
+	for (var i=0;i<preloadedImages.length && map==null;i++) {
+		if (preloadedImages[i].id==card.id) {
+			map = preloadedImages[i].texture;
+		}
+	}
+	
+	if (map==null) {
+		map = new THREE.TextureLoader().load( 'Images/' + card.name.replace(':','_') + '.png' );
+		map.minFilter = THREE.LinearFilter;
 	}
 
-	function copyDeckToClipboard() {
+	if (cardDisplay.mesh.getObjectByName("front").material.map!=null)
+		cardDisplay.mesh.getObjectByName("front").material.map.dispose();
+	cardDisplay.mesh.getObjectByName("front").material.map=map;	
+	cardDisplay.mesh.getObjectByName("front").material.color.setHex( 0xFFFFFF );
+	cardDisplay.mesh.getObjectByName("front").needsUpdate=true;
+
+	cardDisplay.mesh.getObjectByName("front").visible=true;
+}
+
+function preloadCardTexture(card) {
+	var map;
+	
+	map = new THREE.TextureLoader().load( 'Images/' + card.name.replace(':','_') + '.png' );
+	map.minFilter = THREE.LinearFilter;
+	
+	preloadedImages.push({texture:map,id:card.id});
+}
+
+function clearPreloadedImages() {
+	for (var i=0;i<preloadedImages.length;i++)
+		preloadedImages[i].texture.dispose();
+	preloadedImages=[];
+} 
+
+function copyDeckToClipboard() {
 	var deck;
 	var deckString="";
 	if (mode==1)
@@ -343,9 +367,9 @@
 	object.name = image;
 	imagesToDisplay.push(object);
 	scene.add( object );
-	}
+}
 
-	function imageClicked(imageName) {
+function imageClicked(imageName) {
 	var theCollection;
 	if (mode==0)
 		theCollection = collection;
@@ -394,7 +418,7 @@
 			loadPage(currentPage,theCollection);
 		}
 	}
-	}
+}
 
 	function loadText(theText,name, size, x, y, z) {
 	var loader = new THREE.FontLoader();

@@ -209,7 +209,7 @@ function getFirstPageOfClass(theClass,theCollection) {
 function loadClassCards(index,classCards) {
 	for (var i=0;i<8;i++) {
 		if (index+i<classCards.length) {
-			setCardTexture(i,classCards[index+i]);
+			setCardTexture(cardsToDisplay[i],classCards[index+i]);
 			cardsToDisplay[i].mesh.visible=true;
 			if (cardsToDisplay[i].card.amount<=0) {
 				cardsToDisplay[i].mesh.getObjectByName("front").material.color.setHex( 0x838383 );

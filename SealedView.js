@@ -48,7 +48,7 @@ function autoOpen() {
 	if (document.getElementById("openingModeSelect").value==="Auto") {
 		for (var cardIndex=0;cardIndex<5 && !hiddenCards[cardIndex];cardIndex++);
 		if (cardIndex<5) {
-			setCardTexture(cardIndex,cardsToDisplay[cardIndex].card);
+			setCardTexture(cardsToDisplay[cardIndex],cardsToDisplay[cardIndex].card);
 			animations.push({object:cardsToDisplay[cardIndex].mesh,type:"rotationY",amount:Math.PI,startingValue:cardsToDisplay[cardIndex].mesh.rotation.y,startTime:0,endTime:800});
 			hiddenCards[cardIndex]=false;
 			if (cardIndex!=4)
@@ -118,7 +118,7 @@ function sealedCardClicked(num) {
 	if (whichView==="Opening") {
 		if (document.getElementById("openingModeSelect").value==="Normal") {
 			if (hiddenCards[num]) {
-				setCardTexture(num,card);
+				setCardTexture(cardsToDisplay[num],card);
 				animations.push({object:cardsToDisplay[num].mesh,type:"rotationY",amount:Math.PI,startingValue:cardsToDisplay[num].mesh.rotation.y,startTime:0,endTime:800});
 				hiddenCards[num]=false;
 			}
@@ -139,7 +139,7 @@ function sealedCardClicked(num) {
 							loadCardAmountText(cardsToDisplay[num], 50,-45,-275, 0);
 							if (card.amount<=0)
 								cardsToDisplay[num].mesh.getObjectByName("front").material.color.setHex( 0x838383 );
-							setBarTexture(i+8,sealedDeck[i]);
+							setBarTexture(cardsToDisplay[i+8],sealedDeck[i]);
 						}
 						flag=true;
 					}
@@ -163,7 +163,7 @@ function sealedCardClicked(num) {
 				}
 			}
 			if (card.amount>0)
-				setBarTexture(num,card);
+				setBarTexture(cardsToDisplay[num],card);
 			else {
 				for (var i=0;i<sealedDeck.length;i++) {
 					if (sealedDeck[i].id==card.id) {
@@ -182,7 +182,7 @@ function updateDeckList() {
 	for (var i=0;i<30;i++) {
 		if (sealedDeck.length>i) {
 			if (cardsToDisplay[i+8].card==null || cardsToDisplay[i+8].card.id!=sealedDeck[i].id) {
-				setBarTexture(i+8,sealedDeck[i]);
+				setBarTexture(cardsToDisplay[i+8],sealedDeck[i]);
 			}
 		}
 		else {

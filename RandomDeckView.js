@@ -20,7 +20,7 @@ function displayRandomDeck() {
 	
 	for (var i=0;i<30;i++) {
 		if (i<randomDeck.length) {
-			setBarTexture(i,randomDeck[i]);
+			setBarTexture(cardsToDisplay[i],randomDeck[i]);
 		}
 		else
 			cardsToDisplay[i].mesh.visible=false;
@@ -100,11 +100,11 @@ function createRandomDeck() {
 	displayRandomDeck();
 }
 
-function setBarTexture(num,card) {
+function setBarTexture(cardDisplay,card) {
 	var map;
 	var material;
 	
-	var barArtObject = cardsToDisplay[num].mesh.getObjectByName("barArt");
+	var barArtObject = cardDisplay.mesh.getObjectByName("barArt");
 	var width = barArtObject.geometry.parameters.width;
 	var height = barArtObject.geometry.parameters.height;
 	
@@ -112,23 +112,23 @@ function setBarTexture(num,card) {
 	map.minFilter = THREE.LinearFilter;
 	
 	
-	if (cardsToDisplay[num].mesh.children.length>=3) {
-		var amountText = cardsToDisplay[num].mesh.getObjectByName("cardAmountText");
+	if (cardDisplay.mesh.children.length>=3) {
+		var amountText = cardDisplay.mesh.getObjectByName("cardAmountText");
 		if (amountText!=null) {
 			amountText.material.dispose();
 			amountText.geometry.dispose();
-			cardsToDisplay[num].mesh.remove(amountText);
+			cardDisplay.mesh.remove(amountText);
 		}
 	}
 	
-	if (cardsToDisplay[num].mesh.children.length>=2) {
-		var manaText = cardsToDisplay[num].mesh.getObjectByName("cardManaText");
+	if (cardDisplay.mesh.children.length>=2) {
+		var manaText = cardDisplay.mesh.getObjectByName("cardManaText");
 		if (manaText.material instanceof THREE.MultiMaterial) {
 			manaText.material.materials[0].dispose();
 			manaText.material.materials[1].dispose();
 		}
 		manaText.geometry.dispose();
-		cardsToDisplay[num].mesh.remove(manaText);
+		cardDisplay.mesh.remove(manaText);
 	}
 	
 	if (barArtObject.material.map!=null)
@@ -136,14 +136,14 @@ function setBarTexture(num,card) {
 	
 	barArtObject.material.map=map;
 	barArtObject.visible=true;
-	cardsToDisplay[num].card=card;
-	cardsToDisplay[num].mesh.visible=true;
+	cardDisplay.card=card;
+	cardDisplay.mesh.visible=true;
 	
 	if (card.rarity<5)
-		loadTextForDeckList(cardsToDisplay[num],"cardAmountText",card.amount,width/390*30,0xD8D63C,null, width/390*160, height/102*-15, 1);
-	loadTextForDeckList(cardsToDisplay[num],"cardManaText",card.manaCost,width/390*40,0xFFFFFF,0x000000, width/390*-175, height/102*-20, 1);
+		loadTextForDeckList(cardDisplay,"cardAmountText",card.amount,width/390*30,0xD8D63C,null, width/390*160, height/102*-15, 1);
+	loadTextForDeckList(cardDisplay,"cardManaText",card.manaCost,width/390*40,0xFFFFFF,0x000000, width/390*-175, height/102*-20, 1);
 	
-	cardsToDisplay[num].mesh.needsUpdate = true;
+	cardDisplay.mesh.needsUpdate = true;
 }
 
 function loadTextForDeckList(cardDisplay, name, theText, size, color, color2, x, y, z) {

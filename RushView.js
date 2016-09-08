@@ -28,7 +28,7 @@ function displayRushDeck() {
 	
 	for (var i=0;i<30;i++) {
 		if (i<rushDeck.length) {
-			setBarTexture(i,rushDeck[i]);
+			setBarTexture(cardsToDisplay[i],rushDeck[i]);
 		}
 		else
 			cardsToDisplay[i].mesh.visible=false;
@@ -84,7 +84,7 @@ function startMovingCards(row) {
 		
 		for (var i=row*6;i<row*6+6;i++) {
 			if (i<rushCollection.length) {
-				setCardTexture(i%cardsToDisplay.length,rushCollection[i]);
+				setCardTexture(cardsToDisplay[i%cardsToDisplay.length],rushCollection[i]);
 				if (cardsToDisplay[i%cardsToDisplay.length].mesh.position.y<=-838)
 					cardsToDisplay[i%cardsToDisplay.length].mesh.position.y=640+198;
 				animations.push({object:cardsToDisplay[i%cardsToDisplay.length].mesh,type:"positionY",amount:-1676,startingValue:cardsToDisplay[i%cardsToDisplay.length].mesh.position.y,startTime:0,endTime:timeForOneRow});
@@ -176,6 +176,7 @@ function startRush() {
 		rushDeck=[];
 		rushCollection=[];
 		rushDeckSize=0;
+		clearPreloadedImages();
 		
 		for (var i=0;i<amountOfCards;i++) {
 			flag=false;
@@ -202,6 +203,7 @@ function startRush() {
 			card = rushCollection[i];
 			card = {name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden};
 			addToCollection(card, limitedCollection,2,1);
+			preloadCardTexture(card);
 		}
 		console.log(limitedCollection.expansionAll.allCards.length);
 		
