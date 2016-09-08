@@ -242,6 +242,7 @@ function openPacks() {
 	sealedCollection = initCollection();
 	
 	packs=[];
+	clearPreloadedImages();
 	
 	for (var i=0;i<packAmounts.length;i++) {
 		switch (i) {
@@ -276,6 +277,9 @@ function openPacks() {
 	}
 	
 	sortCollection(sealedCollection);
+	
+	for (var i=0;i<sealedCollection.expansionAll.allCards.length;i++)
+		preloadCardTexture(sealedCollection.expansionAll.allCards[i]);
 	
 	if (document.getElementById("openingModeSelect").value==="Instant")
 		loadSealedCollectionView();
