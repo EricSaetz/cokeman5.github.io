@@ -49,7 +49,7 @@ function handleSubmitAttempt(i) {
 
 function initCollection() {
 	var theCollection = {expansionAll:[], expansionBasic:[], expansionClassic:[], expansionNaxx:[], expansionGvG:[], expansionBRM:[],
-				  expansionTGT:[], expansionLOE:[], expansionOG:[], expansionKARA:[], expansionOther:[]};
+				  expansionTGT:[], expansionLOE:[], expansionOG:[], expansionKARA:[],expansionMSG:[], expansionOther:[]};
 				  
 	var n;
 	for (n in theCollection) {
@@ -166,8 +166,10 @@ function readCollection(text, max, min) {
 					addToExpansion(card,theCollection.expansionLOE);
 				else if (card.id<42019)
 					addToExpansion(card,theCollection.expansionOG);
-				else
+				else if (card.id<49618)
 					addToExpansion(card,theCollection.expansionKARA);
+				else
+					addToExpansion(card,theCollection.expansionMSG);
 			}
 		}
 	}
@@ -305,6 +307,7 @@ function readCollection(text, max, min) {
 		sortExpansion(theCollection.expansionLOE);
 		sortExpansion(theCollection.expansionOG);
 		sortExpansion(theCollection.expansionKARA);
+		sortExpansion(theCollection.expansionMSG);
 		sortExpansion(theCollection.expansionOther);
 	}
 	

@@ -1,4 +1,4 @@
-var packAmounts = [0,0,0,0,0,0,0,0,0,0];
+var packAmounts = [0,0,0,0,0,0,0,0,0,0,0];
 var packs = [];
 var hiddenCards = [true,true,true,true,true];
 var packNum = 0;
@@ -266,6 +266,8 @@ function openPacks() {
 				break;
 			case 9 : theExpansion = limitedCollection.expansionKARA;
 				break;
+			case 10 : theExpansion = limitedCollection.expansionMSG;
+				break;
 		}
 		
 		for (var n=0;n<packAmounts[i];n++) {
@@ -298,7 +300,7 @@ function openPacks() {
 
 function updatePacksTextArea() {
 	var textAreaContents = '';
-	var packNames = ["Wild", "Basic","Classic","Naxx","GvG","BRM","TGT","LOE","OG","KARA"];
+	var packNames = ["Wild", "Basic","Classic","Naxx","GvG","BRM","TGT","LOE","OG","KARA","MSG"];
 	for (var i=0;i<packNames.length;i++) {
 		if (i!=0)
 			textAreaContents+='&#13;&#10;'
