@@ -191,7 +191,6 @@ function updateTime() {
 	removeText("timer");
 	if (time>0) {
 		time--;
-		console.log(time);
 		
 		if (time%60<10)
 			loadText(Math.floor(time/60)+' : 0'+time%60,"timer",100,-470,500,0);

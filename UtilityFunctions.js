@@ -210,7 +210,7 @@ function loadCollectionTextures(theCollection, isBar,onLoadingFinished) {
 		if (isBar)
 			map = new THREE.TextureLoader().load( 'Bars/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished();})});
 		else
-			map = new THREE.TextureLoader().load( 'Images/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished();})});
+			map = new THREE.TextureLoader().load( 'Images/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished(); console.log("Card Loaded");})});
 		map.minFilter = THREE.LinearFilter;
 		amountPreloading++;
 		

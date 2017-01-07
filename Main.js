@@ -159,7 +159,6 @@ function render() {
 
 //increase timer on every timed function and activate them when their time is up
 function processTimedFunctions(timeDifference) {
-	console.log(timeDifference);
 	for (var i=timedFunctions.length-1;i>=0;i--) {
 		timedFunctions[i].timer+=timeDifference;
 		if (timedFunctions[i].timer>=timedFunctions[i].maxTime) {

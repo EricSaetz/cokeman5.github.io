@@ -30,8 +30,6 @@ function marketCollectionCardClicked(cardDisplay) {
 	var cardFoundInDeck = false;
 	var price = getPrice(cardDisplay.card);
 	
-	console.log(theCollection==marketCollection);
-	
 	if (marketDeckSize<30 && cardDisplay.card.amount > 0 && funds>=price) {
 		marketDeckSize++;
 		funds-=price;

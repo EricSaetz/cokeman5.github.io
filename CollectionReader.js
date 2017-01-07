@@ -22,8 +22,6 @@ function handleSubmitAttempt(i) {
 	var element;
 	var tempCollection;
 	
-	console.log(usernames[i]);
-	
 	$.ajax({
 		type: 'GET',
 		url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'http%3A%2F%2Fwww.hearthpwn.com%2Fmembers%2F"+usernames[i]+"%2Fcollection'&diagnostics=true",

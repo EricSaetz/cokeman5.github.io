@@ -37,8 +37,6 @@ function createRandomDeck() {
 	percentageClassCards = parseInt(document.getElementById('percentageClassCards').value);
 	selectedClass = document.getElementById('classSelect').value;
 	
-	console.log(isStandard);
-	
 	createLoadingIcon(0,0,0);
 	
 	if (selectedClass==="Random")
