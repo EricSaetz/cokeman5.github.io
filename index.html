@@ -1,25 +1,35 @@
 <!doctype html>
 <html lang='en'>
 <head>
-  <title>HS Alternate Gamemodes v1.4</title>
+  <title>HS Alternate Game Modes v1.5</title>
   <meta charset='utf-8' >
-  <meta name="description" content="HS Alternate Gamemodes">
-</head>
-<body>
+  <meta name="description" content="Experience multiple Hearthstone deckbuilding formats and challenges to face off against your friends with!">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Cokeman5">
+  <meta name="application-name" content="HS Alternate Game Modes">
+  <meta name="keywords" content="Hearthstone, Alternate, Game, Modes, Deckbuilding, Formats, Fun, Friends, Random, Sealed, Rush, Arena, Gadgetzan, Market">
 
-<div id="gui" style="width: 300px;overflow: hidden; padding:0px; margin:0px"></div>
+
+  
+  <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-83859029-1', 'auto');
+	  ga('send', 'pageview');
+
+   </script>
+  
+</head>
+<body background="Other/wood.png" style="padding:0px; margin:0px">
+
+<div id="gui" style="position:fixed; width: 300px; overflow: hidden; padding:0px; margin:0px"></div>
 
 <div id="render" style="position:absolute; left:300px; top:0px;overflow: hidden; padding:0px; margin:0px">
-<textarea id="appDescriptionText" style="position:fixed; bottom:35%; left:30%; width:600px; height:350px; resize:none;text-align: center; border:none" cols="15" readonly="true">
-Welcome to HS Alternate Gamemodes! This app is meant to improve the experience of playing Hearthstone with friends by offering a variety of different deck building modes. These modes aim to help level the playing field between players with varying collection sizes, as well as creating a wide variety of interesting decks.
-
-In order to make proper use of this app, create an account on Hearthpwn.com. From there you can download Hearthpwn's Innkeeper App to automatically sync your collection with your hearthpwn account, or you can manually input your collection. Once your collection is input on hearthpwn just type in your username below and click submit. 
-
-You can also get the intersection of multiple collections by separating multiple usernames with a ';'.</textarea>
-<p id="accountForm" style="position:fixed; bottom:45%; left:40%">
-  Hearthpwn Username: <input type="text" id ="username" name="username"></input>
-</p>
-<input style="position:fixed; bottom:40%; left:47%" id="submitButton" type="submit" onclick="handleSubmitAttempt(0)" value="Submit"></input>
+<input style="position:fixed; bottom:60%; left:43%" id="fullCollectionButton" type="submit" onclick="parseFullCollection();" value="Use Full Collection"></input>
+<input style="position:fixed; bottom:50%; left:41.5%" id="customCollectionButton" type="submit" onclick="customCollectionPressed();" value="Use Hearthpwn Collection"></input>
 
 </div>
 
@@ -29,21 +39,16 @@ You can also get the intersection of multiple collections by separating multiple
 <script type='text/javascript' src='/RandomDeckView.js'></script>
 <script type='text/javascript' src='/SealedView.js'></script>
 <script type='text/javascript' src='/RushView.js'></script>
+<script type='text/javascript' src='/ArenaView.js'></script>
+<script type='text/javascript' src='/GadgetzanMarketView.js'></script>
 <script type='text/javascript' src='/GUIHandler.js'></script>
+<script type='text/javascript' src='/CollectionStorage.js'></script>
+<script type='text/javascript' src='/UtilityFunctions.js'></script>
 <script type='text/javascript' src='/js/jquery.js'></script>
+<script type='text/javascript' src='/js/jquery.indexeddb.js'></script>
 <script type='text/javascript' src='/js/OrbitControls.js'></script>
+<script type='text/javascript' src='/js/seedrandom.js'></script>
 <script type='text/javascript' src='/Main.js'></script>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-83859029-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
 
 </body>
 </html>

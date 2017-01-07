@@ -1,69 +1,58 @@
-function startCollectionView(theCollection, x, y, width, height) {
+var theCollection;
+var currentPage = 0;
+var leftArrow;
+var rightArrow;
+var onPageLoaded;
+
+function startCollectionView(x, y, width, height, onClicked, onPageLoad) {
   var material;
   var verticalGap,horizontalGap;
   
   clearAssets();
   
+  if (onPageLoaded!=null)
+	  onPageLoaded = onPageLoad;
+  else
+	  onPageLoaded = function() {};
+  
   verticalGap = (height-395*2)/3;
   horizontalGap = (width-286*3)/5;
   
 	for (var i=0; i<8;i++) {
-		var material1 = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
-		var material2 = new THREE.MeshLambertMaterial( { map: null, side: THREE.BackSide, transparent: true} );
-		object1 = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material1 );
-		object2 = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material2 );
-		object1.name = "front";
-		object2.name = "back";
-		object = new THREE.Object3D();
-		object.add(object1);
-		object.add(object2);
-		object1.visible = false;
-		object2.visible = false;
-		cardsToDisplay.push({mesh:object,card:null});
-		object.position.set( (286+horizontalGap)*(i%4)+horizontalGap-width/2+x, height/2-(Math.floor(i/4)*(verticalGap+395))-verticalGap-395/2+y, 0 );
-		scene.add( object );
+		createCardDisplay( (286+horizontalGap)*(i%4)+horizontalGap-width/2+x, height/2-(Math.floor(i/4)*(verticalGap+395))-verticalGap-395/2+y, 0, 286, 395, false, onClicked);
 	}
 	setCardBack(document.getElementById("cardBackSelect").value);
 	
-	loadImage("druidIcon",x-675,y+height/2.2,100,100);
-	loadImage("hunterIcon",x-525,y+height/2.2,100,100);
-	loadImage("mageIcon",x-375,y+height/2.2,100,100);
-	loadImage("paladinIcon",x-225,y+height/2.2,100,100);
-	loadImage("priestIcon",x-75,y+height/2.2,100,100);
-	loadImage("rogueIcon",x+75,y+height/2.2,100,100);
-	loadImage("shamanIcon",x+225,y+height/2.2,100,100);
-	loadImage("warlockIcon",x+375,y+height/2.2,100,100);
-	loadImage("warriorIcon",x+525,y+height/2.2,100,100);
-	loadImage("neutralIcon",x+675,y+height/2.2,100,100);
+	loadImage("druidIcon",druidIconClicked,true,x-width/9.6*4.5,y+height/2.3,0,width/12.8,height/8.4);
+	loadImage("hunterIcon",hunterIconClicked,true,x-width/9.6*3.5,y+height/2.3,0,width/12.8,height/8.4);
+	loadImage("mageIcon",mageIconClicked,true,x-width/9.6*2.5,y+height/2.3,0,width/12.8,height/8.4);
+	loadImage("paladinIcon",paladinIconClicked,true,x-width/9.6*1.5,y+height/2.3,0,width/12.8,height/8.4);
+	loadImage("priestIcon",priestIconClicked,true,x-width/9.6*.5,y+height/2.3,0,width/12.8,height/8.4);
+	loadImage("rogueIcon",rogueIconClicked,true,x+width/9.6*.5,y+height/2.3,0,width/12.8,height/8.4);
+	loadImage("shamanIcon",shamanIconClicked,true,x+width/9.6*1.5,y+height/2.3,0,width/12.8,height/8.4);
+	loadImage("warlockIcon",warlockIconClicked,true,x+width/9.6*2.5,y+height/2.3,0,width/12.8,height/8.4);
+	loadImage("warriorIcon",warriorIconClicked,true,x+width/9.6*3.5,y+height/2.3,0,width/12.8,height/8.4);
+	loadImage("neutralIcon",neutralIconClicked,true,x+width/9.6*4.5,y+height/2.3,0,width/12.8,height/8.4);
 	
-	loadArrows(x,y,width,height);
+	leftArrow = loadImage("leftArrow",leftArrowClicked,true,x-width/2+15,y,0,150,100);
+	rightArrow = loadImage("rightArrow",rightArrowClicked,true,x+width/2-15,y,0,150,100);
 	currentPage = 0;
-	loadPage(currentPage,theCollection);
-	scene.add(rightArrow);
-	scene.add(leftArrow);
+	loadPage(currentPage);
 }
 
-function loadPage(page,theCollection) {
+function loadPage(page) {
+	
 	if (page<=0)
-		leftArrow.visible=false;
+		leftArrow.imgObj.visible=false;
 	else
-		leftArrow.visible=true;
+		leftArrow.imgObj.visible=true;
 	
-	if (page>=getMaxPages(theCollection)-1)
-		rightArrow.visible=false;
+	if (page>=getMaxPages()-1)
+		rightArrow.imgObj.visible=false;
 	else
-		rightArrow.visible=true;
+		rightArrow.imgObj.visible=true;
 	
-	
-	for (var n=0;n<textToDisplay.length;n++) {
-		scene.remove(textToDisplay[n]);
-		textToDisplay[n].material.dispose();
-		textToDisplay[n].geometry.dispose();
-	}
-	
-	textToDisplay = [];
-	
-	var classCards = theCollection.expansionAll.druid;
+	var classCards = getSubCollection(theCollection, function(card){return card.theClass==="DRUID"},true);
 	var offset = 0;
 	var index = page*8;
 	
@@ -73,55 +62,55 @@ function loadPage(page,theCollection) {
 	} else {
 		offset+=Math.ceil(classCards.length/8)*8;
 		index = page*8-offset;
-		classCards = theCollection.expansionAll.hunter;
+		classCards = getSubCollection(theCollection, function(card){return card.theClass==="HUNTER"},true);
 		if (index<classCards.length) {
 			loadClassCards(index,classCards);
 		} else {
 			offset+=Math.ceil(classCards.length/8)*8;
 			index = page*8-offset;
-			classCards = theCollection.expansionAll.mage;
+			classCards = getSubCollection(theCollection, function(card){return card.theClass==="MAGE"},true);
 			if (index<classCards.length) {
 				loadClassCards(index,classCards);
 			} else {
 				offset+=Math.ceil(classCards.length/8)*8;
 				index = page*8-offset;
-				classCards = theCollection.expansionAll.paladin;
+				classCards = getSubCollection(theCollection, function(card){return card.theClass==="PALADIN"},true);
 				if (index<classCards.length) {
 					loadClassCards(index,classCards);
 				} else {
 					offset+=Math.ceil(classCards.length/8)*8;
 					index = page*8-offset;
-					classCards = theCollection.expansionAll.priest;
+					classCards = getSubCollection(theCollection, function(card){return card.theClass==="PRIEST"},true);
 					if (index<classCards.length) {
 						loadClassCards(index,classCards);
 					} else {
 						offset+=Math.ceil(classCards.length/8)*8;
 						index = page*8-offset;
-						classCards = theCollection.expansionAll.rogue;
+						classCards = getSubCollection(theCollection, function(card){return card.theClass==="ROGUE"},true);
 						if (index<classCards.length) {
 							loadClassCards(index,classCards);
 						} else {
 							offset+=Math.ceil(classCards.length/8)*8;
 							index = page*8-offset;
-							classCards = theCollection.expansionAll.shaman;
+							classCards = getSubCollection(theCollection, function(card){return card.theClass==="SHAMAN"},true);
 							if (index<classCards.length) {
 								loadClassCards(index,classCards);
 							} else {
 								offset+=Math.ceil(classCards.length/8)*8;
 								index = page*8-offset;
-								classCards = theCollection.expansionAll.warlock;
+								classCards = getSubCollection(theCollection, function(card){return card.theClass==="WARLOCK"},true);
 								if (index<classCards.length) {
 									loadClassCards(index,classCards);
 								} else {
 									offset+=Math.ceil(classCards.length/8)*8;
 									index = page*8-offset;
-									classCards = theCollection.expansionAll.warrior;
+									classCards = getSubCollection(theCollection, function(card){return card.theClass==="WARRIOR"},true);
 									if (index<classCards.length) {
 										loadClassCards(index,classCards);
 									} else {
 										offset+=Math.ceil(classCards.length/8)*8;
 										index = page*8-offset;
-										classCards = theCollection.expansionAll.neutral;
+										classCards = getSubCollection(theCollection, function(card){return card.theClass==="NONE"},true);
 										if (index<classCards.length) {
 											loadClassCards(index,classCards);
 										}
@@ -135,75 +124,77 @@ function loadPage(page,theCollection) {
 		}
 	}
 	
+	if (onPageLoaded!=null)
+		onPageLoaded();
 }
 
-function getMaxPages(theCollection) {
-	var maxPages = Math.ceil(theCollection.expansionAll.druid.length/8)+
-			   Math.ceil(theCollection.expansionAll.hunter.length/8)+
-			   Math.ceil(theCollection.expansionAll.mage.length/8)+
-			   Math.ceil(theCollection.expansionAll.paladin.length/8)+
-			   Math.ceil(theCollection.expansionAll.priest.length/8)+
-			   Math.ceil(theCollection.expansionAll.rogue.length/8)+
-			   Math.ceil(theCollection.expansionAll.shaman.length/8)+
-			   Math.ceil(theCollection.expansionAll.warlock.length/8)+
-			   Math.ceil(theCollection.expansionAll.warrior.length/8)+
-			   Math.ceil(theCollection.expansionAll.neutral.length/8);
+function getMaxPages() {
+	var maxPages = Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="DRUID"})/8)+
+			   Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="HUNTER"})/8)+
+			   Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="MAGE"})/8)+
+			   Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="PALADIN"})/8)+
+			   Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="PRIEST"})/8)+
+			   Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="ROGUE"})/8)+
+			   Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="SHAMAN"})/8)+
+			   Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="WARLOCK"})/8)+
+			   Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="WARRIOR"})/8)+
+			   Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="NONE"})/8);
 			   
    return maxPages;
 }
 
-function getFirstPageOfClass(theClass,theCollection) {
+function getFirstPageOfClass(theClass) {
 	var page=0;
 	if (theClass==="DRUID") {
 		return page;
 	}
 	else
-		page+=Math.ceil(theCollection.expansionAll.druid.length/8);
+		page+=Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="DRUID"})/8);
 	
 	if (theClass==="HUNTER")
 		return page;
 	else
-		page+=Math.ceil(theCollection.expansionAll.hunter.length/8);
+		page+=Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="HUNTER"})/8);
 	
 	if (theClass==="MAGE")
 		return page;
 	else
-		page+=Math.ceil(theCollection.expansionAll.mage.length/8);
+		page+=Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="MAGE"})/8);
 	
 	if (theClass==="PALADIN")
 		return page;
 	else
-		page+=Math.ceil(theCollection.expansionAll.paladin.length/8);
+		page+=Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="PALADIN"})/8)
 	
 	if (theClass==="PRIEST")
 		return page;
 	else
-		page+=Math.ceil(theCollection.expansionAll.priest.length/8);
+		page+=Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="PRIEST"})/8)
 	
 	if (theClass==="ROGUE")
 		return page;
 	else
-		page+=Math.ceil(theCollection.expansionAll.rogue.length/8);
+		page+=Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="ROGUE"})/8);
 	
 	if (theClass==="SHAMAN")
 		return page;
 	else
-		page+=Math.ceil(theCollection.expansionAll.shaman.length/8);
+		page+=Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="SHAMAN"})/8);
 	
 	if (theClass==="WARLOCK")
 		return page;
 	else
-		page+=Math.ceil(theCollection.expansionAll.warlock.length/8);
+		page+=Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="WARLOCK"})/8);
 	
 	if (theClass==="WARRIOR")
 		return page;
 	else
-		page+=Math.ceil(theCollection.expansionAll.warrior.length/8);
+		page+=Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="WARRIOR"})/8);
 	
-	if (theClass==="NEUTRAL")
+	if (theClass==="NONE")
 		return page;
 	else
-		page+=Math.ceil(theCollection.expansionAll.neutral.length/8);
+		page+=Math.ceil(getCardCount(theCollection,function(card){return card.theClass==="NONE"})/8);
 }
 
 function loadClassCards(index,classCards) {
@@ -214,7 +205,7 @@ function loadClassCards(index,classCards) {
 			if (cardsToDisplay[i].card.amount<=0) {
 				cardsToDisplay[i].mesh.getObjectByName("front").material.color.setHex( 0x838383 );
 			}
-			loadCardAmountText(cardsToDisplay[i], 50,-45,-275, 0);
+			loadCardAmountText(cardsToDisplay[i], 50,-45,-255, 0);
 		} 
 		else {
 			cardsToDisplay[i].mesh.visible = false;
@@ -222,75 +213,98 @@ function loadClassCards(index,classCards) {
 	}
 }
 
+function rightArrowClicked(rightArrow) {
+	currentPage++;
+	loadPage(currentPage);
+}
+
+function leftArrowClicked() {
+	currentPage--;
+	loadPage(currentPage);
+}
+
+function druidIconClicked() {
+	currentPage = getFirstPageOfClass("DRUID",theCollection);
+	loadPage(currentPage);
+}
+
+function hunterIconClicked() {
+	currentPage = getFirstPageOfClass("HUNTER",theCollection);
+	loadPage(currentPage);
+}
+
+function mageIconClicked() {
+	currentPage = getFirstPageOfClass("MAGE",theCollection);
+	loadPage(currentPage);
+}
+
+function paladinIconClicked() {
+	currentPage = getFirstPageOfClass("PALADIN",theCollection);
+	loadPage(currentPage);
+}
+
+function priestIconClicked() {
+	currentPage = getFirstPageOfClass("PRIEST",theCollection);
+	loadPage(currentPage);
+}
+
+function rogueIconClicked() {
+	currentPage = getFirstPageOfClass("ROGUE",theCollection);
+	loadPage(currentPage);
+}
+
+function shamanIconClicked() {
+	currentPage = getFirstPageOfClass("SHAMAN",theCollection);
+	loadPage(currentPage);
+}
+
+function warlockIconClicked() {
+	currentPage = getFirstPageOfClass("WARLOCK",theCollection);
+	loadPage(currentPage);
+}
+
+function warriorIconClicked() {
+	currentPage = getFirstPageOfClass("WARRIOR",theCollection);
+	loadPage(currentPage);
+}
+
+function neutralIconClicked() {
+	currentPage = getFirstPageOfClass("NONE",theCollection);
+	loadPage(currentPage);
+}
+
 function loadCardAmountText(cardDisplay, size, x, y, z) {
-	var loader = new THREE.FontLoader();
 	var max;
 	var oldText;
 
-	loader.load( 'Font/Harabara_Regular.json', function ( font ) {
-		
-		oldText = cardDisplay.mesh.getObjectByName("amountText");
-		if (oldText!=null) {
-			oldText.material.dispose();
-			oldText.geometry.dispose();
-			cardDisplay.mesh.remove(oldText);
-		}
-		
-		if (cardDisplay.card.rarity==5)
-			max='/1';
-		else
-			max='/2';
+	oldText = cardDisplay.mesh.getObjectByName("amountText");
+	if (oldText!=null) {
+		oldText.material.dispose();
+		oldText.geometry.dispose();
+		cardDisplay.mesh.remove(oldText);
+	}
+	
+	if (cardDisplay.card.rarity==5)
+		max='/1';
+	else
+		max='/2';
+	
+	var textGeo = new THREE.TextGeometry( cardDisplay.card.amount+max, {
 
-		var textGeo = new THREE.TextGeometry( cardDisplay.card.amount+max, {
+		font: font,
 
-			font: font,
+		size: size,
+		height: 1,
+		curveSegments: 12
 
-			size: size,
-			height: 1,
-			curveSegments: 12
-
-		} );
-
-		var textMaterial = new THREE.MeshPhongMaterial( { color: 0xFFFFFF } );
-
-		var mesh = new THREE.Mesh( textGeo, textMaterial );
-		
-		mesh.name="amountText";
-		
-		mesh.position.set(x,y,z);
-		cardDisplay.mesh.add(mesh);
 	} );
-}
 
-function loadArrows(x,y,width,height) {
-	var vertices = [new THREE.Vector3(-50,50,0),new THREE.Vector3(50,0,0),new THREE.Vector3(-50,-50,0)];
-	var holes = [];
-	var triangles, mesh;
-	var geometry = new THREE.Geometry();
-	var material = new THREE.MeshBasicMaterial();
-	
-	material.color.setHex( 0x000000 );
-	geometry.vertices = vertices;
-	triangles = THREE.ShapeUtils.triangulateShape( vertices, holes );
-	for( var i = 0; i < triangles.length; i++ ){
-		geometry.faces.push( new THREE.Face3( triangles[i][0], triangles[i][1], triangles[i][2] ));
-	}
+	var textMaterial = new THREE.MeshPhongMaterial( { color: 0xFFFFFF } );
 
-	mesh = new THREE.Mesh( geometry, material );
-	mesh.position.set(width/2+x,0,0);
-	rightArrow = mesh;
+	var mesh = new THREE.Mesh( textGeo, textMaterial );
 	
-	geometry = new THREE.Geometry();
-	vertices = [new THREE.Vector3(50,50,0),new THREE.Vector3(-50,0,0),new THREE.Vector3(50,-50,0)];
-	geometry.vertices = vertices;
-	triangles = THREE.ShapeUtils.triangulateShape( vertices, holes );
-	for( var i = 0; i < triangles.length; i++ ){
-		geometry.faces.push( new THREE.Face3( triangles[i][0], triangles[i][1], triangles[i][2] ));
-	}
+	mesh.name="amountText";
 	
-	mesh = new THREE.Mesh( geometry, material );
-	mesh.position.set(-1*(width/2)+x,0,0);
-	leftArrow = mesh;
-	
-	
+	mesh.position.set(x,y,z);
+	cardDisplay.mesh.add(mesh);
 }

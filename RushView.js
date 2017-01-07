@@ -15,15 +15,7 @@ function displayRushDeck() {
 	clearAssets();
 	
 	for (var i=0; i<30;i++) {
-		var material = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
-		object1 = new THREE.Mesh(  new THREE.PlaneGeometry( 130*3, 34*3, 4, 4 ), material );
-			object1.name = "barArt";
-			object = new THREE.Object3D();
-			object.add(object1);
-			object.position.set( 500*Math.floor(i/10)-500,510-34*3*(i%10),0);
-			cardsToDisplay.push({mesh:object,card:null});
-			object.visible = false;
-			scene.add( object );
+		createBarDisplay( 500*Math.floor(i/10)-500,510-34*3*(i%10),0,130*3,34*3,null);
 	}
 	
 	for (var i=0;i<30;i++) {
@@ -49,6 +41,8 @@ function rushCardClicked(cardDisplay) {
 
 function rushOver() {
 	var card;
+	
+	playSound("Sounds/Rush Draft Over.ogg", 1);
 	
 	animations=[];
 	while (rushDeckSize<30) {
@@ -78,24 +72,13 @@ function addToRushDeck(card) {
 	card.amount--;
 }
 
-function startMovingCards(row) {
-	if (rushDeckSize<30) {
-		var timeForOneRow = totalTime*(1676/(1676+465*Math.floor((rushCollection.length-1)/6)));
-		
-		for (var i=row*6;i<row*6+6;i++) {
-			if (i<rushCollection.length) {
-				setCardTexture(cardsToDisplay[i%cardsToDisplay.length],rushCollection[i]);
-				if (cardsToDisplay[i%cardsToDisplay.length].mesh.position.y<=-838)
-					cardsToDisplay[i%cardsToDisplay.length].mesh.position.y=640+198;
-				animations.push({object:cardsToDisplay[i%cardsToDisplay.length].mesh,type:"positionY",amount:-1676,startingValue:cardsToDisplay[i%cardsToDisplay.length].mesh.position.y,startTime:0,endTime:timeForOneRow});
-			}
-		}
-		
-		if ((row+1)*6<rushCollection.length)
-			timedFunctions.push({timer:0,maxTime:timeForOneRow*(465/1676),onTimeReached:function(){startMovingCards(row+1)}});
-		else {
-			timedFunctions.push({timer:0,maxTime:timeForOneRow,onTimeReached:function(){rushOver()}});
-		}
+function startMovingCards() {
+	var amountOfRows = Math.ceil(rushCollection.length/6);
+	var distance = -1*(1280+396*amountOfRows);
+	
+	for (var i=0;i<rushCollection.length;i++) {
+		setCardTexture(cardsToDisplay[i],rushCollection[i]);
+		animations.push({object:cardsToDisplay[i].mesh,type:"positionY",amount:distance,startingValue:cardsToDisplay[i].mesh.position.y,startTime:0,endTime:totalTime});
 	}
 }
 
@@ -112,71 +95,52 @@ function startRush() {
 	var object;
 	var percentageClassCards;
 	var amountOfTime;
+	var neutrals;
+	var standardOnly = document.getElementById('standardCheckBox').checked;
 	
 	amountOfCards = parseInt(document.getElementById("amountOfCards").value);
 	if (amountOfCards>=30) {
 		percentageClassCards = parseInt(document.getElementById('percentageClassCards').value);
 		clearAssets();
+		
+		createLoadingIcon(0,0,0);
 	  
-		for (var i=0; i<24;i++) {
-			var material1 = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
-			var material2 = new THREE.MeshLambertMaterial( { map: null, side: THREE.BackSide, transparent: true} );
-			object1 = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material1 );
-			object2 = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material2 );
-			object1.name = "front";
-			object2.name = "back";
-			object = new THREE.Object3D();
-			object.add(object1);
-			object.add(object2);
-			object1.visible = false;
-			object2.visible = false;
-			cardsToDisplay.push({mesh:object,card:null});
-			object.position.set( (i%6)*(70+286)-960+70,640+198, 0 );
-			scene.add( object );
+		for (var i=0; i<amountOfCards;i++) {
+			createCardDisplay( (i%6)*(70+286)-960+70,640+198+396*Math.floor(i/6), 0 , 286, 395, false, rushCardClicked );
 		}
-		
-		time = parseInt(document.getElementById("Time").value);
-		totalTime = parseInt(document.getElementById("Time").value)*1000;
-		
-		loadText(Math.floor(time/60),"timerMinutes",100,-675,500,0);
-		loadText(":","timerColon",100,-590,500,0);
-		loadText(Math.floor((time%60)/10),"timerTenSeconds",100,-550,500,0);
-		loadText(time%10,"timerSeconds",100,-470,500,0);
-		
-		loadText("0/30","amountText",100,400,500,0);
-		
-		timedFunctions.push({timer:0,maxTime:1000,onTimeReached:function(){updateTime()}});
 		
 		setCardBack(document.getElementById("cardBackSelect").value);
 		
 		selectedClass = document.getElementById('classSelect').value;
 		
+		if (selectedClass==="Random")
+			selectedClass=getRandomClass();
+		
 		switch (selectedClass) {
-			case 'Random' : theClass = getRandomClass(limitedCollection);
+			case 'Druid' : theClass = getSubCollection(collection,function(card){return card.theClass==="DRUID" && card.amount>0 && (!standardOnly || isStandard(card))},true);
 				break;
-			case 'Druid' : theClass = limitedCollection.expansionAll.druid;
+			case 'Hunter' : theClass = getSubCollection(collection,function(card){return card.theClass==="HUNTER" && card.amount>0 && (!standardOnly || isStandard(card))},true);
 				break;
-			case 'Hunter' : theClass = limitedCollection.expansionAll.hunter;
+			case 'Mage' : theClass = getSubCollection(collection,function(card){return card.theClass==="MAGE" && card.amount>0 && (!standardOnly || isStandard(card))},true);
 				break;
-			case 'Mage' : theClass = limitedCollection.expansionAll.mage;
+			case 'Paladin' : theClass = getSubCollection(collection,function(card){return card.theClass==="PALADIN" && card.amount>0 && (!standardOnly || isStandard(card))},true);
 				break;
-			case 'Paladin' : theClass = limitedCollection.expansionAll.paladin;
+			case 'Priest' : theClass = getSubCollection(collection,function(card){return card.theClass==="PRIEST" && card.amount>0 && (!standardOnly || isStandard(card))},true);
 				break;
-			case 'Priest' : theClass = limitedCollection.expansionAll.priest;
+			case 'Rogue' : theClass = getSubCollection(collection,function(card){return card.theClass==="ROGUE" && card.amount>0 && (!standardOnly || isStandard(card))},true);
 				break;
-			case 'Rogue' : theClass = limitedCollection.expansionAll.rogue;
+			case 'Shaman' : theClass = getSubCollection(collection,function(card){return card.theClass==="SHAMAN" && card.amount>0 && (!standardOnly || isStandard(card))},true);
 				break;
-			case 'Shaman' : theClass = limitedCollection.expansionAll.shaman;
+			case 'Warlock' : theClass = getSubCollection(collection,function(card){return card.theClass==="WARLOCK" && card.amount>0 && (!standardOnly || isStandard(card))},true);
 				break;
-			case 'Warlock' : theClass = limitedCollection.expansionAll.warlock;
-				break;
-			case 'Warrior' : theClass = limitedCollection.expansionAll.warrior;
+			case 'Warrior' : theClass = getSubCollection(collection,function(card){return card.theClass==="WARRIOR" && card.amount>0 && (!standardOnly || isStandard(card))},true);
 		}
+		
+		neutrals = getSubCollection(collection,function(card){return card.theClass==="NONE" && card.amount>0 && (!standardOnly || isStandard(card))},true);
 		
 		rushDeck=[];
 		rushCollection=[];
 		rushDeckSize=0;
-		clearPreloadedImages();
 		
 		for (var i=0;i<amountOfCards;i++) {
 			flag=false;
@@ -184,69 +148,62 @@ function startRush() {
 			if (Math.random()*100<percentageClassCards && theClass.length>0)
 				cards = theClass;
 			else
-				cards = limitedCollection.expansionAll.neutral;
+				cards = neutrals;
 			
 			if (cards.length>0) {
 				index = Math.floor(Math.random()*cards.length);
 				card = {name:cards[index].name,id:cards[index].id,rarity:cards[index].rarity,manaCost:cards[index].manaCost,theClass:cards[index].theClass,amount:1, amountGolden:cards[index].amountGolden};
 				cards[index].amount--;
 				if (cards[index].amount<=0)
-					removeFromCollection(cards[index],limitedCollection);
+					cards.splice(index,1);
 			} else {
 				card = {name:"Shadow of Nothing",id:-1,rarity:4,manaCost:0,theClass:"PRIEST",amount:1, amountGolden:0};
 			}
 			rushCollection.push(card);
 		}
 		
-		console.log(rushCollection.length);
-		for (var i=0;i<rushCollection.length;i++) {
-			card = rushCollection[i];
-			card = {name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden};
-			addToCollection(card, limitedCollection,2,1);
-			preloadCardTexture(card);
-		}
-		console.log(limitedCollection.expansionAll.allCards.length);
-		
-		startMovingCards(0);
+		loadCollectionTextures(rushCollection, false,function(){ onFinishedLoadingRush(); });
 	}
 }
 
+function onFinishedLoadingRush() {
+	for (var i=0;i<imagesToDisplay.length;i++) {
+		if (imagesToDisplay[i].imgObj.name==="Loading") {
+			unloadImage(imagesToDisplay[i]);
+			imagesToDisplay.splice(i,1);
+			i--;
+		}
+	}
+	
+	time = parseInt(document.getElementById("Time").value);
+	totalTime = parseInt(document.getElementById("Time").value)*1000;
+	
+	loadText(Math.floor(time/60)+' : '+time%60,"timer",100,-470,500,0);
+	updateCardCount();
+	timedFunctions.push({timer:0,maxTime:1000,onTimeReached:function(){updateTime()}});
+	timedFunctions.push({timer:0,maxTime:totalTime,onTimeReached:function(){rushOver();}});
+	
+	startMovingCards();
+}
+
 function updateTime() {
+	
+	removeText("timer");
 	if (time>0) {
-		var timerText;
 		time--;
-		if (Math.floor((time+1)/60)!=Math.floor(time/60)) {
-			timerText = scene.getObjectByName("timerMinutes");
-			scene.remove(timerText);
-			timerText.material.dispose();
-			timerText.geometry.dispose();
-			loadText(Math.floor(time/60),"timerMinutes",100,-675,500,0);
-		}
-		if (Math.floor(((time+1)%60)/10)!=Math.floor((time%60)/10)) {
-			timerText = scene.getObjectByName("timerTenSeconds");
-			scene.remove(timerText);
-			timerText.material.dispose();
-			timerText.geometry.dispose();
-			loadText(Math.floor((time%60)/10),"timerTenSeconds",100,-550,500,0);
-		}
+		console.log(time);
 		
-		timerText = scene.getObjectByName("timerSeconds");
-		scene.remove(timerText);
-		timerText.material.dispose();
-		timerText.geometry.dispose();
-		loadText(time%10,"timerSeconds",100,-470,500,0);
+		if (time%60<10)
+			loadText(Math.floor(time/60)+' : 0'+time%60,"timer",100,-470,500,0);
+		else
+			loadText(Math.floor(time/60)+' : '+time%60,"timer",100,-470,500,0);
 		
 		timedFunctions.push({timer:0,maxTime:1000,onTimeReached:function(){updateTime()}});
 	}
 }
 
 function updateCardCount() {
-	var amountText;
-	
-	amountText = scene.getObjectByName("amountText")
-	scene.remove(amountText);
-	amountText.material.dispose();
-	amountText.geometry.dispose();
+	removeText("amountText");
 	loadText(rushDeckSize+"/30","amountText",100,400,500,0);
 	
 }

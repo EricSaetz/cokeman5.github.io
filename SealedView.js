@@ -1,10 +1,14 @@
-var packAmounts = [0,0,0,0,0,0,0,0,0,0,0];
+var packAmounts = [50,0,0,0,0,0,0,0,0,0,0];
 var packs = [];
 var hiddenCards = [true,true,true,true,true];
 var packNum = 0;
 var sealedCollection = [];
-var sealedDeck = [];
-var sealedDeckSize = 0;
+var sealedDeck1 = [];
+var sealedDeck2 = [];
+var sealedDeck3 = [];
+var currentSealedDeck = [];
+var currentSealedDeckSize = 0;
+var doneButton;
 var whichView;
 
 function startSealedView() {
@@ -13,35 +17,18 @@ function startSealedView() {
 
 function loadSealedOpeningView() {
 	clearAssets();
-	whichView = "Opening";
+	whichView = 0;
+	var scale = 12;
 	
-	for (var i=0; i<5;i++) {
-		var material1 = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
-		var material2 = new THREE.MeshLambertMaterial( { map: null, side: THREE.BackSide, transparent: true} );
-		object1 = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material1 );
-		object2 = new THREE.Mesh(  new THREE.PlaneGeometry( 286, 395, 4, 4 ), material2 );
-		object1.name = "front";
-		object2.name = "back";
-		object = new THREE.Object3D();
-		object.add(object1);
-		object.add(object2);
-		object1.visible = false;
-		object2.visible = false;
-		cardsToDisplay.push({mesh:object,card:null});
-		object.rotation.set(0,Math.PI,0,"XYZ");
-		scene.add( object );
-	}
+	createCardDisplay(-30*scale,7*scale,0,286,395,true,sealedCardClicked);
+	createCardDisplay(0,30*scale,0,286,395,true,sealedCardClicked);
+	createCardDisplay(30*scale,7*scale,0,286,395,true,sealedCardClicked);
+	createCardDisplay(19*scale,-30*scale,0,286,395,true,sealedCardClicked);
+	createCardDisplay(-19*scale,-30*scale,0,286,395,true,sealedCardClicked);
 	
 	setCardBack(document.getElementById("cardBackSelect").value);
 	
-	var scale = 12;
-	cardsToDisplay[0].mesh.position.set(-30*scale,7*scale,0);
-	cardsToDisplay[1].mesh.position.set(0,30*scale,0);
-	cardsToDisplay[2].mesh.position.set(30*scale,7*scale,0);
-	cardsToDisplay[3].mesh.position.set(19*scale,-30*scale,0);
-	cardsToDisplay[4].mesh.position.set(-19*scale,-30*scale,0);
-	
-	loadDoneButton();
+	doneButton = loadImage("doneButton",doneButtonPressed,true,0,0,0,300,192);
 }
 
 function autoOpen() {
@@ -49,13 +36,14 @@ function autoOpen() {
 		for (var cardIndex=0;cardIndex<5 && !hiddenCards[cardIndex];cardIndex++);
 		if (cardIndex<5) {
 			setCardTexture(cardsToDisplay[cardIndex],cardsToDisplay[cardIndex].card);
+			playCardRevealSound(cardsToDisplay[cardIndex].card);
 			animations.push({object:cardsToDisplay[cardIndex].mesh,type:"rotationY",amount:Math.PI,startingValue:cardsToDisplay[cardIndex].mesh.rotation.y,startTime:0,endTime:800});
 			hiddenCards[cardIndex]=false;
 			if (cardIndex!=4)
 				timedFunctions.push({timer:0,maxTime:800,onTimeReached:function(){autoOpen()}});
 			else {
 				timedFunctions.push({timer:0,maxTime:1600,onTimeReached:function(){autoOpen()}});
-				doneButton.visible=true;
+				doneButton.imgObj.visible=true;
 			}
 		} 
 		else {
@@ -72,26 +60,25 @@ function autoOpen() {
 }
 
 function loadSealedCollectionView() {
-	startCollectionView(sealedCollection,-200,0,1670,1240);
-	whichView="Collection";
-	sealedDeckSize=0;
-	sealedDeck=[];
+	theCollection=sealedCollection;
+	startCollectionView(-180,0,1690,1240, sealedCollectionCardClicked, null);
+	whichView=1;
+	sealedDeck1=[];
+	sealedDeck2=[];
+	sealedDeck3=[];
+	currentSealedDeck=sealedDeck1;
 	
 	for (var i=0; i<30;i++) {
-		var material = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
-		object1 = new THREE.Mesh(  new THREE.PlaneGeometry( 255, 40, 4, 4 ), material );
-		object1.name = "barArt";
-		object = new THREE.Object3D();
-		object.add(object1);
-		object.position.set( 900,590-i*40,0);
-		cardsToDisplay.push({mesh:object,card:null});
-		object.visible = false;
-		scene.add( object );
+		createBarDisplay( 900,550-i*40,0,255,40,sealedCollectionBarClicked);
 	}
+	
+	loadImage("Deck1",switchDeck1,true,820,590,0,85,30);
+	loadImage("Deck2",switchDeck2,true,905,590,0,85,30);
+	loadImage("Deck3",switchDeck3,true,990,590,0,85,30);
 }
 
 function openingModeChanged(value) {
-	if (whichView==="Opening") {
+	if (whichView===0) {
 		if (value==="Auto" && timedFunctions.length<=0) {
 			timedFunctions.push({timer:0,maxTime:800,onTimeReached:function(){autoOpen()}});
 		}
@@ -112,91 +99,112 @@ function doneButtonPressed() {
 	}
 }
 
-function sealedCardClicked(num) {
-	var flag = false;
-	var card = cardsToDisplay[num].card;
-	if (whichView==="Opening") {
+function sealedCardClicked(cardDisplay) {
+	
+	if (whichView==0) {
 		if (document.getElementById("openingModeSelect").value==="Normal") {
-			if (hiddenCards[num]) {
-				setCardTexture(cardsToDisplay[num],card);
-				animations.push({object:cardsToDisplay[num].mesh,type:"rotationY",amount:Math.PI,startingValue:cardsToDisplay[num].mesh.rotation.y,startTime:0,endTime:800});
-				hiddenCards[num]=false;
+			for (var i=0;i<5;i++) {
+				if (cardsToDisplay[i]==cardDisplay) {
+					if (hiddenCards[i]) {
+						setCardTexture(cardDisplay,cardDisplay.card);
+						playCardRevealSound(cardDisplay.card);
+						animations.push({object:cardDisplay.mesh,type:"rotationY",amount:Math.PI,startingValue:cardDisplay.mesh.rotation.y,startTime:0,endTime:800});
+						hiddenCards[i]=false;
+					}
+				}
 			}
 			
 			if (!hiddenCards[0] && !hiddenCards[1] && !hiddenCards[2] && !hiddenCards[3] && !hiddenCards[4])
-				doneButton.visible=true;
+				doneButton.imgObj.visible=true;
 		}
-	}
-	else if (whichView==="Collection") {
-		if (num<8) {
-			if (sealedDeckSize<30) {
-				sealedDeckSize++;
-				for (var i=0;i<sealedDeck.length && !flag;i++) {
-					if (card.amount > 0 && sealedDeck[i].id==card.id) {
-						if (sealedDeck[i].rarity<5 && sealedDeck[i].amount<2) {
-							sealedDeck[i].amount++;
-							card.amount--;
-							loadCardAmountText(cardsToDisplay[num], 50,-45,-275, 0);
-							if (card.amount<=0)
-								cardsToDisplay[num].mesh.getObjectByName("front").material.color.setHex( 0x838383 );
-							setBarTexture(cardsToDisplay[i+8],sealedDeck[i]);
-						}
-						flag=true;
-					}
-				}
-				if (card.amount > 0 && !flag) {
-					sealedDeck.push({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden});
-					card.amount--;
-					loadCardAmountText(cardsToDisplay[num], 50,-45,-275, 0);
-					if (card.amount<=0)
-						cardsToDisplay[num].mesh.getObjectByName("front").material.color.setHex( 0x838383 );
-				}
-			}
-		}
-		else {
-			card.amount--;
-			addToCollection({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden},sealedCollection,null,1);
-			for (var i=0;i<8;i++) {
-				if (cardsToDisplay[i].card.id==card.id) {
-					loadCardAmountText(cardsToDisplay[i], 50,-45,-275, 0);
-					cardsToDisplay[i].mesh.getObjectByName("front").material.color.setHex( 0xFFFFFF );
-				}
-			}
-			if (card.amount>0)
-				setBarTexture(cardsToDisplay[num],card);
-			else {
-				for (var i=0;i<sealedDeck.length;i++) {
-					if (sealedDeck[i].id==card.id) {
-						sealedDeck.splice(i,1);
-					}
-				}
-			}
-		}
-		updateDeckList();
 	}
 }
 
-function updateDeckList() {
-	sealedDeck.sort(function(a, b){return compareCards(a,b)});
-	console.log(sealedDeck);
-	for (var i=0;i<30;i++) {
-		if (sealedDeck.length>i) {
-			if (cardsToDisplay[i+8].card==null || cardsToDisplay[i+8].card.id!=sealedDeck[i].id) {
-				setBarTexture(cardsToDisplay[i+8],sealedDeck[i]);
+function playCardRevealSound(card) {
+	switch (card.rarity) {
+		case 3 : {
+			playSound('Sounds/card_turn_over_rare.ogg',.2);
+			playSound('Sounds/Rare.ogg',1); 
+		}
+			break;
+		case 4 : {
+			playSound('Sounds/card_turn_over_epic.ogg',.2);
+			playSound('Sounds/Epic.ogg',1);
+		}
+			break;
+		case 5 : {
+			playSound('Sounds/card_turn_over_legendary.ogg',.2);
+			playSound('Sounds/Legendary.ogg',1);
+		}
+			break;
+		default : playSound('Sounds/card_turn_over_normal.ogg',.2);
+	}
+}
+
+function sealedCollectionCardClicked(cardDisplay) {
+	var cardFoundInDeck = false;
+	
+		if (currentSealedDeckSize<30 && cardDisplay.card.amount > 0) {
+			currentSealedDeckSize++;
+			//if card is not unique to the deck
+			for (var i=0;i<currentSealedDeck.length && !cardFoundInDeck;i++) {
+				if (currentSealedDeck[i].id==cardDisplay.card.id) {
+					if (currentSealedDeck[i].rarity<5 && currentSealedDeck[i].amount<2) {
+						currentSealedDeck[i].amount++;
+						cardDisplay.card.amount--;
+						removeFromCollection(cardDisplay.card.id,1,sealedCollection);
+						loadCardAmountText(cardDisplay, 50,-45,-255, 0);
+						if (cardDisplay.card.amount<=0)
+							cardDisplay.mesh.getObjectByName("front").material.color.setHex( 0x838383 );
+						setBarTexture(cardsToDisplay[i+8],currentSealedDeck[i]);
+					}
+					cardFoundInDeck=true;
+				}
+			}
+			//if card is  unique to the deck
+			if (!cardFoundInDeck) {
+				currentSealedDeck.push({name:cardDisplay.card.name,id:cardDisplay.card.id,rarity:cardDisplay.card.rarity,manaCost:cardDisplay.card.manaCost,theClass:cardDisplay.card.theClass,amount:1, amountGolden:cardDisplay.card.amountGolden});
+				cardDisplay.card.amount--;
+				removeFromCollection(cardDisplay.card.id,1,sealedCollection);
+				loadCardAmountText(cardDisplay, 50,-45,-255, 0);
+				if (cardDisplay.card.amount<=0)
+					cardDisplay.mesh.getObjectByName("front").material.color.setHex( 0x838383 );
 			}
 		}
-		else {
-			for (var n=0;n<cardsToDisplay[i+8].mesh.children.length;n++) {
-				cardsToDisplay[i+8].mesh.children[n].visible=false;
-				cardsToDisplay[i+8].card=null;
+		
+		updateDeckList(currentSealedDeck,8);
+}
+
+function sealedCollectionBarClicked(cardDisplay) {
+	cardDisplay.card.amount--;
+	addToCollection({name:cardDisplay.card.name,id:cardDisplay.card.id,rarity:cardDisplay.card.rarity,manaCost:cardDisplay.card.manaCost,theClass:cardDisplay.card.theClass,amount:1, amountGolden:cardDisplay.card.amountGolden},sealedCollection,null,1);
+	currentSealedDeckSize--;
+	for (var i=0;i<8;i++) {
+		if (cardsToDisplay[i].card.id==cardDisplay.card.id) {
+			cardsToDisplay[i].card.amount++;
+			loadCardAmountText(cardsToDisplay[i], 50,-45,-255, 0);
+			cardsToDisplay[i].mesh.getObjectByName("front").material.color.setHex( 0xFFFFFF );
+		}
+	}
+	
+	for (var i=0;i<currentSealedDeck.length;i++) {
+		if (currentSealedDeck[i].id==cardDisplay.card.id) {
+			currentSealedDeck[i].amount = cardDisplay.card.amount;
+			if (cardDisplay.card.amount>0)
+				setBarTexture(cardDisplay,cardDisplay.card);
+			else {
+				currentSealedDeck.splice(i,1);
+				i--;
 			}
 		}
 	}
+	
+	updateDeckList(currentSealedDeck,8);
 }
 
 function displayPack() {
-	if (packs.length>0) {
-		doneButton.visible=false;
+		if (packs.length>0) {
+		doneButton.imgObj.visible=false;
 		for (var i=0;i<5;i++) {
 			setCardBack(document.getElementById("cardBackSelect").value);
 			cardsToDisplay[i].card = packs[packNum][i];
@@ -238,53 +246,77 @@ function clearPacks() {
 
 function openPacks() {
 	var theExpansion;
+	var flag = false;
 	
-	sealedCollection = initCollection();
+	sealedCollection = [];
 	
 	packs=[];
-	clearPreloadedImages();
+	
+	createLoadingIcon(0,0,0);
 	
 	for (var i=0;i<packAmounts.length;i++) {
-		switch (i) {
-			case 0 : theExpansion = limitedCollection.expansionAll;
-				break;
-			case 1 : theExpansion = limitedCollection.expansionBasic;
-				break;
-			case 2 : theExpansion = limitedCollection.expansionClassic;
-				break;
-			case 3 : theExpansion = limitedCollection.expansionNaxx;
-				break;
-			case 4 : theExpansion = limitedCollection.expansionGvG;
-				break;
-			case 5 : theExpansion = limitedCollection.expansionBRM;
-				break;
-			case 6 : theExpansion = limitedCollection.expansionTGT;
-				break;
-			case 7 : theExpansion = limitedCollection.expansionLOE;
-				break;
-			case 8 : theExpansion = limitedCollection.expansionOG;
-				break;
-			case 9 : theExpansion = limitedCollection.expansionKARA;
-				break;
-			case 10 : theExpansion = limitedCollection.expansionMSG;
-				break;
-		}
-		
-		for (var n=0;n<packAmounts[i];n++) {
-			var aPack=generatePack(theExpansion);
-			for (var z=0;z<aPack.length;z++)
-				addToCollection(aPack[z],sealedCollection,null,1);
-			packs.push(aPack);
+		if (packAmounts[i]>0) {
+			switch (i) {
+				case 0 : theExpansion = getSubCollection(collection,function(card){return card.amount>0},true);
+					break;
+				case 1 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==1},true);
+					break;
+				case 2 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==2},true);
+					break;
+				case 3 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==3},true);
+					break;
+				case 4 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==4},true);
+					break;
+				case 5 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==5},true);
+					break;
+				case 6 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==6},true);
+					break;
+				case 7 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==7},true);
+					break;
+				case 8 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==8},true);
+					break;
+				case 9 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==9},true);
+					break;
+				case 10 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==10},true);
+			}
+			
+			for (var n=0;n<packAmounts[i];n++) {
+				var aPack=generatePack(theExpansion);
+				for (var z=0;z<aPack.length;z++) {
+					flag = false;
+					for (var m=0;m<sealedCollection.length && !flag;m++) {
+						if (sealedCollection[m].id==aPack[z].id) {
+							sealedCollection[m].amount++;
+							flag=true;
+						}
+					}
+					if (!flag) {
+						sealedCollection.push(aPack[z]);
+					}
+				}
+				packs.push(aPack);
+			}
 		}
 	}
 	
-	for (var i=0;i<sealedCollection.expansionAll.allCards.length;i++)
-		preloadCardTexture(sealedCollection.expansionAll.allCards[i]);
+	sealedCollection.sort(function(a, b){return compareCards(a,b)});
+	loadCollectionTextures(sealedCollection, false,onFinishedLoadingSealed);
+}
+
+function onFinishedLoadingSealed() {
+	for (var i=0;i<imagesToDisplay.length;i++) {
+		if (imagesToDisplay[i].imgObj.name==="Loading") {
+			unloadImage(imagesToDisplay[i]);
+			imagesToDisplay.splice(i,1);
+			i--;
+		}
+	}
 	
-	sortCollection(sealedCollection);
-	
-	if (document.getElementById("openingModeSelect").value==="Instant")
+	if (document.getElementById("openingModeSelect").value==="Instant") {
+		for (var i=0;i<sealedCollection.length;i++)
+			loadCardTexture(sealedCollection[i],true);
 		loadSealedCollectionView();
+	}
 	else if (document.getElementById("openingModeSelect").value==="Auto") {
 		loadSealedOpeningView();
 		packNum=0;
@@ -317,22 +349,39 @@ function generatePack(expansion) {
 	var cardPool;
 	var card;
 	var commonsInPack=0;
+	var index;
+	var flag;
 	
+	var commons = getSubCollection(expansion,function(card){return card.rarity==1 || card.rarity==2},false);
+	var rares = getSubCollection(expansion,function(card){return card.rarity==3},false);
+	var epics = getSubCollection(expansion,function(card){return card.rarity==4},false);
+	var legendaries = getSubCollection(expansion,function(card){return card.rarity==5},false);
 	
 	for (var z=0;z<5;z++) {
 		rarity = Math.random();
-		if (rarity<.0110 && expansion.legendaries.length>0)
-			cardPool=expansion.legendaries;
-		else if (rarity<.0552 && expansion.epics.length>0)
-			cardPool=expansion.epics;
-		else if ((rarity<.2293 || commonsInPack>=4) && expansion.rares.length>0)
-			cardPool=expansion.rares;
+		if (rarity<.0110 && legendaries.length>0)
+			cardPool=legendaries;
+		else if (rarity<.0552 && epics.length>0)
+			cardPool=epics;
+		else if ((rarity<.2293 || commonsInPack>=4) && rares.length>0)
+			cardPool=rares;
 		else {
 			commonsInPack++;
-			cardPool=expansion.commons;
+			cardPool=commons;
 		}
 		if (cardPool.length>0) {
-			card = cardPool[Math.floor(Math.random()*cardPool.length)];
+			index = Math.floor(Math.random()*cardPool.length);
+			card = cardPool[index];
+			if (card.amount==1 && card.rarity!=5) {
+				cardPool.splice(index,1);
+				flag = false;
+				for (var i=0;!flag && i<expansion.length;i++)
+					if (expansion[i].id==card.id) {
+						expansion.splice(i,1);
+						i--;
+						flag=true;
+					}
+			}
 			card = {name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden};
 		} else {
 			card = {name:"Shadow of Nothing",id:-1,rarity:4,manaCost:0,theClass:"PRIEST",amount:1, amountGolden:0};
@@ -343,12 +392,35 @@ function generatePack(expansion) {
 	return pack;
 }
 
-function loadDoneButton() {
-	map = new THREE.TextureLoader().load( 'Other/doneButton.png' );
-	map.minFilter = THREE.LinearFilter;
-	var material = new THREE.MeshLambertMaterial( { map: map, side: THREE.FrontSide, transparent: true } );
-	object = new THREE.Mesh(  new THREE.PlaneGeometry( 300, 192, 4, 4 ), material );
-	object.visible=false;
-	doneButton = object;
-	scene.add( object );
+function switchDeck1() {
+	currentSealedDeck = sealedDeck1;
+	
+	currentSealedDeckSize=0;
+	for (var i;i<currentSealedDeck.length;i++) {
+		currentDeckSealedSize+=currentSealedDeck[i].amount;
+	}
+	
+	updateDeckList(currentSealedDeck,8);
+}
+
+function switchDeck2() {
+	currentSealedDeck = sealedDeck2;
+	
+	currentSealedDeckSize=0;
+	for (var i;i<currentSealedDeck.length;i++) {
+		currentDeckSealedSize+=currentSealedDeck[i].amount;
+	}
+	
+	updateDeckList(currentSealedDeck,8);
+}
+
+function switchDeck3() {
+	currentSealedDeck = sealedDeck3;
+	
+	currentSealedDeckSize=0;
+	for (var i;i<currentSealedDeck.length;i++) {
+		currentDeckSealedSize+=currentSealedDeck[i].amount;
+	}
+	
+	updateDeckList(currentSealedDeck,8);
 }

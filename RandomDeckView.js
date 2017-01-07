@@ -1,5 +1,6 @@
+var randomDeck = [];
+
 function startRandomDeckView() {
-	
 	loadRandomDeckGUI();
 }
 
@@ -7,15 +8,7 @@ function displayRandomDeck() {
 	clearAssets();
 	
 	for (var i=0; i<30;i++) {
-		var material = new THREE.MeshLambertMaterial( { map: null, side: THREE.FrontSide, transparent: true } );
-		object1 = new THREE.Mesh(  new THREE.PlaneGeometry( 130*3, 34*3, 4, 4 ), material );
-			object1.name = "barArt";
-			object = new THREE.Object3D();
-			object.add(object1);
-			object.position.set( 500*Math.floor(i/10)-500,510-34*3*(i%10),0);
-			cardsToDisplay.push({mesh:object,card:null});
-			object.visible = false;
-			scene.add( object );
+		createBarDisplay( 500*Math.floor(i/10)-500,510-34*3*(i%10),0,130*3,34*3,null);
 	}
 	
 	for (var i=0;i<30;i++) {
@@ -36,30 +29,47 @@ function createRandomDeck() {
 	var flag = false;
 	var percentageClassCards;
 	var selectedClass;
+	var neutrals;
+	var isReno,isStand;
 	
+	isReno = document.getElementById('renoCheckBox').checked;
+	isStand = document.getElementById('standardCheckBox').checked;
 	percentageClassCards = parseInt(document.getElementById('percentageClassCards').value);
 	selectedClass = document.getElementById('classSelect').value;
 	
+	console.log(isStandard);
+	
+	createLoadingIcon(0,0,0);
+	
+	if (selectedClass==="Random")
+		selectedClass=getRandomClass();
+	
 	switch (selectedClass) {
-		case 'Random' : theClass = getRandomClass(limitedCollection);
+		case 'Druid' : theClass = getSubCollection(collection,function(card){return card.theClass==="DRUID" && card.amount>0},true);
 			break;
-		case 'Druid' : theClass = limitedCollection.expansionAll.druid;
+		case 'Hunter' : theClass = getSubCollection(collection,function(card){return card.theClass==="HUNTER" && card.amount>0},true);
 			break;
-		case 'Hunter' : theClass = limitedCollection.expansionAll.hunter;
+		case 'Mage' : theClass = getSubCollection(collection,function(card){return card.theClass==="MAGE" && card.amount>0},true);
 			break;
-		case 'Mage' : theClass = limitedCollection.expansionAll.mage;
+		case 'Paladin' : theClass = getSubCollection(collection,function(card){return card.theClass==="PALADIN" && card.amount>0},true);
 			break;
-		case 'Paladin' : theClass = limitedCollection.expansionAll.paladin;
+		case 'Priest' : theClass = getSubCollection(collection,function(card){return card.theClass==="PRIEST" && card.amount>0},true);
 			break;
-		case 'Priest' : theClass = limitedCollection.expansionAll.priest;
+		case 'Rogue' : theClass = getSubCollection(collection,function(card){return card.theClass==="ROGUE" && card.amount>0},true);
 			break;
-		case 'Rogue' : theClass = limitedCollection.expansionAll.rogue;
+		case 'Shaman' : theClass = getSubCollection(collection,function(card){return card.theClass==="SHAMAN" && card.amount>0},true);
 			break;
-		case 'Shaman' : theClass = limitedCollection.expansionAll.shaman;
+		case 'Warlock' : theClass = getSubCollection(collection,function(card){return card.theClass==="WARLOCK" && card.amount>0},true);
 			break;
-		case 'Warlock' : theClass = limitedCollection.expansionAll.warlock;
-			break;
-		case 'Warrior' : theClass = limitedCollection.expansionAll.warrior;
+		case 'Warrior' : theClass = getSubCollection(collection,function(card){return card.theClass==="WARRIOR" && card.amount>0},true);
+	}
+		
+		
+	neutrals = getSubCollection(collection,function(card){return card.theClass==="NONE" && card.amount>0},true);
+	
+	if (isStand) {
+		theClass = getSubCollection(theClass,function(card){return isStandard(card)},false);
+		neutrals = getSubCollection(neutrals,function(card){return isStandard(card)},false);
 	}
 	
 	randomDeck=[];
@@ -67,14 +77,24 @@ function createRandomDeck() {
 	for (var i=0;i<30;i++) {
 		flag=false;
 		
+		if (i==0 && isReno) {
+			for (var z=0;z<neutrals.length;z++) {
+				if (neutrals[z].id==27228) {
+					randomDeck.push({name:neutrals[z].name,id:neutrals[z].id,rarity:neutrals[z].rarity,manaCost:neutrals[z].manaCost,theClass:neutrals[z].theClass,amount:1, amountGolden:neutrals[z].amountGolden});
+					i++;
+					break;
+				}
+			}
+		}
+		
 		if (Math.random()*100<percentageClassCards && theClass.length>0)
 			cards = theClass;
 		else
-			cards = limitedCollection.expansionAll.neutral;
+			cards = neutrals;
 		
 		index = Math.floor(Math.random()*cards.length);
 		for (var n=0;n<randomDeck.length && !flag;n++) {
-			if (randomDeck[n].name===(cards[index].name)) {
+			if (randomDeck[n].id==cards[index].id) {
 				randomDeck[n].amount++;
 				flag = true;
 			}
@@ -86,89 +106,19 @@ function createRandomDeck() {
 				card = {name:"Shadow of Nothing",id:-1,rarity:4,manaCost:0,theClass:"PRIEST",amount:1, amountGolden:0};
 			randomDeck.push(card);
 		}
-		cards[index].amount--;
-		if (cards[index].amount<=0)
+		
+		if (isReno)
 			cards.splice(index,1);
+		else {
+			cards[index].amount--;
+			if (cards[index].amount<=0)
+				cards.splice(index,1);
+		}
 	}
 	
 	randomDeck.sort(function(a, b){return compareCards(a,b)});
 	
-	for (var n=0;n<randomDeck.length;n++) {
-		addToCollection(randomDeck[n],limitedCollection,2,0);
-	}
-	
-	displayRandomDeck();
-}
-
-function setBarTexture(cardDisplay,card) {
-	var map;
-	var material;
-	
-	var barArtObject = cardDisplay.mesh.getObjectByName("barArt");
-	var width = barArtObject.geometry.parameters.width;
-	var height = barArtObject.geometry.parameters.height;
-	
-	map = new THREE.TextureLoader().load( 'Bars/' + card.name.replace(':','_') + '.png' );
-	map.minFilter = THREE.LinearFilter;
-	
-	
-	if (cardDisplay.mesh.children.length>=3) {
-		var amountText = cardDisplay.mesh.getObjectByName("cardAmountText");
-		if (amountText!=null) {
-			amountText.material.dispose();
-			amountText.geometry.dispose();
-			cardDisplay.mesh.remove(amountText);
-		}
-	}
-	
-	if (cardDisplay.mesh.children.length>=2) {
-		var manaText = cardDisplay.mesh.getObjectByName("cardManaText");
-		if (manaText.material instanceof THREE.MultiMaterial) {
-			manaText.material.materials[0].dispose();
-			manaText.material.materials[1].dispose();
-		}
-		manaText.geometry.dispose();
-		cardDisplay.mesh.remove(manaText);
-	}
-	
-	if (barArtObject.material.map!=null)
-		barArtObject.material.map.dispose();
-	
-	barArtObject.material.map=map;
-	barArtObject.visible=true;
-	cardDisplay.card=card;
-	cardDisplay.mesh.visible=true;
-	
-	if (card.rarity<5)
-		loadTextForDeckList(cardDisplay,"cardAmountText",card.amount,width/390*30,0xD8D63C,null, width/390*160, height/102*-15, 1);
-	loadTextForDeckList(cardDisplay,"cardManaText",card.manaCost,width/390*40,0xFFFFFF,0x000000, width/390*-175, height/102*-20, 1);
-	
-	cardDisplay.mesh.needsUpdate = true;
-}
-
-function loadTextForDeckList(cardDisplay, name, theText, size, color, color2, x, y, z) {
-	var loader = new THREE.FontLoader();
-
-	loader.load( 'Font/Harabara_Regular.json', function ( font ) {
-		var textGeo;
-		
-		if (color2!=null)
-			textGeo = new THREE.TextGeometry( theText, {font: font,size: size,height: 1,curveSegments: 12,bevelThickness: 1, bevelSize: 4, bevelEnabled: true} );
-		else 
-			textGeo = new THREE.TextGeometry( theText, {font: font,size: size,height: 1,curveSegments: 12} );
-		
-		var textMaterial = new THREE.MeshPhongMaterial( { color: color } );
-		if (color2!=null) {
-			textMaterial = new THREE.MultiMaterial([textMaterial,new THREE.MeshPhongMaterial( { color: color2 } )]);
-		}
-
-		var mesh = new THREE.Mesh( textGeo, textMaterial );
-		
-		mesh.name = name;
-		
-		mesh.position.set(x,y,z);
-		cardDisplay.mesh.add(mesh);
-	} );
+	loadCollectionTextures(randomDeck, true, displayRandomDeck);
 }
 
 function filterInput(theEvent) {
