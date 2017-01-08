@@ -105,7 +105,7 @@ function readFullCollection() {
 			else if (text[n].includes('data-is-gold')) {
 				//get whether or not the card is golden
 				cardData=text[n].split('"');
-				isGolden = (cardData[3]==="TRUE");
+				isGolden = (cardData[3]==="True");
 			}
 			else if (text[n].includes('data-card-count')) {
 				//get the amount of cards the player owns
@@ -152,14 +152,15 @@ function readCollection(text) {
 		
 		for (var n=0;n<text.length;n++) {
 			if (text[n].includes('data-card-name')) {
-				cardData=text[n].split('"');
+				cardData = text[n].split('"');
 				cardName = cardData[15];
 				cardName = cardName.replace(/&amp;#27;/g,'\'');
 				id = parseInt(cardData[21]);
 				rarity = parseInt(cardData[25]);
 				manaCost = parseInt(cardData[11]);
-				theClass=cardData[5];
-				isGolden = (cardData[23]==="TRUE");
+				theClass = cardData[5];
+				isGolden = (cardData[23]==="True");
+				console.log(text[n]);
 			}
 			else if (text[n].includes('data-card-count')) {
 				cardAmount = parseInt(text[n].split('"')[3]);
@@ -169,7 +170,7 @@ function readCollection(text) {
 				for (var i=0;i<someBasics.length && rarity==1;i++)
 					if (id==someBasics[i])
 						rarity=2;
-				
+					
 				if (!isGolden) {
 					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount, amountGolden:amountGolden};
 					tempCollection.push(card);
