@@ -70,6 +70,13 @@ function createRandomDeck() {
 		neutrals = getSubCollection(neutrals,function(card){return isStandard(card)},false);
 	}
 	
+	if (isReno) {
+		for (var z=0;z<theClass.length;z++)
+			theClass[z].amount=1;
+		for (var z=0;z<neutrals.length;z++)
+			theClass[z].amount=1;
+	}
+	
 	randomDeck=[];
 	
 	for (var i=0;i<30;i++) {
@@ -105,13 +112,11 @@ function createRandomDeck() {
 			randomDeck.push(card);
 		}
 		
-		if (isReno)
+		
+		
+		cards[index].amount--;
+		if (cards[index].amount<=0)
 			cards.splice(index,1);
-		else {
-			cards[index].amount--;
-			if (cards[index].amount<=0)
-				cards.splice(index,1);
-		}
 	}
 	
 	randomDeck.sort(function(a, b){return compareCards(a,b)});
