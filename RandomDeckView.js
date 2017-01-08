@@ -74,7 +74,7 @@ function createRandomDeck() {
 		for (var z=0;z<theClass.length;z++)
 			theClass[z].amount=1;
 		for (var z=0;z<neutrals.length;z++)
-			theClass[z].amount=1;
+			neutrals[z].amount=1;
 	}
 	
 	randomDeck=[];
