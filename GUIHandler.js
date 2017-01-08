@@ -3,7 +3,7 @@ function customCollectionPressed() {
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Hearthpwn Username:";
-	aText.setAttribute("style","position:fixed; bottom:39.5%; left:33%");
+	aText.setAttribute("style","position:fixed; bottom:39.5%; left:33%; font-size:15px");
 	gui.appendChild(aText);
 	
 	input = document.createElement("input");
@@ -40,7 +40,7 @@ function loadMainGUI() {
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Game Mode:";
-	aText.setAttribute("style","position:absolute; top:0px; left:100px");
+	aText.setAttribute("style","position:absolute; top:0px; left:100px; font-size:15px");
 	gui.appendChild(aText);
 	aSelect = document.createElement("select");
 	aSelect.setAttribute("onchange", "changeMode(this.value)");
@@ -56,7 +56,7 @@ function loadMainGUI() {
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Card Back:";
-	aText.setAttribute("style","position:absolute; top:60px; left:38px");
+	aText.setAttribute("style","position:absolute; top:60px; left:38px; font-size:15px");
 	aText.setAttribute("id","cardBackText");
 	gui.appendChild(aText);
 	aSelect = document.createElement("select");
@@ -74,7 +74,7 @@ function loadMainGUI() {
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Volume:";
-	aText.setAttribute("style","position:absolute; top:95px; left:34px");
+	aText.setAttribute("style","position:absolute; top:95px; left:34px; font-size:15px");
 	aText.setAttribute("id","volumeText");
 	gui.appendChild(aText);
 	input = document.createElement("input");
@@ -87,7 +87,7 @@ function loadMainGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="Here you can view your collection";
 	aText.setAttribute("id","modeDescription");
-	aText.setAttribute("style","position:absolute;  width:250px; height:100px; top:120px; left:25px; text-align:center");
+	aText.setAttribute("style","position:absolute;  width:250px; height:100px; top:120px; left:25px; text-align:center; font-size:15px");
 	gui.appendChild(aText);
 }
 
@@ -102,7 +102,7 @@ function loadRandomDeckGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="Standard Only?";
 	aText.setAttribute("id","standardText");
-	aText.setAttribute("style","position:absolute; bottom:195px; left:85px");
+	aText.setAttribute("style","position:absolute; bottom:195px; left:85px; font-size:15px");
 	gui.appendChild(aText);
 	input = document.createElement("input");
 	input.setAttribute("type","checkbox");
@@ -113,7 +113,7 @@ function loadRandomDeckGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="Reno Deck?";
 	aText.setAttribute("id","renoText");
-	aText.setAttribute("style","position:absolute; bottom:165px; left:85px");
+	aText.setAttribute("style","position:absolute; bottom:165px; left:85px; font-size:15px");
 	gui.appendChild(aText);
 	input = document.createElement("input");
 	input.setAttribute("type","checkbox");
@@ -133,7 +133,7 @@ function loadRandomDeckGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="% Chance of Class Cards:";
 	aText.setAttribute("id","%Text");
-	aText.setAttribute("style","position:absolute; bottom:95px; left:50px");
+	aText.setAttribute("style","position:absolute; bottom:95px; left:50px; font-size:15px");
 	gui.appendChild(aText);
 	
 	input = document.createElement("input");
@@ -146,7 +146,7 @@ function loadRandomDeckGUI() {
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Class:";
-	aText.setAttribute("style","position:absolute; bottom:130px; left:88px");
+	aText.setAttribute("style","position:absolute; bottom:130px; left:88px; font-size:15px");
 	aText.setAttribute("id","classText");
 	gui.appendChild(aText);
 	
@@ -213,7 +213,7 @@ function loadSealedGUI() {
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Opening Mode:";
-	aText.setAttribute("style","position:absolute; bottom:290px; left:38px");
+	aText.setAttribute("style","position:absolute; bottom:290px; left:38px; font-size:15px");
 	aText.setAttribute("id","openingModeText");
 	gui.appendChild(aText);
 	aSelect = document.createElement("select");
@@ -231,7 +231,7 @@ function loadSealedGUI() {
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Packs:";
-	aText.setAttribute("style","position:absolute; bottom:250px; left:38px");
+	aText.setAttribute("style","position:absolute; bottom:250px; left:38px; font-size:15px");
 	aText.setAttribute("id","packText");
 	gui.appendChild(aText);
 	aSelect = document.createElement("select");
@@ -243,7 +243,7 @@ function loadSealedGUI() {
 	aTextArea.setAttribute("cols",15);
 	aTextArea.setAttribute("readonly","true");
 	aTextArea.setAttribute("id","packAmountsText");
-	aTextArea.setAttribute("style","position:absolute; bottom:130px; left:38px;overflow-y:scroll; height:100px");
+	aTextArea.setAttribute("style","position:absolute; bottom:130px; left:38px;overflow-y:scroll; height:100px; font-size:15px");
 	gui.appendChild(aTextArea);
 	
 	var textAreaContents = '';
@@ -293,7 +293,7 @@ function loadSealedGUI() {
 	
 	aText = document.createElement("p");
 	aText.innerHTML="#";
-	aText.setAttribute("style","position:absolute; bottom:250px; left:215px");
+	aText.setAttribute("style","position:absolute; bottom:250px; left:215px; font-size:15px");
 	aText.setAttribute("id","amountText");
 	gui.appendChild(aText);
 	
@@ -352,7 +352,7 @@ function loadRushGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="Standard Only?";
 	aText.setAttribute("id","standardText");
-	aText.setAttribute("style","position:absolute; bottom:215px; left:85px");
+	aText.setAttribute("style","position:absolute; bottom:215px; left:85px; font-size:15px");
 	gui.appendChild(aText);
 	input = document.createElement("input");
 	input.setAttribute("type","checkbox");
@@ -371,7 +371,7 @@ function loadRushGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="Time(s):";
 	aText.setAttribute("id","timeText");
-	aText.setAttribute("style","position:absolute; bottom:190px; left:105px");
+	aText.setAttribute("style","position:absolute; bottom:190px; left:105px; font-size:15px");
 	gui.appendChild(aText);
 	
 	input = document.createElement("input");
@@ -385,12 +385,12 @@ function loadRushGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="Amount of Cards:";
 	aText.setAttribute("id","amountOfCardsText");
-	aText.setAttribute("style","position:absolute; bottom:160px; left:75px");
+	aText.setAttribute("style","position:absolute; bottom:160px; left:75px; font-size:15px");
 	gui.appendChild(aText);
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Class:";
-	aText.setAttribute("style","position:absolute; bottom:125px; left:88px");
+	aText.setAttribute("style","position:absolute; bottom:125px; left:88px; font-size:15px");
 	aText.setAttribute("id","classText");
 	gui.appendChild(aText);
 	
@@ -418,7 +418,7 @@ function loadRushGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="% Chance of Class Cards:";
 	aText.setAttribute("id","%Text");
-	aText.setAttribute("style","position:absolute; bottom:95px; left:50px");
+	aText.setAttribute("style","position:absolute; bottom:95px; left:50px; font-size:15px");
 	gui.appendChild(aText);
 	
 	input = document.createElement("input");
@@ -476,7 +476,7 @@ function loadArenaGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="Standard Only?";
 	aText.setAttribute("id","standardText");
-	aText.setAttribute("style","position:absolute; bottom:195px; left:85px");
+	aText.setAttribute("style","position:absolute; bottom:195px; left:85px; font-size:15px");
 	gui.appendChild(aText);
 	input = document.createElement("input");
 	input.setAttribute("type","checkbox");
@@ -487,7 +487,7 @@ function loadArenaGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="Allow Banned Cards?";
 	aText.setAttribute("id","bannedCardsText");
-	aText.setAttribute("style","position:absolute; bottom:170px; left:75px");
+	aText.setAttribute("style","position:absolute; bottom:170px; left:75px; font-size:15px");
 	gui.appendChild(aText);
 	
 	input = document.createElement("input");
@@ -499,7 +499,7 @@ function loadArenaGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="Allow C'thun Cards?";
 	aText.setAttribute("id","c'thunText");
-	aText.setAttribute("style","position:absolute; bottom:140px; left:75px");
+	aText.setAttribute("style","position:absolute; bottom:140px; left:75px; font-size:15px");
 	gui.appendChild(aText);
 	
 	input = document.createElement("input");
@@ -510,7 +510,7 @@ function loadArenaGUI() {
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Cards Per Selection:";
-	aText.setAttribute("style","position:absolute; bottom:105px; left:65px");
+	aText.setAttribute("style","position:absolute; bottom:105px; left:65px; font-size:15px");
 	aText.setAttribute("id","cardChoiceAmountText");
 	gui.appendChild(aText);
 	
@@ -574,7 +574,7 @@ function loadMarketGUI() {
 	aText = document.createElement("p");
 	aText.innerHTML="Standard Only?";
 	aText.setAttribute("id","standardText");
-	aText.setAttribute("style","position:absolute; bottom:130px; left:85px");
+	aText.setAttribute("style","position:absolute; bottom:130px; left:85px; font-size:15px");
 	gui.appendChild(aText);
 	input = document.createElement("input");
 	input.setAttribute("type","checkbox");
@@ -584,7 +584,7 @@ function loadMarketGUI() {
 	
 	aText = document.createElement("p");
 	aText.innerHTML="Budget:";
-	aText.setAttribute("style","position:absolute; bottom:100px; left:100px");
+	aText.setAttribute("style","position:absolute; bottom:100px; left:100px; font-size:15px");
 	aText.setAttribute("id","budgetText");
 	gui.appendChild(aText);
 	
