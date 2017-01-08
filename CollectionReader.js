@@ -160,7 +160,6 @@ function readCollection(text) {
 				manaCost = parseInt(cardData[11]);
 				theClass = cardData[5];
 				isGolden = (cardData[23]==="True");
-				console.log(text[n]);
 			}
 			else if (text[n].includes('data-card-count')) {
 				cardAmount = parseInt(text[n].split('"')[3]);

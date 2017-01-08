@@ -206,21 +206,31 @@ function loadCardTexture(card, isBar, onLoadingFinished) {
 
 function loadCollectionTextures(theCollection, isBar,onLoadingFinished) {
 	var map;
+	var alreadyLoaded;
 	for (var i=0;i<theCollection.length;i++) {
-		if (isBar)
-			map = new THREE.TextureLoader().load( 'Bars/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished();})});
-		else
-			map = new THREE.TextureLoader().load( 'Images/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished(); console.log("Card Loaded");})});
-		map.minFilter = THREE.LinearFilter;
-		amountPreloading++;
-		
-		loadedCardImages.push({texture:map,id:theCollection[i].id,isBar:isBar});
+		for (var z=0;z<loadedCardImages.length;z++) {
+			if (loadedCardImages[z].id==theCollection[i].id && loadedCardImages[z].isBar==isBar) {
+				alreadyLoaded=true;
+				break;
+			}
+		}
+		if (!alreadyLoaded) {
+			if (isBar)
+				map = new THREE.TextureLoader().load( 'Bars/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished();})});
+			else
+				map = new THREE.TextureLoader().load( 'Images/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished();})});
+			map.minFilter = THREE.LinearFilter;
+			amountPreloading++;
+			
+			loadedCardImages.push({texture:map,id:theCollection[i].id,isBar:isBar});
+		}
 	}
 }
 
 function donePreloading(onLoadingFinished) {
 	amountPreloading--;
-	if (amountPreloading==0) {
+	console.log(amountPreloading);
+	if (amountPreloading<=0) {
 		if (onLoadingFinished!=null) {
 			onLoadingFinished();
 		}
