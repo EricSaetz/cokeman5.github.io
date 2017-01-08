@@ -1,6 +1,7 @@
 function clearAssets() {
 	animations=[];
 	timedFunctions=[];
+	amountPreloading=0;
 	
 	for (var i=0;i<cardsToDisplay.length;i++) {
 		scene.remove(cardsToDisplay[i].mesh);
@@ -206,7 +207,9 @@ function loadCardTexture(card, isBar, onLoadingFinished) {
 
 function loadCollectionTextures(theCollection, isBar,onLoadingFinished) {
 	var map;
-	var alreadyLoaded;
+	var alreadyLoaded = false;
+	var loadingNeeded = false;
+	
 	for (var i=0;i<theCollection.length;i++) {
 		for (var z=0;z<loadedCardImages.length;z++) {
 			if (loadedCardImages[z].id==theCollection[i].id && loadedCardImages[z].isBar==isBar) {
@@ -215,15 +218,21 @@ function loadCollectionTextures(theCollection, isBar,onLoadingFinished) {
 			}
 		}
 		if (!alreadyLoaded) {
+			loadingNeeded=true;
+			console.log("loading:"+theCollection[i].name+"  "+isBar);
 			if (isBar)
-				map = new THREE.TextureLoader().load( 'Bars/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished();})});
+				map = new THREE.TextureLoader().load( 'Bars/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished();})}, function(){},function(){donePreloading(function(){onLoadingFinished();})});
 			else
-				map = new THREE.TextureLoader().load( 'Images/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished();})});
+				map = new THREE.TextureLoader().load( 'Images/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished();})}, function(){},function(){donePreloading(function(){onLoadingFinished();})});
 			map.minFilter = THREE.LinearFilter;
 			amountPreloading++;
 			
 			loadedCardImages.push({texture:map,id:theCollection[i].id,isBar:isBar});
 		}
+	}
+	
+	if (!loadingNeeded) {
+		onLoadingFinished();
 	}
 }
 
@@ -233,6 +242,9 @@ function donePreloading(onLoadingFinished) {
 	if (amountPreloading<=0) {
 		if (onLoadingFinished!=null) {
 			onLoadingFinished();
+		}
+		else {
+			console.log("wtf");
 		}
 	}
 }
