@@ -126,6 +126,12 @@ function readFullCollection() {
 				else {
 					//if the card is golden then it's a copy of the card that came before it, just set that amount golden to this cards amount golden
 					tempCollection[tempCollection.length-1].amountGolden=amountGolden;
+					if (tempCollection[tempCollection.length-1].amount<2 && tempCollection[tempCollection.length-1].rarity<5) {
+						tempCollection[tempCollection.length-1].amount=Math.min(tempCollection[tempCollection.length-1].amount+cardAmount,2);
+					}
+					else if (tempCollection[tempCollection.length-1].amount<1 && tempCollection[tempCollection.length-1].rarity==5) {
+						tempCollection[tempCollection.length-1].amount=Math.min(tempCollection[tempCollection.length-1].amount+cardAmount,1);
+					}
 				}
 			}
 		}
@@ -176,6 +182,12 @@ function readCollection(text) {
 				}
 				else {
 					tempCollection[tempCollection.length-1].amountGolden=amountGolden;
+					if (tempCollection[tempCollection.length-1].amount<2 && tempCollection[tempCollection.length-1].rarity<5) {
+						tempCollection[tempCollection.length-1].amount=Math.min(tempCollection[tempCollection.length-1].amount+cardAmount,2);
+					}
+					else if (tempCollection[tempCollection.length-1].amount<1 && tempCollection[tempCollection.length-1].rarity==5) {
+						tempCollection[tempCollection.length-1].amount=Math.min(tempCollection[tempCollection.length-1].amount+cardAmount,1);
+					}
 				}
 			}
 		}
