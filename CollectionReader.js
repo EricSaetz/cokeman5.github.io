@@ -118,7 +118,7 @@ function readFullCollection() {
 					if (id==someBasics[i])
 						rarity=2;
 				
-				if (!isGolden) {
+				if (!isGolden || tempCollection[tempCollection.length-1].id!=id;) {
 					//if the card isn't golden add it normally
 					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount, amountGolden:amountGolden};
 					tempCollection.push(card);
@@ -176,7 +176,7 @@ function readCollection(text) {
 					if (id==someBasics[i])
 						rarity=2;
 					
-				if (!isGolden) {
+				if (!isGolden || tempCollection[tempCollection.length-1].id!=id;) {
 					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount, amountGolden:amountGolden};
 					tempCollection.push(card);
 				}
