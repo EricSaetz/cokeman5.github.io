@@ -56,7 +56,7 @@ function marketCollectionCardClicked(cardDisplay) {
 		}
 		//if card is  unique to the deck
 		if (!cardFoundInDeck) {
-			marketDeck.push({name:cardDisplay.card.name,id:cardDisplay.card.id,rarity:cardDisplay.card.rarity,manaCost:cardDisplay.card.manaCost,theClass:cardDisplay.card.theClass,amount:1, amountGolden:cardDisplay.card.amountGolden});
+			marketDeck.push({name:cardDisplay.card.name,id:cardDisplay.card.id,rarity:cardDisplay.card.rarity,manaCost:cardDisplay.card.manaCost,theClass:cardDisplay.card.theClass,amount:1});
 			cardDisplay.card.amount--;
 			removeFromCollection(cardDisplay.card.id,1,marketCollection);
 			loadCardAmountText(cardDisplay, 50,-45,-255, 0);
@@ -75,7 +75,7 @@ function marketCollectionBarClicked(cardDisplay) {
 	removeText("fundsText");
 	loadText("Funds: "+funds+"G","fundsText", 40, 750,570,0);
 	
-	addToCollection({name:cardDisplay.card.name,id:cardDisplay.card.id,rarity:cardDisplay.card.rarity,manaCost:cardDisplay.card.manaCost,theClass:cardDisplay.card.theClass,amount:1, amountGolden:cardDisplay.card.amountGolden},marketCollection,null,1);
+	addToCollection({name:cardDisplay.card.name,id:cardDisplay.card.id,rarity:cardDisplay.card.rarity,manaCost:cardDisplay.card.manaCost,theClass:cardDisplay.card.theClass,amount:1},marketCollection,null,1);
 	for (var i=0;i<8;i++) {
 		if (cardsToDisplay[i].card.id==cardDisplay.card.id) {
 			cardsToDisplay[i].card.amount++;

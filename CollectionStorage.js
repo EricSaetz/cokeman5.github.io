@@ -9,7 +9,7 @@ function getSubCollection(theCollection,conditionFunction,isCopy) {
 		card = theCollection[n];
 		if (conditionFunction(card)) {
 			if (isCopy)
-				subCollection.push({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:card.amount, amountGolden:card.amountGolden});
+				subCollection.push({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:card.amount});
 			else
 				subCollection.push(card);
 		}

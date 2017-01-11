@@ -181,7 +181,7 @@ function setBarTexture(cardDisplay,card) {
 	
 	barArtObject.material.map=map;
 	barArtObject.visible=true;
-	cardDisplay.card={name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:card.amount, amountGolden:card.amountGolden};
+	cardDisplay.card={name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:card.amount};
 	cardDisplay.mesh.visible=true;
 	
 	if (card.rarity<5)

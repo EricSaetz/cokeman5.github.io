@@ -77,8 +77,6 @@ function readFullCollection() {
 		var rarity=0;
 		var manaCost=0;
 		var theClass='NEUTRAL';
-		var amountGolden=0;
-		var isGolden=false;
 		var id;
 		var cardData;
 		var tempCollection = [];
@@ -102,30 +100,20 @@ function readFullCollection() {
 				cardData=text[n].split('"');
 				theClass = cardData[3];
 			}
-			else if (text[n].includes('data-is-gold')) {
-				//get whether or not the card is golden
-				cardData=text[n].split('"');
-				isGolden = (cardData[3]==="True");
-			}
 			else if (text[n].includes('data-card-count')) {
 				//get the amount of cards the player owns
 				cardAmount = parseInt(text[n].split('"')[3]);
-				if (isGolden)
-					amountGolden=cardAmount;
 				
 				//correct the rarity of basic cards
 				for (var i=0;i<someBasics.length && rarity==1;i++)
 					if (id==someBasics[i])
 						rarity=2;
 				
-				if (!isGolden || tempCollection[tempCollection.length-1].id!=id) {
-					//if the card isn't golden add it normally
-					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount, amountGolden:amountGolden};
+				if (tempCollection.length==0 || tempCollection[tempCollection.length-1].id!=id) {
+					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount};
 					tempCollection.push(card);
 				}
 				else {
-					//if the card is golden then it's a copy of the card that came before it, just set that amount golden to this cards amount golden
-					tempCollection[tempCollection.length-1].amountGolden=amountGolden;
 					if (tempCollection[tempCollection.length-1].amount<2 && tempCollection[tempCollection.length-1].rarity<5) {
 						tempCollection[tempCollection.length-1].amount=Math.min(tempCollection[tempCollection.length-1].amount+cardAmount,2);
 					}
@@ -146,8 +134,6 @@ function readCollection(text) {
 		var rarity=0;
 		var manaCost=0;
 		var theClass='NEUTRAL';
-		var amountGolden=0;
-		var isGolden=false;
 		var id;
 		var cardData;
 		var tempCollection = [];
@@ -165,23 +151,19 @@ function readCollection(text) {
 				rarity = parseInt(cardData[25]);
 				manaCost = parseInt(cardData[11]);
 				theClass = cardData[5];
-				isGolden = (cardData[23]==="True");
 			}
 			else if (text[n].includes('data-card-count')) {
 				cardAmount = parseInt(text[n].split('"')[3]);
-				if (isGolden)
-					amountGolden=cardAmount;
 				
 				for (var i=0;i<someBasics.length && rarity==1;i++)
 					if (id==someBasics[i])
 						rarity=2;
 					
-				if (!isGolden || tempCollection[tempCollection.length-1].id!=id) {
-					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount, amountGolden:amountGolden};
+				if (tempCollection.length==0 || tempCollection[tempCollection.length-1].id!=id) {
+					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount};
 					tempCollection.push(card);
 				}
 				else {
-					tempCollection[tempCollection.length-1].amountGolden=amountGolden;
 					if (tempCollection[tempCollection.length-1].amount<2 && tempCollection[tempCollection.length-1].rarity<5) {
 						tempCollection[tempCollection.length-1].amount=Math.min(tempCollection[tempCollection.length-1].amount+cardAmount,2);
 					}

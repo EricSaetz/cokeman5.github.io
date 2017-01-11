@@ -170,13 +170,13 @@ function getDraftCards() {
 		if (Math.random()<classChance && classCards.length!=0) {
 			card = classCards[Math.floor(Math.random()*classCards.length)];
 			removeFromCollection(card.id,999,classCards);
-			card = {name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden};
+			card = {name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1};
 		} else if (neutralCards.length!=0) {
 			card = neutralCards[Math.floor(Math.random()*neutralCards.length)];
 			removeFromCollection(card.id,999,neutralCards);
-			card = {name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1, amountGolden:card.amountGolden};
+			card = {name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1};
 		} else {
-			card = {name:"Shadow of Nothing",id:-1,rarity:4,manaCost:0,theClass:"PRIEST",amount:1, amountGolden:0};
+			card = {name:"Shadow of Nothing",id:-1,rarity:4,manaCost:0,theClass:"PRIEST",amount:1};
 		}
 		
 		cardsForRound.push(card);
