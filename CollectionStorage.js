@@ -48,7 +48,6 @@ function removeFromCollection(cardId,amount,theCollection) {
 	for (var n=0;n<theCollection.length;n++) {
 		if (theCollection[n].id==cardId) {
 			theCollection[n].amount-=amount;
-			console.log(theCollection[n].amount);
 			if (theCollection[n].amount<=0) {
 				theCollection.splice(n,1);
 				n--;

@@ -93,7 +93,7 @@ function init() {
 	audioLoader = new THREE.AudioLoader();
 
 	// Create a light, set its position, and add it to the scene.
-	scene.add( new THREE.AmbientLight( 0x404040, 5 ) );
+	scene.add( new THREE.AmbientLight( 0x323232, 5 ) );
 	raycaster = new THREE.Raycaster();
 
 	//set the background image of the scene

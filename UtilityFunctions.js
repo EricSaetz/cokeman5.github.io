@@ -219,7 +219,6 @@ function loadCollectionTextures(theCollection, isBar,onLoadingFinished) {
 		}
 		if (!alreadyLoaded) {
 			loadingNeeded=true;
-			console.log("loading:"+theCollection[i].name+"  "+isBar);
 			if (isBar)
 				map = new THREE.TextureLoader().load( 'Bars/' + theCollection[i].name.replace(':','_') + '.png', function(){donePreloading(function(){onLoadingFinished();})}, function(){},function(){donePreloading(function(){onLoadingFinished();})});
 			else
@@ -238,7 +237,6 @@ function loadCollectionTextures(theCollection, isBar,onLoadingFinished) {
 
 function donePreloading(onLoadingFinished) {
 	amountPreloading--;
-	console.log(amountPreloading);
 	if (amountPreloading<=0) {
 		if (onLoadingFinished!=null) {
 			onLoadingFinished();

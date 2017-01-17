@@ -364,7 +364,7 @@ function loadRushGUI() {
 	input.setAttribute("type","text");
 	input.setAttribute("id","Time");
 	input.setAttribute("maxlength",3);
-	input.setAttribute("value","100");
+	input.setAttribute("value","120");
 	input.setAttribute("style","position:absolute; bottom:205px; left:170px;width:25px");
 	gui.appendChild(input);
 	

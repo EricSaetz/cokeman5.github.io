@@ -28,14 +28,44 @@ function displayRushDeck() {
 }
 
 function rushCardClicked(cardDisplay) {
-	if (cardDisplay.card.amount>0 && cardDisplay.mesh.position.y>-838) {
-		addToRushDeck(cardDisplay.card);
-		rushDeckSize++;
-		updateCardCount();
-		cardDisplay.mesh.getObjectByName("front").material.color.setHex( 0x838383 );
-		if (rushDeckSize>=30) {
-			rushOver();
+	if (cardDisplay.mesh.position.y>-838) {
+		if (cardDisplay.card.amount>0) {
+			addToRushDeck(cardDisplay.card);
+			rushDeckSize++;
+			updateCardCount();
+			cardDisplay.mesh.getObjectByName("front").material.color.setHex( 0x838383 );
+			if (rushDeckSize>=30) {
+				rushOver();
+			}
 		}
+		else {
+			removeFromRushDeck(cardDisplay.card);
+			cardDisplay.mesh.getObjectByName("front").material.color.setHex( 0xFFFFFF );
+		}
+		
+		updateDeckList(rushDeck,cardsToDisplay.length-30);
+	}
+}
+
+function removeFromRushDeck(card) {
+	removeFromCollection(card.id,1,rushDeck);
+	card.amount+=1;
+	rushDeckSize--;
+	updateCardCount();
+}
+
+function rushBarClicked(cardDisplay) {
+	if (cardDisplay.card!=null) {
+		for (var i=0;i<cardsToDisplay.length-30;i++) {
+			if (cardsToDisplay[i].card.id==cardDisplay.card.id) {
+				cardsToDisplay[i].card.amount+=1;
+				cardsToDisplay[i].mesh.getObjectByName("front").material.color.setHex( 0xFFFFFF );
+				break;
+			}
+		}
+		
+		removeFromRushDeck(cardDisplay.card);
+		updateDeckList(rushDeck,cardsToDisplay.length-30);
 	}
 }
 
@@ -44,16 +74,61 @@ function rushOver() {
 	
 	playSound("Sounds/Rush Draft Over.ogg", 1);
 	
-	animations=[];
-	while (rushDeckSize<30) {
-		card = rushCollection[Math.floor(Math.random()*rushCollection.length)];
-		if (card.amount>0) {
-			rushDeckSize++;
-			addToRushDeck(card);
-		}
-	}
+	clearAssets();
+	
+	finishFillingDeck();
 	rushDeck.sort(function(a, b){return compareCards(a,b)});
 	displayRushDeck();
+}
+
+function finishFillingDeck() {
+	var manaCosts = [0,0,0,0,0,0,0];
+	var idealCurve = [4,6,5,5,4,3,3];
+	var requiredCost=1;
+	var tempCollection;
+	var card;
+
+	
+	if (rushDeckSize<30) {
+		for (var i=0;i<rushDeck;i++)
+			manaCosts[rushDeck[i].manaCost]+=rushDeck[i].amount;
+	}
+	
+	while (rushDeckSize<30) {
+		for (var i=0;i<7;i++)
+			if (idealCurve[i]-manaCosts[i]>idealCurve[requiredCost-1]-manaCosts[requiredCost-1])
+				requiredCost=i+1;
+		
+		switch (requiredCost) {
+			case 1 : tempCollection = getSubCollection(rushCollection,function(card){return card.manaCost==1 && card.amount>=1},false);
+				break;
+			case 2 : tempCollection = getSubCollection(rushCollection,function(card){return card.manaCost==2 && card.amount>=1},false);
+				break;
+			case 3 : tempCollection = getSubCollection(rushCollection,function(card){return card.manaCost==3 && card.amount>=1},false);
+				break;
+			case 4 : tempCollection = getSubCollection(rushCollection,function(card){return card.manaCost==4 && card.amount>=1},false);
+				break;
+			case 5 : tempCollection = getSubCollection(rushCollection,function(card){return card.manaCost==5 && card.amount>=1},false);
+				break;
+			case 6 : tempCollection = getSubCollection(rushCollection,function(card){return card.manaCost==6 && card.amount>=1},false);
+				break;
+			case 7 : tempCollection = getSubCollection(rushCollection,function(card){return card.manaCost>=7 && card.amount>=1},false);
+				break;
+		}
+		
+		if (tempCollection.length<=0) {
+			tempCollection = rushCollection;
+			console.log("no cards of correct mana found");
+		}
+		
+		if (tempCollection.length>=0) {
+			card = tempCollection[Math.floor(Math.random()*tempCollection.length)];
+			console.log(card.amount);
+			addToRushDeck(card);
+			manaCosts[requiredCost-1]++;
+			rushDeckSize++;
+		}
+	}
 }
 
 function addToRushDeck(card) {
@@ -106,7 +181,11 @@ function startRush() {
 		createLoadingIcon(0,0,0);
 	  
 		for (var i=0; i<amountOfCards;i++) {
-			createCardDisplay( (i%6)*(70+286)-960+70,640+198+396*Math.floor(i/6), 0 , 286, 395, false, rushCardClicked );
+			createCardDisplay( (i%5)*(70+286)-960+70,640+198+396*Math.floor(i/5), 0 , 286, 395, false, rushCardClicked );
+		}
+		
+		for (var i=0; i<30;i++) {
+			createBarDisplay( 900,550-i*40,0,255,40,rushBarClicked);
 		}
 		
 		setCardBack(document.getElementById("cardBackSelect").value);
