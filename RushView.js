@@ -236,6 +236,7 @@ function startRush() {
 				if (cards[index].amount<=0)
 					cards.splice(index,1);
 			} else {
+				card = {name:"Shadow of Nothing",id:-1,rarity:4,manaCost:0,theClass:"PRIEST",amount:1,cardId:"EX1_345"};
 			}
 			rushCollection.push(card);
 		}

@@ -8,8 +8,7 @@
   <meta name="author" content="Cokeman5">
   <meta name="application-name" content="HS Alternate Game Modes">
   <meta name="keywords" content="Hearthstone, Alternate, Game, Modes, Deckbuilding, Formats, Fun, Friends, Random, Sealed, Rush, Arena, Gadgetzan, Market">
-
-
+  <meta name="deckContents" property="x-hearthstone:deck:cards" content="NEW1_030"/>
   
   <script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -19,6 +18,16 @@
 
 	  ga('create', 'UA-83859029-1', 'auto');
 	  ga('send', 'pageview');
+	  
+	  var allMetaElements = document.getElementsByTagName('meta');
+		//loop through and find the element you want
+		for (var i=0; i<allMetaElements.length; i++) { 
+		  if (allMetaElements[i].getAttribute("name") == "deckContents") { 
+			 //make necessary changes
+			 allMetaElements[i].setAttribute('content', "NEW1_030,NEW1_030,EX1_001,EX1_001"); 
+			 break;
+		  } 
+		} 
    </script>
   
 </head>
