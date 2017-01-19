@@ -141,7 +141,7 @@ function addToRushDeck(card) {
 		}
 	}
 	if (!flag) {
-		rushDeck.push({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1});
+		rushDeck.push({name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:1,cardId:card.cardId});
 	}
 	
 	card.amount--;
@@ -231,12 +231,11 @@ function startRush() {
 			
 			if (cards.length>0) {
 				index = Math.floor(Math.random()*cards.length);
-				card = {name:cards[index].name,id:cards[index].id,rarity:cards[index].rarity,manaCost:cards[index].manaCost,theClass:cards[index].theClass,amount:1};
+				card = {name:cards[index].name,id:cards[index].id,rarity:cards[index].rarity,manaCost:cards[index].manaCost,theClass:cards[index].theClass,amount:1,cardId:cards[index].cardId};
 				cards[index].amount--;
 				if (cards[index].amount<=0)
 					cards.splice(index,1);
 			} else {
-				card = {name:"Shadow of Nothing",id:-1,rarity:4,manaCost:0,theClass:"PRIEST",amount:1};
 			}
 			rushCollection.push(card);
 		}

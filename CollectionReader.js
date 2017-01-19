@@ -8,7 +8,16 @@ function parseFullCollection() {
 			text = data.split('\n');
 			collection = readFullCollection(text);
 			collection.sort(function(a, b){return compareCards(a,b)});
-			loadProgram();
+			$.ajax({
+				type: 'GET',
+				url: "cardIDLookupTable.txt",
+				dataType: 'text',
+				success: function(data) {
+					text = data.split('\n');
+					addCardIds(text);
+					loadProgram();
+				}
+			});
 		}
 	});
 }
@@ -43,7 +52,16 @@ function handleSubmitAttempt(i) {
 				alert("The collection entered is private or does not exist!");
 			else if (i==usernames.length-1) {
 				//all collection files have been processed, load the program
-				loadProgram();
+				$.ajax({
+					type: 'GET',
+					url: "cardIDLookupTable.txt",
+					dataType: 'text',
+					success: function(data) {
+						text = data.split('\n');
+						addCardIds(text);
+						loadProgram();
+					}
+				});
 			} 
 			else //recursively call this function until all usernames have been processed
 				handleSubmitAttempt(i+1);
@@ -58,6 +76,9 @@ function loadProgram() {
 	element.parentNode.removeChild(element);
 	element = document.getElementById("customCollectionButton");
 	element.parentNode.removeChild(element);
+	
+	for (var i=0;i<collection.length;i++)
+		console.log(collection[i].cardId);
 	//load the main gui elements
 	loadMainGUI();
 	//load up the scene
@@ -68,6 +89,19 @@ function loadProgram() {
 	update(0, totalGameTime);
 	//start the render loop
 	render();
+}
+
+function addCardIds(text) {
+	var cardData;
+	for (var i=0;i<collection.length;i++) {
+		for (var z=0;z<text.length;z++) {
+			cardData = text[z].split("::");
+			if (parseInt(cardData[1])==collection[i].id) {
+				collection[i].cardId=cardData[2];
+				break;
+			}
+		}
+	}
 }
 
 //parse the full collection
@@ -110,7 +144,7 @@ function readFullCollection() {
 						rarity=2;
 				
 				if (tempCollection.length==0 || tempCollection[tempCollection.length-1].id!=id) {
-					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount};
+					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount,cardId:""};
 					tempCollection.push(card);
 				}
 				else {
@@ -160,7 +194,7 @@ function readCollection(text) {
 						rarity=2;
 					
 				if (tempCollection.length==0 || tempCollection[tempCollection.length-1].id!=id) {
-					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount};
+					card = {name:cardName,id:id,rarity:rarity,manaCost:manaCost,theClass:theClass,amount:cardAmount,cardId:""};
 					tempCollection.push(card);
 				}
 				else {

@@ -1,0 +1,1054 @@
+Innervate::548::EX1_169
+Moonfire::619::EX1_166a
+Claw::532::CS2_005o
+Enchanted Raven::42024::KAR_300
+Forbidden Ancient::35213::OG_051
+Jade Idol::49714::CFM_602b
+Living Roots::22329::AT_037b
+Mark of the Lotus::49642::CFM_614
+Naturalize::154::EX1_161
+Raven Idol::27230::LOE_115b
+Savagery::148::EX1_578
+Anodized Robo Cub::12219::GVG_030
+Darnassus Aspirant::22303::AT_038
+Druid of the Saber::22307::AT_042
+Mark of the Wild::480::CS2_009e
+Mark of Y'Shaarj::33151::OG_048e
+Power of the Wild::165::EX1_160
+Wild Growth::282::CS2_013
+Wrath::633::EX1_154b
+Addled Grizzly::35235::OG_313
+Celestial Dreamer::49748::CFM_617
+Druid of the Flame::14457::OG_044b
+Feral Rage::35210::OG_047
+Grove Tender::12273::GVG_032
+Healing Touch::258::CS2_007
+Jade Blossom::49703::CFM_713
+Mark of Nature::149::EX1_155be
+Mounted Raptor::27253::LOE_050
+Mulch::22383::AT_044
+Pilfered Power::49636::CFM_616
+Savage Roar::329::CS2_011o
+Astral Communion::22334::AT_043
+Bite::266::EX1_570e
+Fandral Staghelm::35208::OG_044
+Jungle Moonkin::27236::LOE_051
+Keeper of the Grove::459::EX1_166
+Klaxxi Amber-Weaver::33121::OG_188
+Mire Keeper::33162::OG_202
+Poison Seeds::7726::FP1_019
+Savage Combatant::22293::AT_039
+Soul of the Forest::311::EX1_158e
+Swipe::620::CS2_012
+Wildwalker::22361::AT_040
+Druid of the Claw::587::OG_044a
+Druid of the Fang::12243::GVG_080t
+Force of Nature::237::EX1_571
+Lunar Visions::49635::CFM_811
+Nourish::120::EX1_164b
+Starfall::464::NEW1_007b
+Virmen Sensei::49721::CFM_816
+Dark Arakkoa::35189::OG_293
+Dark Wispers::12298::GVG_041c
+Jade Behemoth::49718::CFM_343
+Mech-Bear-Cat::12226::GVG_034
+Menagerie Warden::42059::KAR_065
+Moonglade Portal::42040::KAR_075
+Recycle::12279::GVG_031
+Starfire::667::EX1_173
+Ancient of Lore::34::NEW1_008
+Ancient of War::242::EX1_178
+Knight of the Wild::22360::AT_041
+Malorne::12293::GVG_035
+Wisps of the Old Gods::33172::OG_195
+Ironbark Protector::238::CS2_232
+Aviana::22325::AT_045
+Cenarius::605::EX1_573
+Tree of Life::12270::GVG_033
+Volcanic Lumberer::14458::BRM_009
+Kun the Forgotten King::49628::CFM_308
+Alleycat::49745::CFM_315
+Arcane Shot::167::DS1_185
+Bestial Wrath::304::EX1_549o
+Brave Archer::22310::AT_059
+Fiery Bat::35214::OG_179
+Hunter's Mark::22::CS2_084e
+On the Hunt::35220::OG_061
+Smuggler's Crate::49735::CFM_334
+Timber Wolf::86::DS1_175
+Tracking::163::DS1_184
+Webspinner::7741::FP1_011
+Bear Trap::22364::AT_060
+Call Pet::12224::GVG_017
+Cat Trick::42051::KAR_004
+Dart Trap::27227::LOE_021
+Explorer's Hat::27209::LOE_105e
+Explosive Trap::344::EX1_610
+Feign Death::12238::GVG_026
+Flare::630::EX1_544
+Freezing Trap::99::EX1_611
+Glaivezooka::12267::GVG_043e
+Hidden Cache::49736::CFM_026
+Kindly Grandmother::42020::KARA_05_01b
+King's Elekk::22370::AT_058
+Lock and Load::22258::AT_061e
+Misdirection::447::EX1_533
+Quick Shot::14459::BRM_013
+Scavenging Hyena::279::EX1_531
+Snake Trap::210::EX1_554
+Snipe::553::EX1_609
+Steamwheedle Sniper::12242::GVG_087
+Trogg Beastrager::49660::CFM_338
+Animal Companion::578::NEW1_031
+Carrion Grub::35218::OG_325
+Cloaked Huntress::42050::KAR_006
+Deadly Shot::239::EX1_617
+Desert Camel::27251::LOE_020
+Dreadscale::22389::AT_063t
+Eaglehorn Bow::363::EX1_536
+Forlorn Stalker::33181::OG_292
+Infest::33146::OG_045
+Kill Command::488::EX1_539
+Metaltooth Leaper::12254::GVG_048
+Powershot::22384::AT_056
+Rat Pack::49681::CFM_316
+Shaky Zipgunner::49669::CFM_336
+Stablemaster::22365::AT_057
+Unleash the Hounds::317::EX1_538
+Core Rager::14444::BRM_014
+Dispatch Kodo::49674::CFM_335
+Houndmaster::225::DS1_070
+Infested Wolf::35215::OG_216
+Multi-Shot::407::DS1_183
+Cobra Shot::12304::GVG_073
+Explosive Shot::114::EX1_537
+King of Beasts::12285::GVG_046
+Knuckles::49682::CFM_333
+Piranha Launcher::49618::CFM_337
+Princess Huhuran::35188::OG_309
+Ram Wrangler::22344::AT_010
+Starving Buzzard::101::CS2_237
+Tundra Rhino::162::DS1_178
+Ball of Spiders::22272::AT_062
+Savannah Highmane::8::EX1_534
+Acidmaw::22393::AT_063
+Gahz'rilla::12232::GVG_049
+Gladiator's Longbow::278::DS1_188
+Giant Sand Worm::31118::OG_308
+Call of the Wild::33167::OG_211
+King Krush::194::EX1_543
+Forbidden Flame::33124::OG_086
+Freezing Potion::49734::CFM_021
+Arcane Blast::22358::AT_004
+Arcane Missiles::589::EX1_277
+Babbling Book::42028::KAR_009
+Ice Lance::188::CS2_031
+Kabal Lackey::49692::CFM_066
+Mana Wyrm::263::NEW1_012
+Mirror Image::30::CS2_mirror
+Arcane Explosion::56::CS2_025
+Cult Sorcerer::35239::OG_303
+Fallen Hero::22268::AT_003
+Flamecannon::12192::GVG_001
+Frostbolt::177::CS2_024
+Medivh's Valet::42048::KAR_092
+Shatter::35244::OG_081
+Snowchugger::12230::GVG_002
+Sorcerer's Apprentice::4::EX1_608
+Unstable Portal::12178::LOEA15_2H
+Arcane Intellect::489::CS2_023
+Counterspell::531::EX1_287
+Duplicate::7732::FP1_018
+Effigy::22267::AT_002
+Flamewaker::14445::BRM_002
+Forgotten Torch::27216::LOE_002
+Frost Nova::49::CS2_026
+Ice Barrier::672::EX1_289
+Ice Block::28::EX1_295o
+Kirin Tor Mage::411::EX1_612
+Manic Soulcaster::49637::CFM_660
+Mirror Entity::569::EX1_294
+Polymorph_ Boar::22396::AT_005
+Potion of Polymorph::49694::CFM_620
+Soot Spewer::12306::GVG_123
+Spellbender::309::tt_010a
+Spellslinger::22299::AT_007
+Twilight Flamecaller::35187::OG_083
+Vaporize::160::EX1_594
+Volcanic Potion::49689::CFM_065
+Animated Armor::27252::LOE_119
+Cone of Cold::26::EX1_275
+Dalaran Aspirant::22359::AT_006
+Demented Frostcaller::35184::OG_085
+Echo of Medivh::12300::GVG_005
+Ethereal Arcanist::125::EX1_274
+Fireball::522::CS2_029
+Goblin Blastmage::12195::GVG_004
+Polymorph::595::CS2_022e
+Water Elemental::274::CS2_033
+Wee Spellstopper::12261::GVG_122
+Cabalist's Tome::33155::OG_090
+Cryomancer::49739::CFM_671
+Dragon's Breath::14446::BRM_003
+Ethereal Conjurer::27249::LOE_003
+Flame Lance::22302::AT_001
+Servant of Yogg-Saron::33179::OG_087
+Blizzard::276::CS2_028
+Coldarra Drake::22261::AT_008
+Faceless Summoner::33178::OG_207
+Kabal Crystal Runner::49700::CFM_760
+Archmage Antonidas::220::EX1_559
+Firelands Portal::42025::KAR_076
+Flame Leviathan::12290::GVG_007
+Flamestrike::44::CS2_032
+Greater Arcane Missiles::49740::CFM_623
+Inkmaster Solia::49693::CFM_687
+Anomalus::35230::OG_120
+Rhonin::22343::AT_009
+Pyroblast::496::EX1_279
+Forbidden Healing::33126::OG_198
+Avenge::7729::FP1_020
+Blessing of Might::394::CS2_087e
+Blessing of Wisdom::100::EX1_363e2
+Competitive Spirit::22363::AT_073e
+Divine Strength::35252::OG_223
+Eye for an Eye::206::EX1_132
+Getaway Kodo::49640::CFM_800
+Grimscale Chum::49685::CFM_650
+Hand of Protection::499::EX1_371
+Humility::189::EX1_360e
+Light's Justice::250::CS2_091
+Meanstreet Marshal::49641::CFM_759
+Noble Sacrifice::158::EX1_130
+Redemption::657::EX1_136
+Repentance::642::EX1_379e
+Sacred Trial::27217::LOE_027
+Selfless Hero::35245::OG_221
+Smuggler's Run::49676::CFM_305
+Vilefin Inquisitor::33158::OG_006
+A Light in the Darkness::35237::OG_311
+Argent Lance::22316::AT_077
+Argent Protector::191::EX1_362
+Equality::383::EX1_619e
+Grimestreet Outfitter::49662::CFM_753
+Holy Light::108::CS2_089
+Seal of Light::12305::GVG_057a
+Shielded Minibot::12257::GVG_058
+Aldor Peacekeeper::23::EX1_382
+Coghammer::12228::GVG_059
+Divine Favor::581::EX1_349
+Muster for Battle::12223::GVG_061
+Nightbane Templar::42052::KAR_010
+Rallying Blade::35246::OG_222
+Scarlet Purifier::12240::GVG_101
+Seal of Champions::22373::AT_074e2
+Small-Time Recruits::49631::CFM_905
+Steward of Darkshire::33153::OG_310
+Sword of Justice::567::EX1_366
+Warhorse Trainer::22330::AT_075
+Wickerflame Burnbristle::49633::CFM_815
+Blessing of Kings::29::CS2_092e
+Consecration::260::CS2_093
+Hammer of Wrath::350::CS2_094
+Keeper of Uldaman::27260::LOE_017
+Murloc Knight::22362::AT_076
+Silvermoon Portal::42054::KAR_077
+Truesilver Champion::293::CS2_097
+Blessed Champion::7::EX1_355e
+Bolvar Fordragon::12244::GVG_063
+Cobalt Guardian::12222::GVG_062
+Dragon Consort::14452::BRM_018
+Grimestreet Enforcer::49667::CFM_639
+Holy Wrath::355::EX1_365
+Quartermaster::12280::GVG_060
+Solemn Vigil::14453::BRM_001
+Stand Against Darkness::31116::OG_273
+Tuskarr Jouster::22315::AT_104
+Avenging Wrath::142::EX1_384
+Enter the Coliseum::22380::AT_078
+Ivory Knight::42019::KAR_057
+Mysterious Challenger::22394::AT_079
+Eadric the Pure::22313::AT_081
+Grimestreet Protector::49678::CFM_062
+Guardian of Kings::283::CS2_088
+Lay on Hands::506::EX1_354
+Ragnaros, Lightlord::33147::OG_229
+Tirion Fordring::391::EX1_383
+Anyfin Can Happen::27240::LOE_026
+Circle of Healing::38::EX1_621
+Forbidden Shaping::33125::OG_101
+Silence::544::EX1_332
+Flash Heal::22328::AT_055
+Holy Smite::409::CS1_130
+Inner Fire::207::CS1_129e
+Light of the Naaru::12297::GVG_012
+Mind Vision::438::CS2_003
+Northshire Cleric::600::CS2_235
+Pint-Size Potion::49644::CFM_661
+Potion of Madness::49630::CFM_603
+Power Word_ Glory::22385::AT_013e
+Power Word_ Shield::431::CS2_004e
+Shadowbomber::12278::GVG_009
+Twilight Whelp::14460::BRM_004
+Confuse::22327::AT_016
+Convert::22379::AT_015
+Divine Spirit::554::CS2_236e
+Embrace the Shadow::33176::OG_104
+Lightwell::117::EX1_341
+Mana Geode::49705::CFM_606
+Mind Blast::415::DS1_233
+Museum Curator::27250::LOE_006
+Purify::42061::KAR_013
+Resurrect::14461::BRM_017
+Shadow Word_ Pain::315::CS2_234
+Shadowboxer::12256::GVG_072
+Shrinkmeister::12197::GVG_011
+Wyrmrest Agent::22398::AT_116
+Dark Cultist::7735::FP1_023
+Kabal Talonpriest::49620::CFM_626
+Shadow Word_ Death::547::EX1_622
+Shadowfiend::22356::AT_014
+Shadowform::421::EX1_625
+Thoughtsteal::62::EX1_339
+Velen's Chosen::12174::GVG_010b
+Auchenai Soulpriest::656::EX1_591
+Greater Healing Potion::49755::CFM_604
+Holy Champion::22287::AT_011
+Hooded Acolyte::35192::OG_334
+Lightspawn::192::EX1_335
+Mass Dispel::249::EX1_626
+Mindgames::301::EX1_345
+Priest of the Feast::42056::KAR_035
+Shadow Madness::442::EX1_334e
+Shadow Word_ Horror::33150::OG_100
+Shifting Shade::35186::OG_335
+Spawn of Shadows::22357::AT_012
+Darkshire Alchemist::35199::OG_234
+Drakonid Operative::49638::CFM_605
+Excavated Evil::27242::LOE_111
+Holy Nova::671::CS1_112
+Kabal Songstealer::49753::CFM_657
+Onyx Bishop::42058::KAR_204
+Power Word_ Tentacles::35193::OG_094
+Raza the Chained::49702::CFM_020
+Twilight Darkmender::35191::OG_096
+Upgraded Repair Bot::12185::GVG_083
+Vol'jin::12296::GVG_014
+Cabal Shadow Priest::147::EX1_091
+Dragonfire Potion::49648::CFM_662
+Entomb::27238::LOE_104
+Herald Volazj::33127::OG_316
+Holy Fire::457::EX1_624
+Lightbomb::12301::GVG_008
+Temple Enforcer::232::EX1_623
+Confessor Paletress::22368::AT_018
+Prophet Velen::228::EX1_350
+Mind Control::401::CS1_113
+Backstab::471::CS2_072
+Counterfeit Coin::49643::CFM_630
+Preparation::364::EX1_145o
+Shadowstep::550::EX1_144
+Bladed Cultist::35198::OG_070
+Buccaneer::22347::AT_029
+Cold Blood::92::CS2_073e2
+Conceal::284::EX1_128
+Deadly Poison::87::CS2_074e
+Journey Below::35194::OG_072
+Pit Snake::27221::LOE_010
+Sinister Strike::205::CS2_075
+Swashburglar::42046::KAR_069
+Betrayal::198::EX1_126
+Cutpurse::22336::AT_031
+Defias Ringleader::417::EX1_131
+Eviscerate::382::EX1_124
+Gadgetzan Ferryman::49722::CFM_693
+Gang Up::14462::BRM_007
+Goblin Auto-Barber::12212::GVG_023
+Jade Shuriken::49711::CFM_690
+Jade Swarmer::49713::CFM_691
+One-eyed Cheat::12255::GVG_025
+Patient Assassin::14::EX1_522
+Sap::385::EX1_581
+Shiv::164::EX1_278
+Undercity Huckster::33135::OG_330
+Undercity Valiant::22371::AT_030
+Beneath the Grounds::22397::AT_035
+Burgle::22321::AT_033
+Cogmaster's Wrench::12265::GVG_024
+Deadly Fork::42057::KAR_094
+Edwin VanCleef::3::EX1_613
+Fan of Knives::378::EX1_129
+Headcrack::135::EX1_137
+Iron Sensei::12229::GVG_027
+Perdition's Blade::82::EX1_133
+Shadow Rager::49752::CFM_636
+Shadow Strike::35195::OG_176
+Shady Dealer::22348::AT_032
+Shaku, the Collector::49657::CFM_781
+SI_7 Agent::286::EX1_134
+Unearthed Raptor::27220::LOE_019e
+Anub'ar Ambusher::7728::FP1_026
+Blade Flurry::244::CS2_233
+Master of Disguise::127::NEW1_014
+Poisoned Blade::22273::AT_034
+Sabotage::12236::GVG_047
+Shadow Sensei::49725::CFM_694
+Southsea Squidface::35241::OG_267
+Tinker's Sharpsword Oil::12276::GVG_022b
+Tomb Pillager::27229::LOE_012
+Xaril, Poisoned Mind::33139::OG_080
+Assassinate::568::CS2_076
+Assassin's Blade::433::CS2_080
+Dark Iron Skulker::14434::BRM_008
+Ethereal Peddler::42023::KAR_070
+Lotus Assassin::49619::CFM_634
+Ogre Ninja::12235::GVG_088
+Shado-Pan Rider::22305::AT_028
+Shadowcaster::33180::OG_291
+Kidnapper::562::NEW1_005
+Luckydo Buccaneer::49754::CFM_342
+Thistle Tea::33174::OG_073
+Trade Prince Gallywix::12291::GVG_028
+Vanish::658::NEW1_004
+Sprint::90::CS2_077
+Anub'arak::22324::AT_036
+Blade of C'Thun::35197::OG_282
+Ancestral Healing::216::CS2_041
+Totemic Might::367::EX1_244e
+Dust Devil::129::EX1_243
+Earth Shock::77::EX1_245
+Evolve::35232::TB_OG_027
+Finders Keepers::49749::CFM_313
+Forked Lightning::530::EX1_251
+Frost Shock::233::CS2_037
+Lightning Bolt::10::EX1_238
+Primal Fusion::35234::OG_023
+Spirit Claws::42042::KAR_063
+Tunnel Trogg::27246::LOE_018
+Ancestral Knowledge::22319::AT_053
+Ancestral Spirit::526::CS2_038e
+Crackle::12241::GVG_038
+Devolve::49715::CFM_696
+Eternal Sentinel::35231::OG_026
+Flametongue Totem::390::EX1_565
+Jade Claws::49724::CFM_717
+Lava Shock::14440::BRM_011t
+Maelstrom Portal::42045::KAR_073
+Reincarnate::7731::FP1_025
+Rockbiter Weapon::491::CS2_045e
+Stormcrack::35227::OG_206
+Stormforged Axe::152::EX1_247
+Totem Golem::22265::AT_052
+Vitality Totem::12259::GVG_039
+Whirling Zap-o-matic::12231::GVG_037
+Windfury::146::CS2_039
+Elemental Destruction::22345::AT_051
+Far Sight::107::CS2_053e
+Feral Spirit::214::EX1_248
+Healing Wave::22340::AT_048
+Hex::270::EX1_246
+Lava Burst::679::EX1_241
+Lightning Storm::676::EX1_259
+Mana Tide Totem::613::EX1_575
+Powermace::12269::GVG_036
+Tuskarr Totemic::22270::AT_046
+Unbound Elemental::51::EX1_258
+Ancestor's Call::12218::GVG_029
+Call in the Finishers::49716::CFM_310
+Charged Hammer::22331::AT_050
+Draenei Totemcarver::22269::AT_047
+Dunemaul Shaman::12234::GVG_066
+Fireguard Destroyer::14455::BRM_012
+Flamewreathed Faceless::35226::OG_024
+Jade Lightning::49707::CFM_707
+Jinyu Waterspeaker::49719::CFM_061
+Lotus Illusionist::49751::CFM_697
+Master of Evolution::33160::OG_328
+Rumbling Elemental::27244::LOE_016
+Siltfin Spiritwalker::12277::GVG_040
+Wicked Witchdoctor::42047::KAR_021
+Windspeaker::151::EX1_587
+Bloodlust::256::CS2_046e
+Doomhammer::172::EX1_567
+Earth Elemental::124::EX1_250
+Hallazeal the Ascended::33131::OG_209
+Hammer of Twilight::33163::OG_031
+Thunder Bluff Valiant::22271::AT_049
+White Eyes::49726::CFM_324
+Fire Elemental::636::CS2_042
+The Mistcaller::22349::AT_054
+Thing from Below::33159::OG_028
+Everyfin is Awesome::27224::LOE_113
+Jade Chieftain::49720::CFM_312
+Neptulon::12292::GVG_042
+Al'Akir the Windlord::335::NEW1_010
+Forbidden Ritual::35217::OG_114
+Sacrificial Pact::348::NEW1_003
+Blood Imp::196::CS2_059
+Corruption::252::CS2_063e
+Flame Imp::85::EX1_319
+Malchezaar's Imp::42027::KAR_089
+Mortal Coil::43::EX1_302
+Possessed Villager::33171::OG_241
+Power Overwhelming::170::EX1_316e
+Reliquary Seeker::27256::LOE_116
+Soulfire::529::EX1_308
+Voidwalker::340::CS2_065
+Curse of Rafaam::27232::LOE_007
+Dark Peddler::27243::LOE_023
+Darkbomb::12299::GVG_015
+Darkshire Librarian::35221::OG_109
+Demonfire::452::EX1_596e
+Demonfuse::22300::AT_024
+Mistress of Pain::12283::GVG_018
+Renounce Darkness::33136::OG_118
+Succubus::208::EX1_306
+Tiny Knight of Evil::22386::AT_021
+Wrathguard::22304::AT_026
+Bloodfury Potion::49698::CFM_611
+Darkshire Councilman::35224::OG_113
+Demonwrath::14463::BRM_005
+Drain Life::332::CS2_061
+Felguard::236::EX1_301
+Imp Gang Boss::14443::BRM_006
+Sense Demons::327::EX1_317
+Shadow Bolt::647::CS2_057
+Silverware Golem::42037::KAR_A02_12H
+Spreading Madness::33169::OG_116
+Unlicensed Apothecary::49747::CFM_900
+Void Terror::119::EX1_304
+Blastcrystal Potion::49741::CFM_608
+Crystalweaver::49750::CFM_610
+Dreadsteed::22337::AT_019
+Fel Cannon::12221::GVG_020
+Fist of Jaraxxus::22332::AT_022
+Hellfire::122::CS2_062
+Imp-losion::12302::GVG_045
+Pit Lord::402::EX1_313
+Seadevil Stinger::49695::CFM_699
+Shadowflame::673::EX1_303
+Summoning Portal::566::EX1_315
+Voidcaller::7733::FP1_022
+Bane of Doom::670::EX1_320
+Demonheart::12237::GVG_019e
+Doomguard::507::EX1_310
+Floating Watcher::12271::GVG_100
+Kara Kazham!::42033::KAR_025
+Usher of Souls::35242::OG_302
+Anima Golem::12245::GVG_077
+Dark Bargain::22388::AT_025
+Dread Infernal::36::CS2_064
+Felfire Potion::49699::CFM_094
+Kabal Trafficker::49742::CFM_663
+Siphon Soul::573::EX1_309
+Void Crusher::22387::AT_023
+Wilfred Fizzlebang::22288::AT_027
+Abyssal Enforcer::49691::CFM_751
+Cho'gall::33170::OG_121
+Fearsome Doomguard::22391::AT_020
+Twisting Nether::398::EX1_312
+Krul the Unshackled::49744::CFM_750
+Lord Jaraxxus::482::EX1_323h
+Mal'Ganis::12294::GVG_021
+DOOM!::33129::OG_239
+Inner Rage::366::EX1_607e
+Blood To Ichor::35209::OG_314
+Charge::646::EX1_084e
+Cursed Blade::27248::LOE_118e
+I Know a Guy::49623::CFM_940
+N'Zoth's First Mate::33132::OG_312
+Shield Slam::50::EX1_410
+Upgrade!::638::EX1_409
+Warbot::12260::GVG_051
+Whirlwind::161::EX1_400
+Alexstrasza's Champion::22333::AT_071
+Armorsmith::644::EX1_402
+Battle Rage::664::EX1_392
+Bolster::22320::AT_068
+Cleave::81::TB_CoOpv3_005
+Commanding Shout::166::NEW1_036e2
+Cruel Taskmaster::328::EX1_603
+Execute::227::CS2_108
+Fiery War Axe::632::CS2_106
+Heroic Strike::1::CS2_105e
+Hobart Grapplehammer::49729::CFM_643
+Public Defender::49732::CFM_300
+Rampage::454::CS2_104e
+Revenge::14464::BRM_015
+Slam::215::EX1_391
+Sleep with the Fishes::49746::CFM_716
+Sparring Partner::22354::AT_069
+Stolen Goods::49661::CFM_752
+Bash::22309::AT_064
+Blood Warriors::33166::OG_276
+Bloodsail Cultist::35204::OG_315
+Bouncing Blade::12203::GVG_050
+Fierce Monkey::27255::LOE_022
+Frothing Berserker::69::EX1_604
+Grimestreet Pawnbroker::49668::CFM_755
+King's Defender::22286::AT_065e
+Ogre Warmaul::12211::GVG_054
+Orgrimmar Aspirant::22395::AT_066
+Protect the King!::42032::KAR_026
+Ravaging Ghoul::33161::OG_149
+Shield Block::493::EX1_606
+Warsong Commander::193::EX1_084
+Arathi Weaponsmith::504::EX1_398
+Axe Flinger::14439::BRM_016
+Bloodhoof Brave::35205::OG_218
+Brass Knuckles::49680::CFM_631
+Death's Bite::7734::FP1_021
+Grimy Gadgeteer::49679::CFM_754
+Kor'kron Elite::130::NEW1_011
+Magnataur Alpha::22376::AT_067
+Mortal Strike::345::EX1_408
+Screwjank Clunker::12220::GVG_055
+Alley Armorsmith::49663::CFM_756
+Arcanite Reaper::182::CS2_112
+Brawl::297::EX1_407
+Fool's Bane::42041::KAR_028
+Ironforge Portal::42064::KAR_091
+Siege Engine::12275::GVG_086
+Tentacles for Arms::33140::OG_033
+Iron Juggernaut::12295::GVG_056
+Sea Reaver::22339::AT_130
+Shieldmaiden::12215::GVG_053
+Ancient Shieldbearer::33122::OG_301
+Crush::12303::GVG_052
+Gorehowl::96::EX1_411
+Malkorok::35207::OG_220
+Obsidian Destroyer::27222::LOE_009
+Grommash Hellscream::643::EX1_414
+Varian Wrynn::22342::AT_072
+Murloc Tinyfin::27225::LOEA10_3
+Target Dummy::12288::GVG_093
+Wisp::273::OG_195c
+Abusive Sergeant::577::CS2_188
+Angry Chicken::57::EX1_009
+Arcane Anomaly::42043::KAR_036
+Argent Squire::473::EX1_008
+Bloodsail Corsair::453::NEW1_025
+Clockwork Gnome::12200::GVG_082
+Cogmaster::12179::GVG_013
+Dragon Egg::14442::BRM_022
+Elven Archer::356::CS2_189
+Gadgetzan Jouster::22311::AT_133
+Goldshire Footman::564::CS1_042
+Grimscale Oracle::510::EX1_508
+Hungry Crab::660::NEW1_017
+Injured Kvaldir::22322::AT_105
+Leper Gnome::513::EX1_029
+Lightwarden::436::EX1_001
+Lowly Squire::22263::AT_082
+Mistress of Mixtures::49646::CFM_120
+Murloc Raider::55::CS2_168
+Murloc Tidecaller::420::EX1_509
+Patches the Pirate::49624::CFM_637
+Runic Egg::42065::KAR_029
+Secretkeeper::483::EX1_080
+Shieldbearer::24::EX1_405
+Shifter Zerus::35190::OG_123
+Sir Finley Mrrgglton::27215::LOE_076
+Small-Time Buccaneer::49759::CFM_325
+Southsea Deckhand::103::CS2_146
+Stonetusk Boar::76::CS2_171
+Tentacle of N'Zoth::33130::OG_151
+Tournament Attendee::22350::AT_097
+Undertaker::7737::FP1_028
+Voodoo Doctor::410::EX1_011
+Weasel Tunneler::49758::CFM_095
+Worgen Infiltrator::112::EX1_010
+Young Dragonhawk::629::CS2_169
+Young Priestess::123::EX1_004
+Zealous Initiate::35222::OG_158
+Zombie Chow::683::FP1_001
+Acidic Swamp Ooze::74::EX1_066
+Amani Berserker::641::EX1_393
+Ancient Watcher::153::EX1_045
+Annoy-o-Tron::12181::TB_MechWar_Boss1
+Argent Watchman::22298::AT_109
+Beckoner of Evil::31114::OG_281
+Bilefin Tidehunter::35219::OG_156
+Bloodfen Raptor::576::CS2_172
+Bloodmage Thalnos::525::EX1_012
+Bloodsail Raider::637::NEW1_018
+Blowgill Sniper::49672::CFM_647
+Bluegill Warrior::289::CS2_173
+Boneguard Lieutenant::22352::AT_089
+Captain's Parrot::559::NEW1_016
+Crazed Alchemist::612::EX1_059
+Dire Wolf Alpha::305::EX1_162
+Dirty Rat::49673::CFM_790
+Doomsayer::467::NEW1_021
+Duskboar::35251::OG_326
+Echoing Ooze::7754::FP1_003
+Explosive Sheep::12180::GVG_076
+Faerie Dragon::213::NEW1_023
+Flame Juggler::22292::AT_094
+Friendly Bartender::49645::CFM_654
+Frostwolf Grunt::663::CS2_121
+Gadgetzan Socialite::49743::CFM_659
+Garrison Commander::22274::AT_080
+Gilblin Stalker::12249::GVG_081
+Grimestreet Informant::49627::CFM_321
+Haunted Creeper::7756::FP1_002
+Huge Toad::27219::LOE_046
+Jeweled Scarab::27211::LOE_029
+Knife Juggler::422::NEW1_019
+Kobold Geomancer::479::CS2_142
+Lance Carrier::22335::AT_084
+Loot Hoarder::395::EX1_096
+Lorewalker Cho::456::TU4f_001
+Mad Bomber::80::EX1_082
+Mad Scientist::7748::FP1_004
+Mana Addict::67::EX1_055
+Mana Wraith::197::EX1_616
+Master Swordsmith::584::NEW1_037
+Mechwarper::12188::GVG_006
+Micro Machine::12189::GVG_103
+Millhouse Manastorm::339::TU4b_001
+Murloc Tidehunter::357::EX1_506
+Nat Pagle::19::EX1_557
+Nat, the Darkfisher::35248::OG_338
+Nerub'ar Weblord::7755::FP1_017
+Nerubian Egg::7738::FP1_007
+Netherspite Historian::42039::KAR_062
+Novice Engineer::435::EX1_015
+Pint-Sized Summoner::54::EX1_076
+Pompous Thespian::42034::KAR_011
+Puddlestomper::12274::GVG_064
+Recombobulator::12198::GVG_108
+River Crocolisk::535::CS2_120
+Ship's Cannon::12258::GVG_075
+Stonesplinter Trogg::12266::GVG_067
+Sunfury Protector::372::EX1_058
+Twilight Geomancer::35202::OG_284
+Twisted Worgen::35223::OG_247
+Unstable Ghoul::7757::FP1_024
+Wild Pyromancer::25::NEW1_020
+Youthful Brewmaster::247::EX1_049
+Acolyte of Pain::428::EX1_007
+Alarm-o-Bot::425::EX1_006
+Am'gam Rager::35238::OG_248
+Arcane Golem::97::EX1_089
+Argent Horserider::22301::AT_087
+Auctionmaster Beardo::49659::CFM_807
+Backstreet Leper::49697::CFM_646
+Blackwing Technician::14437::BRM_033
+Blood Knight::75::EX1_590
+Blubber Baron::49760::CFM_064
+Brann Bronzebeard::27214::LOE_077
+Coldlight Oracle::88::EX1_050
+Coldlight Seer::424::EX1_103
+Coliseum Manager::22291::AT_110
+Dalaran Mage::388::EX1_582
+Dancing Swords::7736::FP1_029
+Deathlord::7753::FP1_009
+Demolisher::212::EX1_102
+Disciple of C'Thun::35196::OG_162
+Dragonhawk Rider::22369::AT_083
+Earthen Ring Farseer::557::CS2_117
+Emperor Cobra::625::EX1_170
+Eydis Darkbane::22295::AT_131
+Fel Orc Soulfiend::49639::CFM_609
+Fencing Coach::22378::AT_115
+Fjola Lightbane::22296::AT_129
+Flesheating Ghoul::610::tt_004
+Flying Machine::12247::GVG_084
+Gnomeregan Infantry::12286::GVG_098
+Gnomish Experimenter::12199::GVG_092
+Goblin Sapper::12213::GVG_095
+Grimestreet Smuggler::49664::CFM_853
+Harvest Golem::386::EX1_556
+Hired Gun::49671::CFM_653
+Hobgoblin::12250::GVG_104
+Ice Rager::22392::AT_092
+Illuminator::12214::GVG_089
+Imp Master::178::EX1_597
+Injured Blademaster::209::CS2_181
+Ironbeak Owl::500::CS2_203
+Ironforge Rifleman::41::CS2_141
+Ironfur Grizzly::519::CS2_125
+Jungle Panther::392::EX1_017
+Kabal Courier::49621::CFM_649
+King Mukla::373::TU4c_001
+Light's Champion::22341::AT_106
+Lil' Exorcist::12239::GVG_097
+Magma Rager::362::CS2_118
+Master of Ceremonies::22306::AT_117
+Mind Control Tech::368::EX1_085
+Moroes::42030::KAR_044
+Murloc Warleader::222::EX1_507
+Ogre Brute::12281::GVG_065
+Pantry Spider::42053::KAR_030a
+Questing Adventurer::157::EX1_044
+Raging Worgen::95::EX1_412
+Raid Leader::502::CS2_122
+Razorfen Hunter::47::CS2_196
+Saboteur::22366::AT_086
+Scarlet Crusader::475::EX1_020
+Sergeant Sally::49728::CFM_341
+Shade of Naxxramas::7730::FP1_005
+Shattered Sun Cleric::434::EX1_019
+Silent Knight::22297::AT_095
+Silithid Swarmer::35200::OG_034
+Silver Hand Regent::22275::AT_100
+Silverback Patriarch::611::CS2_127
+Southsea Captain::324::NEW1_027
+Spawn of N'Zoth::33137::OG_256
+Spider Tank::12184::GVG_044
+Squirming Tentacle::35243::OG_327
+Stoneskin Gargoyle::7750::FP1_027
+Street Trickster::49761::CFM_039
+Tauren Warrior::477::EX1_390
+Thrallmar Farseer::265::EX1_021
+Tinkertown Technician::12202::GVG_102
+Tinkmaster Overspark::245::EX1_083
+Toxic Sewer Ooze::49701::CFM_655
+Twilight Elder::31112::OG_286
+Violet Illusionist::42060::KAR_712
+Wolfrider::174::CS2_124
+Zoobot::42035::KAR_095
+Aberrant Berserker::35236::OG_150
+Ancient Brewmaster::572::EX1_057
+Ancient Mage::176::EX1_584
+Ancient Shade::27245::LOE_110
+Arcane Nullifier X-21::12246::GVG_091
+Arcanosmith::42062::KAR_710
+Armored Warhorse::22312::AT_108
+Backroom Bouncer::49675::CFM_658
+Barnes::42021::KAR_114
+Baron Rivendare::7740::NAX9_01H
+Blackwater Pirate::35203::OG_322
+Burly Rockjaw Trogg::12233::GVG_068
+Chillwind Yeti::31::CS2_182
+Crowd Favorite::22308::AT_121
+C'Thun's Chosen::33123::OG_283
+Cult Master::140::EX1_595
+Cyclopian Horror::35225::OG_337
+Daring Reporter::49723::CFM_851
+Dark Iron Dwarf::128::EX1_046
+Defender of Argus::542::EX1_093
+Dragonkin Sorcerer::14441::BRM_020
+Dragonling Mechanic::472::EX1_025
+Dread Corsair::261::NEW1_022
+Eater of Secrets::31121::OG_254
+Eerie Statue::27233::LOE_107
+Elise Starseeker::27210::LOE_079
+Enhance-o Mechano::12176::GVG_107
+Evil Heckler::22390::AT_114
+Evolved Kobold::35254::OG_082
+Faceless Shambler::33133::OG_174
+Frigid Snobold::22381::AT_093
+Genzo, the Shark::49737::CFM_808
+Gnomish Inventor::246::CS2_147
+Gorillabot A-3::27237::LOE_039
+Gormok the Impaler::22323::AT_122
+Hozen Healer::49710::CFM_067
+Hungry Dragon::14436::BRM_026
+Infested Tauren::33128::OG_249
+Jade Spirit::49708::CFM_715
+Jeeves::12216::GVG_094
+Kabal Chemist::49690::CFM_619
+Kazakus::49622::CFM_621
+Kezan Mystic::12252::GVG_074
+Kooky Chemist::49634::CFM_063
+Lost Tallstrider::12284::GVG_071
+Maiden of the Lake::22259::AT_085
+Mechanical Yeti::12253::GVG_078
+Midnight Drake::35247::OG_320
+Mini-Mage::12262::GVG_109
+Mogu'shan Warden::346::EX1_396
+Naga Corsair::49730::CFM_651
+Oasis Snapjaw::15::CS2_119
+Ogre Magi::659::CS2_197
+Old Murk-Eye::217::EX1_062
+Piloted Shredder::12191::GVG_096
+Polluted Hoarder::31111::OG_323
+Refreshment Vendor::22374::AT_111
+Sen'jin Shieldmasta::326::CS2_179
+Silvermoon Guardian::634::EX1_023
+Spellbreaker::42::EX1_048
+Stormwind Knight::603::CS2_131
+Tanaris Hogchopper::49688::CFM_809
+Tomb Spider::27226::LOE_047
+Tournament Medic::22290::AT_091
+Twilight Drake::360::EX1_043
+Twilight Guardian::22351::AT_017
+Twilight Summoner::33175::OG_272
+Violet Teacher::523::NEW1_026
+Wailing Soul::7758::FP1_016
+Worgen Greaser::49670::CFM_665
+Abomination::597::EX1_097
+Antique Healbot::12227::GVG_069
+Anubisath Sentinel::27241::LOE_061
+Avian Watcher::42044::KAR_037
+Azure Drake::280::EX1_284
+Big Game Hunter::73::EX1_005
+Blackwing Corruptor::14447::BRM_034
+Blingtron 3000::12183::GVG_119
+Bomb Lobber::12193::GVG_099
+Bomb Squad::49696::CFM_667
+Booty Bay Bodyguard::27::CS2_187
+Burgly Bully::49704::CFM_669
+Captain Greenskin::267::NEW1_024
+Clockwork Knight::22294::AT_096
+Corrupted Healbot::31109::OG_147
+Crazed Worshipper::35212::OG_321
+Cult Apothecary::33148::OG_295
+Darkscale Healer::84::DS1_055
+Darkspeaker::35229::OG_102
+Djinni of Zephyrs::27234::LOE_053
+Doppelgangster::49677::CFM_668t2
+Elite Tauren Chieftain::682::PRO_001
+Faceless Manipulator::450::EX1_564
+Fel Reaver::12264::GVG_016
+Fen Creeper::476::CS1_069
+Feugen::7745::NAX13_04H
+Finja, the Flying Star::49632::CFM_344
+Frostwolf Warlord::604::CS2_226
+Grim Patron::14435::BRM_019
+Grook Fu Master::49658::CFM_666
+Gurubashi Berserker::624::EX1_399
+Harrison Jones::602::EX1_558
+Hemet Nesingwary::12268::TU4d_001
+Junkbot::12251::GVG_106
+Kvaldir Raider::22355::AT_119
+Leeroy Jenkins::674::EX1_116
+Loatheb::7746::NAX6_01H
+Lotus Agents::49629::CFM_852
+Madder Bomber::12177::GVG_090
+Menagerie Magician::42055::KAR_702
+Mimiron's Head::12190::GVG_111
+Mukla's Champion::22318::AT_090
+Naga Sea Witch::27231::LOE_038
+Nexus-Champion Saraad::22264::AT_127
+Nightblade::184::EX1_593
+Pit Fighter::22375::AT_101
+Prince Malchezaar::42031::KARA_13_06H
+Psych-o-Tron::35216::OG_145
+Recruiter::22367::AT_113
+Red Mana Wyrm::49762::CFM_060
+Salty Dog::12263::GVG_070
+Second-Rate Bruiser::49626::CFM_652
+Silver Hand Knight::648::CS2_151
+Sludge Belcher::7749::FP1_012
+Spectral Knight::7751::FP1_008
+Spiked Hogrider::49687::CFM_688
+Spiteful Smith::627::CS2_221
+Stalagg::7744::NAX13_05H
+Stampeding Kodo::389::NEW1_041
+Stormpike Commando::325::CS2_150
+Stranglethorn Tiger::338::EX1_028
+Streetwise Investigator::49757::CFM_656
+Summoning Stone::27239::LOE_086
+Validated Doomsayer::31115::OG_200
+Venture Co. Mercenary::509::CS2_227
+Ancient Harbinger::33157::OG_290
+Ancient of Blossoms::49733::CFM_854
+Archmage::545::CS2_155
+Argent Commander::463::EX1_067
+Aya Blackpaw::49706::CFM_902
+Big-Time Racketeer::49625::CFM_648
+Bolf Ramshield::22346::AT_124
+Book Wyrm::42029::KAR_033
+Boulderfist Ogre::60::CS2_200
+Cairne Bloodhoof::498::EX1_110
+Corrupted Seer::35228::OG_161
+Defias Cleaner::49738::CFM_855
+Drakonid Crusher::14449::BRM_024
+Emperor Thaurissan::14454::BRMA03_1H
+Fight Promoter::49712::CFM_328
+Frost Elemental::598::EX1_283
+Gadgetzan Auctioneer::131::EX1_095
+Gazlowe::12287::GVG_117
+Gelbin Mekkatorque::251::EX1_112
+Grand Crusader::22326::AT_118
+Hogger::39::XXX_040
+Illidan Stormrage::203::TU4e_001
+Justicar Trueheart::22276::AT_132
+Kodorider::22266::AT_099
+Leatherclad Hogleader::49686::CFM_810
+Lord of the Arena::414::CS2_162
+Madam Goya::49684::CFM_672
+Maexxna::7747::NAX3_01H
+Master Jouster::22317::AT_112
+Moat Lurker::42063::KAR_041
+Mogor the Ogre::12282::GVG_112
+Mogor's Champion::22382::AT_088
+Mukla, Tyrant of the Vale::33149::OG_122
+Nerubian Prophet::35233::OG_138
+Piloted Sky Golem::12175::GVG_105
+Priestess of Elune::138::EX1_583
+Reckless Rocketeer::560::CS2_213
+Reno Jackson::27228::LOE_011
+Scaled Nightmare::33152::OG_271
+Sideshow Spelleater::22372::AT_098
+Skeram Cultist::33154::OG_339
+Sunwalker::221::EX1_032
+Sylvanas Windrunner::33::EX1_016
+The Beast::179::EX1_577
+The Black Knight::396::EX1_002
+The Skeleton Knight::22314::AT_128
+Toshley::12225::GVG_115
+Volcanic Drake::14450::BRM_025
+Windfury Harpy::675::EX1_033
+Wind-up Burglebot::49647::CFM_025
+Wobbling Runts::27223::LOE_089
+Wrathion::49731::CFM_806
+Baron Geddon::539::EX1_249
+Bog Creeper::35240::OG_153
+Captured Jormungar::22377::AT_102
+Chillmaw::22353::AT_123
+Core Hound::173::CS2_201
+Don Han'Cho::49683::CFM_685
+Dr. Boom::12182::GVG_110
+Grotesque Dragonhawk::35250::OG_152
+Hogger, Doom of Elwynn::31117::OG_318
+Ravenholdt Assassin::518::CS2_161
+Rend Blackhand::14438::BRMA09_1H
+Skycap'n Kragg::22260::AT_070
+Stormwind Champion::310::CS2_222
+The Curator::42022::KAR_061
+Troggzor the Earthinator::12272::GVG_118
+Twin Emperor Vek'lor::35201::OG_131
+War Golem::323::CS2_186
+Chromaggus::14451::BRMA12_1H
+Doomcaller::35211::OG_255
+Eldritch Horror::35253::OG_142
+Foe Reaper 4000::12217::GVG_113
+Force-Tank MAX::12248::GVG_079
+Fossilized Devilsaur::27235::LOE_073
+Gruul::18::NEW1_038
+Kel'Thuzad::7742::TB_KTRAF_H_1
+Medivh, the Guardian::42036::KAR_097
+Ragnaros the Firelord::503::TBA01_1
+Sneed's Old Shredder::12187::GVG_114
+The Boogeymonster::33138::OG_300
+Alexstrasza::303::EX1_561
+Arch-Thief Rafaam::27254::LOE_092
+Blood of The Ancient One::33164::OG_173
+Icehowl::22338::AT_125
+Majordomo Executus::14456::BRMA06_1H
+Malygos::241::EX1_563
+Mayor Noggenfogger::49756::CFM_670
+Mekgineer Thermaplugg::12196::GVG_116
+Nefarian::14448::TBA01_4
+North Sea Kraken::22289::AT_103
+Nozdormu::285::EX1_560
+Onyxia::432::EX1_562
+Soggoth the Slitherer::33173::OG_340
+Ysera::495::EX1_572
+C'Thun::31110::OG_280
+Deathwing::474::NEW1_030
+Deathwing, Dragonlord::33177::OG_317
+Faceless Behemoth::35249::OG_141
+Frost Giant::22262::AT_120
+N'Zoth, the Corruptor::33134::OG_133
+Sea Giant::614::EX1_586
+Yogg-Saron, Hope's End::33168::OG_134
+Y'Shaarj, Rage Unbound::33156::OG_042
+Arcane Giant::42049::KAR_711
+Clockwork Giant::12201::GVG_121
+Mountain Giant::264::EX1_105
+Molten Giant::94::EX1_620

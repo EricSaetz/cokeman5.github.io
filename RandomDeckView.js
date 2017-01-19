@@ -85,7 +85,7 @@ function createRandomDeck() {
 		if (i==0 && isReno) {
 			for (var z=0;z<neutrals.length;z++) {
 				if (neutrals[z].id==27228) {
-					randomDeck.push({name:neutrals[z].name,id:neutrals[z].id,rarity:neutrals[z].rarity,manaCost:neutrals[z].manaCost,theClass:neutrals[z].theClass,amount:1});
+					randomDeck.push({name:neutrals[z].name,id:neutrals[z].id,rarity:neutrals[z].rarity,manaCost:neutrals[z].manaCost,theClass:neutrals[z].theClass,amount:1,cardId:neutrals[z].cardId});
 					i++;
 					break;
 				}
@@ -106,9 +106,9 @@ function createRandomDeck() {
 		}
 		if (!flag) {
 			if (cards.length>0)
-				card = {name:cards[index].name,id:cards[index].id,rarity:cards[index].rarity,manaCost:cards[index].manaCost,theClass:cards[index].theClass,amount:1};
+				card = {name:cards[index].name,id:cards[index].id,rarity:cards[index].rarity,manaCost:cards[index].manaCost,theClass:cards[index].theClass,amount:1,cardId:cards[index].cardId};
 			else
-				card = {name:"Shadow of Nothing",id:-1,rarity:4,manaCost:0,theClass:"PRIEST",amount:1};
+				card = {name:"Shadow of Nothing",id:-1,rarity:4,manaCost:0,theClass:"PRIEST",amount:1,cardId:"EX1_345t"};
 			randomDeck.push(card);
 		}
 		
