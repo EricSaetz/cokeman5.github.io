@@ -181,7 +181,7 @@ function setBarTexture(cardDisplay,card) {
 	
 	barArtObject.material.map=map;
 	barArtObject.visible=true;
-	cardDisplay.card={name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:card.amount};
+	cardDisplay.card={name:card.name,id:card.id,rarity:card.rarity,manaCost:card.manaCost,theClass:card.theClass,amount:card.amount,cardId:card.cardId};
 	cardDisplay.mesh.visible=true;
 	
 	if (card.rarity<5)
@@ -477,14 +477,18 @@ function getExpansion(card) {
 		return 8;
 	else if (card.id<49618)
 		return 9;
-	else
+	else if (card.id<49763)
 		return 10;
+	else if (card.id<55458)
+		return 11
+	else
+		return 12;
 }
 
 function isStandard(card) {
 	var exp = getExpansion(card);
 	
-	return (exp==1 || exp==2 || exp>5);
+	return (exp==1 || exp==2 || exp>7);
 }
 
 function updateDeckList(deck,offset) {
@@ -500,15 +504,35 @@ function updateDeckList(deck,offset) {
 			cardsToDisplay[i+offset].card=null;
 		}
 	}
+	updateDeckListMetaTags(deck);
 }
 
 function playSound(soundFile, volume) {
 	if (document.getElementById("volumeSlider")!=null)
 		volume *= document.getElementById("volumeSlider").value/100;
-	audioLoader.load( soundFile, function( buffer ) {
+		audioLoader.load( soundFile, function( buffer ) {
 		var sound = new THREE.Audio( audioListener );
 		sound.setBuffer( buffer );
 		sound.setVolume(volume);
 		sound.play();
 	});
+}
+
+function updateDeckListMetaTags(deck) {
+	var contents,name,hero;
+	var deckIds;
+	contents = $('meta[name=deckContents]');
+	name = $('meta[name=deckName]');
+	hero = $('meta[name=deckHero]');
+
+	for (var i;i<deck.length;i++) {
+		for (var z;z<deck[i].amount;z++) {
+			if (i==0 && z==0)
+				deckIds+=deck[i].cardId;
+			else
+				deckIds+=','+deck[i].cardId;
+		}
+	}
+	
+	contents.attr('content', deckIds);
 }

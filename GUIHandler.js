@@ -196,7 +196,7 @@ function removeRandomDeckGUI() {
 
 function loadSealedGUI() {
 	var gui,aText,aSelect,aOption,aTextArea,input;
-	var packNames = ["Wild", "Basic","Classic","Naxx","GvG","BRM","TGT","LOE","OG","KARA","MSG"];
+	var packNames = ["Wild", "Basic","Classic","Naxx","GvG","BRM","TGT","LOE","OG","KARA","MSG","Un'goro"];
     var openingModes = [ "Normal", "Auto", "Instant" ];
 	
 	gui = document.getElementById('gui');
