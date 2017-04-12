@@ -278,6 +278,8 @@ function openPacks() {
 				case 9 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==9},true);
 					break;
 				case 10 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==10},true);
+					break;
+				case 11 : theExpansion = getSubCollection(collection,function(card){return card.amount>0 && getExpansion(card)==11},true);
 			}
 			
 			for (var n=0;n<packAmounts[i];n++) {
@@ -332,7 +334,7 @@ function onFinishedLoadingSealed() {
 
 function updatePacksTextArea() {
 	var textAreaContents = '';
-	var packNames = ["Wild", "Basic","Classic","Naxx","GvG","BRM","TGT","LOE","OG","KARA","MSG"];
+	var packNames = ["Wild", "Basic","Classic","Naxx","GvG","BRM","TGT","LOE","OG","KARA","MSG", "Un'goro"];
 	for (var i=0;i<packNames.length;i++) {
 		if (i!=0)
 			textAreaContents+='&#13;&#10;'
